@@ -1,34 +1,67 @@
-version: '3'
+version: '2.1'
 
-# Source: https://github.com/kartoza/docker-geoserver
+# Source:
+# - https://github.com/kartoza/docker-geoserver
+# - https://github.com/kartoza/docker-postgis/blob/develop/docker-compose.yml
 
 volumes:
-  pg_data:
-  geoserver-data:
-  #  db-backups:
   portainer_data:
+  pg_data:
+  pg_backups:
+  geoserver_data:
 
 services:
-   db:
+  portainer:
+    hostname: portainer
+    container_name: portainer
+    image: portainer/portainer
+    volumes:
+      - portainer_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "9000:9000"
+      # URL: http://localhost:9000
+
+  db:
     hostname: postgis
     container_name: postgis
     image: kartoza/postgis:12.0
+    # image: kartoza/postgis:11.0-2.5
     volumes:
       - pg_data:/var/lib/postgresql
-    ports:
-      - "9000:5432"
+      - pg_backups:/backups
     env_file:
       - docker-env/db.env
+    ports:
+      - 9001:5432
     restart: on-failure
     healthcheck:
       test: "exit 0"
 
-   geoserver:
+  pg_backups:
+    hostname: pg_backups
+    container_name: pg_backups
+    image: kartoza/pg-backup:11.0
+    volumes:
+      - pg_backups:/backups
+    links:
+      - db:db
+    env_file:
+      - docker-env/pg_backups.env
+    restart: on-failure
+    depends_on:
+      db:
+        condition: service_healthy
+
+  geoserver:
+    hostname: geoserver
+    container_name: geoserver
     image: kartoza/geoserver:2.15.0
     volumes:
-      - geoserver-data:/opt/geoserver/data_dir
+      - geoserver_data:/opt/geoserver/data_dir
     ports:
-      - "9001:8080"
+      - 9002:8080
+      # URL: http://localhost:9002/geoserver/web/
     restart: on-failure
     env_file:
       - docker-env/geoserver.env
@@ -40,27 +73,3 @@ services:
       interval: 1m30s
       timeout: 10s
       retries: 3
-
-    # URL: http://localhost:8600/geoserver/web/
-
-
-  #  db-dbbackups:
-  #    image: kartoza/pg-backup:11.0
-  #    volumes:
-  #    - db-backups:/backups
-  #    env_file:
-  #    - docker-env/db-backups.env
-  #    restart: on-failure
-  #    depends_on:
-  #      db:
-  #        condition: service_healthy
-
-  portainer:
-    hostname: portainer
-    conatiner_name: portainer
-    image: portainer/portainer
-    volumes:
-      - portainer_data:/data
-      - /var/run/docker.sock:/var/run/docker.sock
-    ports:
-      - "9010:9000"

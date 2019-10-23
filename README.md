@@ -25,6 +25,11 @@ docker-compose -f docker-compose.yml up -d
 docker-compose -f docker-compose.yml down
 
 
+* Remove volumes and containers
+
+docker-compose down --volumes
+
+
 * Import grids on the PostGIS database:
 
 ogr2ogr -append -f "PostgreSQL" PG:"host=localhost dbname=grid user=postgres password=postgres" ../database/grid/grid_cbers4_mux_south_america/grid_cbers4_mux_south_america.shp -nln grid_cbers4_mux_south_america -a_srs EPSG:4326 -skipfailures -lco FID=ID -lco GEOMETRY_NAME=geom -nlt PROMOTE_TO_MULTI
