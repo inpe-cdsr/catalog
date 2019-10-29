@@ -1,4 +1,4 @@
-# exclude all files inside 'env' folder
+# exclude all files from folders
 env/*
 volumes/
 

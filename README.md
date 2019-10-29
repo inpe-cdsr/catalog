@@ -32,8 +32,10 @@ docker-compose down --volumes
 
 * Import grids on the PostGIS database:
 
-ogr2ogr -append -f "PostgreSQL" PG:"host=localhost dbname=grid user=postgres password=postgres" ../database/grid/grid_cbers4_mux_south_america/grid_cbers4_mux_south_america.shp -nln grid_cbers4_mux_south_america -a_srs EPSG:4326 -skipfailures -lco FID=ID -lco GEOMETRY_NAME=geom -nlt PROMOTE_TO_MULTI
+ogr2ogr -append -f "PostgreSQL" PG:"host=localhost port=9002 dbname=vector_data user=postgres password=postgres" ../database/grid/grid_cbers4_mux_south_america/grid_cbers4_mux_south_america.shp -nln grid_cbers4_mux_south_america -a_srs EPSG:4326 -skipfailures -lco FID=ID -lco GEOMETRY_NAME=geom -nlt PROMOTE_TO_MULTI
 
-ogr2ogr -append -f "PostgreSQL" PG:"host=localhost dbname=grid user=postgres password=postgres" ../database/grid/grid_landsat_south_america/grid_landsat_south_america.shp -nln grid_landsat_south_america -a_srs EPSG:4326 -skipfailures -lco FID=ID -lco GEOMETRY_NAME=geom -nlt PROMOTE_TO_MULTI
+>>> ogr2ogr -append -f "PostgreSQL" PG:"host=localhost port=9002 dbname=vector_data user=postgres password=postgres" grid_cbers4_mux_south_america.shp -a_srs EPSG:4326 -skipfailures -lco FID=ID -lco GEOMETRY_NAME=geom
 
-ogr2ogr -append -f "PostgreSQL" PG:"host=localhost dbname=grid user=postgres password=postgres" ../database/grid/vector_ibge_states_of_brazil/vector_ibge_states_of_brazil.shp -nln vector_ibge_states_of_brazil -a_srs EPSG:4326 -skipfailures -lco FID=ID -lco GEOMETRY_NAME=geom -nlt PROMOTE_TO_MULTI
+ogr2ogr -append -f "PostgreSQL" PG:"host=localhost port=9002 dbname=vector_data user=postgres password=postgres" ../database/grid/grid_landsat_south_america/grid_landsat_south_america.shp -nln grid_landsat_south_america -a_srs EPSG:4326 -skipfailures -lco FID=ID -lco GEOMETRY_NAME=geom -nlt PROMOTE_TO_MULTI
+
+ogr2ogr -append -f "PostgreSQL" PG:"host=localhost port=9002 dbname=vector_data user=postgres password=postgres" ../database/grid/vector_ibge_states_of_brazil/vector_ibge_states_of_brazil.shp -nln vector_ibge_states_of_brazil -a_srs EPSG:4326 -skipfailures -lco FID=ID -lco GEOMETRY_NAME=geom -nlt PROMOTE_TO_MULTI
