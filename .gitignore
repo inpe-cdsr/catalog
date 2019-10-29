@@ -1,5 +1,6 @@
-# exclude all files inside 'docker-env' folder
-docker-env/*
+# exclude all files inside 'env' folder
+env/*
+volumes/
 
-# just include the '.EXAMPLE' files inside 'docker-env' folder
-!docker-env/*.EXAMPLE
+# just include the '.EXAMPLE' files inside 'env' folder
+!env/*.EXAMPLE

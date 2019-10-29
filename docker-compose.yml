@@ -6,70 +6,98 @@ version: '2.1'
 
 volumes:
   portainer_data:
-  pg_data:
-  pg_backups:
-  geoserver_data:
+#   pg_data:
+#   pg_backup:
+#   geoserver_data:
+
+networks:
+  postgis-compose-network:
+    driver: bridge
 
 services:
   portainer:
-    hostname: portainer
-    container_name: portainer
+    hostname: dgi_catalog_portainer
+    container_name: dgi_catalog_portainer
     image: portainer/portainer
     volumes:
       - portainer_data:/data
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
-      - "9000:9000"
+      - 9000:9000
       # URL: http://localhost:9000
 
-  db:
-    hostname: postgis
-    container_name: postgis
-    image: kartoza/postgis:12.0
-    # image: kartoza/postgis:11.0-2.5
-    volumes:
-      - pg_data:/var/lib/postgresql
-      - pg_backups:/backups
-    env_file:
-      - docker-env/db.env
-    ports:
-      - 9001:5432
-    restart: on-failure
-    healthcheck:
-      test: "exit 0"
-
-  pg_backups:
-    hostname: pg_backups
-    container_name: pg_backups
-    image: kartoza/pg-backup:11.0
-    volumes:
-      - pg_backups:/backups
-    links:
-      - db:db
-    env_file:
-      - docker-env/pg_backups.env
-    restart: on-failure
-    depends_on:
-      db:
-        condition: service_healthy
-
   geoserver:
-    hostname: geoserver
-    container_name: geoserver
+    hostname: dgi_catalog_geoserver
+    container_name: dgi_catalog_geoserver
     image: kartoza/geoserver:2.15.0
     volumes:
-      - geoserver_data:/opt/geoserver/data_dir
+      # - geoserver_data:/opt/geoserver/data_dir
+      - ./volumes/geoserver/opt/geoserver/data_dir:/opt/geoserver/data_dir
     ports:
-      - 9002:8080
-      # URL: http://localhost:9002/geoserver/web/
+      - 9001:8080
+      # URL: http://localhost:9001/geoserver/web/
     restart: on-failure
     env_file:
-      - docker-env/geoserver.env
+      - env/geoserver.env
     depends_on:
-      db:
+      postgis:
         condition: service_healthy
     healthcheck:
       test: curl --fail -s http://localhost:8080/ || exit 1
       interval: 1m30s
       timeout: 10s
       retries: 3
+    networks:
+      - postgis-compose-network
+
+  postgis:
+    hostname: dgi_catalog_postgis
+    container_name: dgi_catalog_postgis
+    image: kartoza/postgis:12.0
+    # image: kartoza/postgis:11.0-2.5
+    volumes:
+      # - pg_data:/var/lib/postgresql
+      - ./volumes/postgis/var/lib/postgresql:/var/lib/postgresql
+      # - pg_backup:/backups
+      - ./volumes/pg_backup/backups:/backups
+    env_file:
+      - env/postgis.env
+    ports:
+      - 9002:5432
+    restart: on-failure
+    healthcheck:
+      test: "exit 0"
+    networks:
+      - postgis-compose-network
+
+  pgadmin4:
+    hostname: dgi_catalog_pgadmin4
+    container_name: dgi_catalog_pgadmin4
+    image: dpage/pgadmin4:4.14
+    env_file:
+      - env/pgadmin4.env
+    ports:
+      - 9003:80
+    volumes:
+      - ./volumes/pgadmin4/var/lib/pgadmin:/var/lib/pgadmin
+    depends_on:
+      - postgis
+    networks:
+      - postgis-compose-network
+    # http://localhost:9003/
+
+  pg_backup:
+    hostname: dgi_catalog_pg_backup
+    container_name: dgi_catalog_pg_backup
+    image: kartoza/pg-backup:11.0
+    volumes:
+      # - pg_backup:/backups
+      - ./volumes/pg_backup/backups:/backups
+    links:
+      - postgis:postgis
+    env_file:
+      - env/pg_backup.env
+    restart: on-failure
+    depends_on:
+      postgis:
+        condition: service_healthy
