@@ -26,30 +26,6 @@ services:
       - 9000:9000
       # URL: http://localhost:9000
 
-  geoserver:
-    hostname: dgi_catalog_geoserver
-    container_name: dgi_catalog_geoserver
-    image: kartoza/geoserver:2.15.0
-    volumes:
-      # - geoserver_data:/opt/geoserver/data_dir
-      - ./volumes/geoserver/opt/geoserver/data_dir:/opt/geoserver/data_dir
-    ports:
-      - 9001:8080
-      # URL: http://localhost:9001/geoserver/web/
-    restart: on-failure
-    env_file:
-      - env/geoserver.env
-    depends_on:
-      postgis:
-        condition: service_healthy
-    healthcheck:
-      test: curl --fail -s http://localhost:8080/ || exit 1
-      interval: 1m30s
-      timeout: 10s
-      retries: 3
-    networks:
-      - postgis-compose-network
-
   postgis:
     hostname: dgi_catalog_postgis
     container_name: dgi_catalog_postgis
@@ -81,10 +57,35 @@ services:
     volumes:
       - ./volumes/pgadmin4/var/lib/pgadmin:/var/lib/pgadmin
     depends_on:
-      - postgis
+      postgis:
+        condition: service_healthy
     networks:
       - postgis-compose-network
     # http://localhost:9003/
+
+  geoserver:
+    hostname: dgi_catalog_geoserver
+    container_name: dgi_catalog_geoserver
+    image: kartoza/geoserver:2.13.0
+    volumes:
+      # - geoserver_data:/opt/geoserver/data_dir
+      - ./volumes/geoserver/opt/geoserver/data_dir:/opt/geoserver/data_dir
+    ports:
+      - 9001:8080
+    restart: on-failure
+    env_file:
+      - env/geoserver.env
+    depends_on:
+      postgis:
+        condition: service_healthy
+    healthcheck:
+      test: curl --fail -s http://localhost:8080/ || exit 1
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - postgis-compose-network
+    # URL: http://localhost:9001/geoserver/web/
 
   pg_backup:
     hostname: dgi_catalog_pg_backup
