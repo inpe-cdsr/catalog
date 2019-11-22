@@ -3,11 +3,11 @@ upstream geoserver {
 }
 
 upstream portal {
-    server dgi_catalog_portal:8000;
+    server dgi_catalog_portal:8080;
 }
 
 upstream api {
-    server dgi_catalog_api:8001;
+    server dgi_catalog_api:5000;
 }
 
 upstream staccompose {
@@ -48,7 +48,7 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 
-	location /portal/ {
+	location /catalogo/ {
 		proxy_pass http://portal/;
 		proxy_redirect off;
 		proxy_set_header Host $http_host;

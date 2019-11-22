@@ -4,3 +4,5 @@ volumes/
 
 # just include the '.EXAMPLE' files inside 'env' folder
 !env/*.EXAMPLE
+
+docker-compose.prod.yml

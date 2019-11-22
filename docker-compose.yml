@@ -3,19 +3,17 @@ version: '3'
 # Source:
 # - https://github.com/kartoza/docker-geoserver
 
-volumes:
-  portainer_data:
-  geoserver_data:
+# volumes:
+#   portainer_data:
 
 services:
   nginx:
     image: nginx
     container_name: dgi_catalog_nginx
     volumes:
-      - ./config/nginx.template:/etc/nginx/conf.d/mysite.template
-    environment:
-      - NGINX_HOST=localhost
-      - NGINX_PORT=8089
+      - ./nginx/nginx.template:/etc/nginx/conf.d/mysite.template
+    env_file:
+      - env/nginx.env
     command: /bin/bash -c "envsubst '$$NGINX_HOST $$NGINX_PORT' < /etc/nginx/conf.d/mysite.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
     restart: always
     ports:
@@ -24,64 +22,59 @@ services:
       - dgi_catalog
 
   portal:
-    image: registry.dpi.inpe.br/dgi/catalog_front:0.0.1
+    image: registry.dpi.inpe.br/dgi/catalog_app:0.0.1
     container_name: dgi_catalog_portal
     restart: always
     # ports:
-    #   - "8002:8000"
+    #   - "8002:8080"
     networks:
       - dgi_catalog
 
   api:
-    image: registry.dpi.inpe.br/dgi/catalog_back:0.0.1
+    image: registry.dpi.inpe.br/dgi/catalog_api:0.0.1
     container_name: dgi_catalog_api
-    environment:
-      - ENVIRONMENT=ProductionConfig
+    env_file:
+      - env/api.env
     restart: always
     # ports:
-    #   - "5022:8001"
+    #   - "5022:5000"
     networks:
       - dgi_catalog
 
   stac_compose:
     image: registry.dpi.inpe.br/brazildatacube/stac_compose:0.0.5
     container_name: dgi_catalog_stac_compose
-    environment:
-      - PORT=8002
+    env_file:
+      - env/stac_compose.env
     restart: always
     # ports:
-    #   - "5026:8002"
+    #   - "5001:8002"
     networks:
       - dgi_catalog
 
-  portainer:
-    container_name: dgi_catalog_portainer
-    image: portainer/portainer
-    volumes:
-      - portainer_data:/data
-      - /var/run/docker.sock:/var/run/docker.sock
-    restart: always
-    ports:
-      - 9000:9000
-    networks:
-      - dgi_catalog
+  # portainer:
+  #   container_name: dgi_catalog_portainer
+  #   image: portainer/portainer
+  #   volumes:
+  #     - portainer_data:/data
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   restart: always
+  #   ports:
+  #     - 9000:9000
+  #   networks:
+  #     - dgi_catalog
 
   geoserver:
     container_name: dgi_catalog_geoserver
     image: kartoza/geoserver:2.15.0
     volumes:
-      - geoserver_data:/opt/geoserver/data_dir
+      - ./geoserver/geoserverdata:/opt/geoserver/data_dir
       - ./geoserver/grids:/home/data/grids
     env_file:
       - env/geoserver.env
     # ports:
     #   - 9003:8080
     restart: always
-    healthcheck:
-      test: curl --fail -s http://localhost:8080/ || exit 1
-      interval: 1m30s
-      timeout: 10s
-      retries: 3
     networks:
       - dgi_catalog
 
