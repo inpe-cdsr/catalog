@@ -6,3 +6,4 @@ volumes/
 !env/*.EXAMPLE
 
 docker-compose.prod.yml
+geoserver/geoserverdata
