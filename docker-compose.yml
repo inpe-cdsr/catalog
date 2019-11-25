@@ -11,9 +11,9 @@ services:
     image: nginx
     container_name: dgi_catalog_nginx
     volumes:
-      - ./nginx/nginx.template:/etc/nginx/conf.d/mysite.template
+      - /home/rodrigo/dgi/compose/nginx/nginx.template:/etc/nginx/conf.d/mysite.template
     env_file:
-      - env/nginx.env
+      - /home/rodrigo/dgi/compose/env/nginx.env
     command: /bin/bash -c "envsubst '$$NGINX_HOST $$NGINX_PORT' < /etc/nginx/conf.d/mysite.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
     restart: always
     ports:
@@ -22,7 +22,7 @@ services:
       - dgi_catalog
 
   portal:
-    image: registry.dpi.inpe.br/dgi/catalog_app:0.0.1
+    image: registry.dpi.inpe.br/dgi/catalog_app:0.0.3
     container_name: dgi_catalog_portal
     restart: always
     # ports:
@@ -34,7 +34,7 @@ services:
     image: registry.dpi.inpe.br/dgi/catalog_api:0.0.1
     container_name: dgi_catalog_api
     env_file:
-      - env/api.env
+      - /home/rodrigo/dgi/compose/env/api.env
     restart: always
     # ports:
     #   - "5022:5000"
@@ -45,7 +45,7 @@ services:
     image: registry.dpi.inpe.br/brazildatacube/stac_compose:0.0.5
     container_name: dgi_catalog_stac_compose
     env_file:
-      - env/stac_compose.env
+      - /home/rodrigo/dgi/compose/env/stac_compose.env
     restart: always
     # ports:
     #   - "5001:8002"
@@ -68,10 +68,10 @@ services:
     container_name: dgi_catalog_geoserver
     image: kartoza/geoserver:2.15.0
     volumes:
-      - ./geoserver/geoserverdata:/opt/geoserver/data_dir
-      - ./geoserver/grids:/home/data/grids
+      - /home/rodrigo/dgi/data/geoserver/geoserverdata:/opt/geoserver/data_dir
+      - /home/rodrigo/dgi/data/geoserver/grids:/home/data/grids
     env_file:
-      - env/geoserver.env
+      - /home/rodrigo/dgi/compose/env/geoserver.env
     # ports:
     #   - 9003:8080
     restart: always
