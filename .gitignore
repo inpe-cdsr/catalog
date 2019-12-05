@@ -2,6 +2,8 @@
 env/*
 volumes/
 
+nginx/nginx.template.backup.*
+
 # just include the '.EXAMPLE' files inside 'env' folder
 !env/*.EXAMPLE
 

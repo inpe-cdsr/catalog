@@ -14,6 +14,14 @@ upstream staccompose {
     server dgi_catalog_stac_compose:8002;
 }
 
+upstream inpestac {
+    server dgi_catalog_inpe_stac:5000;
+}
+
+upstream portainer {
+    server dgi_catalog_portainer:9000;
+}
+
 server {
     listen         $NGINX_PORT default_server;
     listen         [::]:$NGINX_PORT default_server;
@@ -32,28 +40,43 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 
-	location /stac-compose/ {
-		proxy_pass http://staccompose;
+    location /portainer {
+        proxy_pass http://portainer;
         proxy_set_header Host $http_host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location /stac-compose/ {
+	proxy_pass http://staccompose;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location /inpe-stac {
+        rewrite /inpe-stac/(.*) /$1  break;
+	proxy_pass http://inpestac;
+	proxy_redirect off;
+        proxy_set_header Host $http_host;
     }
 
     location /api/ {
-		proxy_pass http://api;
+	proxy_pass http://api;
         proxy_set_header Host $http_host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 
-	location /catalogo/ {
-		proxy_pass http://portal/;
-		proxy_redirect off;
-		proxy_set_header Host $http_host;
+    location /catalogo/ {
+        proxy_pass http://portal/;
+	proxy_redirect off;
+	proxy_set_header Host $http_host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
-	}
+    }
 }
