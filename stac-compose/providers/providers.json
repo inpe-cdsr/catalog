@@ -1,0 +1,18 @@
+{
+  "DEVELOPMENT_SEED_STAC": {
+    "url": "https://sat-api.developmentseed.org",
+    "type":"stac",
+    "version": "0.6.0"
+  },
+  "KEPLER_STAC": {
+    "url": "https://stac.amskepler.com/v07",
+    "type":"stac",
+    "version": "0.7.0"
+  },
+  "INPE_STAC": {
+    "url": "http://lcoalhost:8089/inpe-stac",
+    "type":"stac",
+    "version": "0.7.0"
+  }
+}
+  

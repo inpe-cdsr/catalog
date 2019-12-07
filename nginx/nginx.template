@@ -3,15 +3,15 @@ upstream geoserver {
 }
 
 upstream portal {
-    server dgi_catalog_portal:8080;
+    server dgi_catalog_portal:8000;
 }
 
 upstream api {
-    server dgi_catalog_api:5000;
+    server dgi_catalog_api:5001;
 }
 
 upstream staccompose {
-    server dgi_catalog_stac_compose:8002;
+    server dgi_catalog_stac_compose:5002;
 }
 
 upstream inpestac {
@@ -49,7 +49,7 @@ server {
     }
 
     location /stac-compose/ {
-	proxy_pass http://staccompose;
+	    proxy_pass http://staccompose;
         proxy_set_header Host $http_host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -58,13 +58,13 @@ server {
 
     location /inpe-stac {
         rewrite /inpe-stac/(.*) /$1  break;
-	proxy_pass http://inpestac;
-	proxy_redirect off;
+        proxy_pass http://inpestac;
+        proxy_redirect off;
         proxy_set_header Host $http_host;
     }
 
     location /api/ {
-	proxy_pass http://api;
+	    proxy_pass http://api;
         proxy_set_header Host $http_host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -73,8 +73,8 @@ server {
 
     location /catalogo/ {
         proxy_pass http://portal/;
-	proxy_redirect off;
-	proxy_set_header Host $http_host;
+        proxy_redirect off;
+        proxy_set_header Host $http_host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
