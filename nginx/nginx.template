@@ -31,6 +31,10 @@ server {
     index index.php index.html index.htm;
     server_name _;
     charset  utf-8;
+    
+    location /datastore {
+        try_files $uri $uri/ *.png;
+    }
 
     location /geoserver {
         proxy_pass http://geoserver;
