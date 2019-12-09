@@ -84,6 +84,7 @@ services:
     volumes:
       - ./geoserver/geoserverdata:/opt/geoserver/data_dir
       - ./geoserver/grids:/home/data/grids
+      - ./geoserver/web.xml:/usr/local/tomcat/webapps/geoserver/WEB-INF/web.xml
     env_file:
       - ./env/geoserver.env
     # ports:
