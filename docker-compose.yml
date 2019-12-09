@@ -53,7 +53,7 @@ services:
       - dgi_catalog
 
   stac_compose:
-    image: registry.dpi.inpe.br/brazildatacube/stac_compose:0.0.6
+    image: registry.dpi.inpe.br/brazildatacube/stac_compose:0.0.7
     container_name: dgi_catalog_stac_compose
     restart: always
     env_file:
