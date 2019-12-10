@@ -34,7 +34,7 @@ services:
     container_name: dgi_catalog_api
     restart: always
     env_file:
-      - ./env/api.env
+      - ./env/dgi_catalog_backend.env
     # ports:
     #   - "5022:5000"
     networks:
@@ -90,6 +90,6 @@ services:
     networks:
       - dgi_catalog
 
-networks: 
+networks:
   dgi_catalog:
     driver: bridge

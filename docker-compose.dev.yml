@@ -4,30 +4,34 @@ volumes:
   portainer_data:
 
 services:
-  # nginx:
-  #   image: nginx
-  #   container_name: dgi_catalog_nginx
-  #   restart: always
-  #   volumes:
-  #     - ./nginx/nginx.template:/etc/nginx/conf.d/mysite.template
-  #   env_file:
-  #     - ./env/nginx.env
-  #   command: /bin/bash -c "envsubst '$$NGINX_HOST $$NGINX_PORT' < /etc/nginx/conf.d/mysite.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
-  #   ports:
-  #     - 8089:8089
-  #   networks:
-  #     - dgi_catalog
+  nginx:
+    # image: nginx:1.16.1
+    image: nginx:1.17.6
+    container_name: dgi_catalog_nginx
+    # restart: always
+    volumes:
+      - ./nginx/nginx.dev.template:/etc/nginx/conf.d/mysite.template
+    env_file:
+      - ./env/nginx.env
+    command: /bin/bash -c "envsubst '$$NGINX_HOST $$NGINX_PORT' < /etc/nginx/conf.d/mysite.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+    ports:
+      - 8089:8089
+    networks:
+      - dgi_catalog
 
-  # portal:
-  #   image: registry.dpi.inpe.br/dgi/catalog_app:0.0.7
-  #   container_name: dgi_catalog_portal
-  #   restart: always
-  #   env_file:
-  #     - ./env/portal.env
-  #   # ports:
-  #   #   - "8002:8000"
-  #   networks:
-  #     - dgi_catalog
+  dgi_catalog_frontend:
+    image: dgi-catalog-frontend:0.0.8
+    container_name: dgi_catalog_frontend
+    command: npm start
+    # restart: always
+    env_file:
+      - ./env/portal.env
+    volumes:
+      - ../dgi-catalog-frontend/portal:/app
+    ports:
+      - "5000:8000"
+    networks:
+      - dgi_catalog
 
   dgi_catalog_backend:
     image: dgi-catalog-backend_dev:0.0.1
@@ -39,7 +43,7 @@ services:
     env_file:
       - ./env/dgi_catalog_backend.env
     ports:
-      - "5022:5000"
+      - "5001:5001"
     networks:
       - dgi_catalog
 
@@ -68,7 +72,7 @@ services:
     env_file:
       - ./env/stac_compose.env
     ports:
-      - "5001:8002"
+      - "5003:5002"
     networks:
       - dgi_catalog
 
@@ -94,7 +98,7 @@ services:
     env_file:
       - ./env/geoserver.env
     ports:
-      - 9003:8080
+      - 9001:8080
     networks:
       - dgi_catalog
 
