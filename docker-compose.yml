@@ -26,7 +26,7 @@ services:
       - dgi_catalog_stac_compose
 
   dgi_catalog_portal:
-    image: registry.dpi.inpe.br/dgi/catalog_app:0.0.7
+    image: registry.dpi.inpe.br/dgi/catalog_app:0.0.8
     container_name: dgi_catalog_portal
     restart: always
     env_file:
@@ -37,7 +37,7 @@ services:
       - dgi_catalog
 
   dgi_catalog_api:
-    image: registry.dpi.inpe.br/dgi/catalog_api:0.0.1
+    image: registry.dpi.inpe.br/dgi/catalog_api:0.0.3
     container_name: dgi_catalog_api
     restart: always
     env_file:
