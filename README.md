@@ -9,25 +9,20 @@ Docker compose related to DGI Catalog project.
 
 ## Settings
 
-Rename the files inside `env` folder:
+Create the environment files related to each application based on the example ones inside `env` folder:
 
 ```
 cd env/
 
-mv portal.env.EXAMPLE portal.env && \
-mv api.env.EXAMPLE api.env && \
-mv inpe_stac.env.EXAMPLE inpe_stac.env && \
-mv stac_compose.env.EXAMPLE stac_compose.env && \
-mv geoserver.env.EXAMPLE geoserver.env && \
-mv nginx.env.EXAMPLE nginx.env
+cp portal.env.EXAMPLE portal.env && \
+cp api.env.EXAMPLE api.env && \
+cp inpe_stac.env.EXAMPLE inpe_stac.env && \
+cp stac_compose.env.EXAMPLE stac_compose.env && \
+cp geoserver.env.EXAMPLE geoserver.env && \
+cp nginx.env.EXAMPLE nginx.env
 ```
 
-Update the files above with proper settings.
-
-
-### Description
-
-The files below are environment variables files that contain settings related to the services inside `docker-compose.*.yml` files.
+Update the files above with proper settings. The files are environment variables files that contain settings related to the services inside `docker-compose.*.yml` files.
 
 - `portal.env`: [dgi-catalog-frontend
 ](https://github.com/dgi-catalog/dgi-catalog-frontend) website settings;
