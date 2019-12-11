@@ -20,7 +20,7 @@ services:
       - dgi_catalog
 
   dgi_catalog_frontend:
-    image: dgi-catalog-frontend:0.0.8
+    image: dgi-catalog-frontend:0.0.9
     container_name: dgi_catalog_frontend
     command: npm start
     # restart: always
