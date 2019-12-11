@@ -1,5 +1,12 @@
 # docker-compose
 
+Docker compose related to DGI Catalog project.
+
+`docker-compose.dev.yml` file contains development services using Docker images with volumes. The Docker images do not contain all code inside them, the code is added into the Docker containers through volumes.
+
+`docker-compose.prod.yml` file contains production services using Docker images without volumes. The Docker images contain all code inside them and they do not use volumes to keep their code.
+
+
 ## Settings
 
 Rename the files inside `env` folder:
@@ -8,14 +15,14 @@ Rename the files inside `env` folder:
 cd env/
 
 mv portal.env.EXAMPLE portal.env && \
-mv dgi_catalog_backend.env.EXAMPLE dgi_catalog_backend.env && \
+mv api.env.EXAMPLE api.env && \
 mv inpe_stac.env.EXAMPLE inpe_stac.env && \
 mv stac_compose.env.EXAMPLE stac_compose.env && \
 mv geoserver.env.EXAMPLE geoserver.env && \
 mv nginx.env.EXAMPLE nginx.env
 ```
 
-Change the settings of these files, if necessary.
+Update the files above with proper settings.
 
 
 ### Description

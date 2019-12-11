@@ -41,7 +41,7 @@ services:
     volumes:
       - ../dgi-catalog-backend:/app
     env_file:
-      - ./env/dgi_catalog_backend.env
+      - ./env/api.env
     ports:
       - "5001:5001"
     networks:
