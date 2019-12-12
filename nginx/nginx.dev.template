@@ -1,10 +1,9 @@
 upstream portal {
-    server dgi_catalog_frontend:8000;
+    server dgi_catalog_portal:8000;
 }
 
 upstream api {
-    server dgi_catalog_backend:5001;
-    #server localhost:5001;
+    server dgi_catalog_api:5001;
 }
 
 upstream inpestac {

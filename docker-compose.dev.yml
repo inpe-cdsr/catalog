@@ -4,8 +4,7 @@ volumes:
   portainer_data:
 
 services:
-  nginx:
-    # image: nginx:1.16.1
+  dgi_catalog_nginx:
     image: nginx:1.17.6
     container_name: dgi_catalog_nginx
     # restart: always
@@ -18,10 +17,16 @@ services:
       - 8089:8089
     networks:
       - dgi_catalog
+    depends_on:
+      - dgi_catalog_api
+      - dgi_catalog_inpe_stac
+      - dgi_catalog_portainer
+      - dgi_catalog_geoserver
+      - dgi_catalog_stac_compose
 
-  dgi_catalog_frontend:
+  dgi_catalog_portal:
     image: dgi-catalog-frontend:0.0.9
-    container_name: dgi_catalog_frontend
+    container_name: dgi_catalog_portal
     command: npm start
     # restart: always
     env_file:
@@ -33,9 +38,9 @@ services:
     networks:
       - dgi_catalog
 
-  dgi_catalog_backend:
-    image: dgi-catalog-backend_dev:0.0.1
-    container_name: dgi_catalog_backend
+  dgi_catalog_api:
+    image: dgi-catalog-backend:0.0.1
+    container_name: dgi_catalog_api
     command: python3 manage.py run
     # restart: always
     volumes:
@@ -47,8 +52,8 @@ services:
     networks:
       - dgi_catalog
 
-  inpe_stac:
-    image: inpe_stac_dev:0.0.3
+  dgi_catalog_inpe_stac:
+    image: dgi_catalog_inpe_stac:0.0.3
     container_name: dgi_catalog_inpe_stac
     command: flask run --host=0.0.0.0
     # restart: always
@@ -61,8 +66,8 @@ services:
     networks:
       - dgi_catalog
 
-  stac_compose:
-    image: stac_compose_dev:0.0.6
+  dgi_catalog_stac_compose:
+    image: dgi_catalog_stac_compose:0.0.6
     container_name: dgi_catalog_stac_compose
     command: python3 manage.py run
     # restart: always
@@ -76,9 +81,9 @@ services:
     networks:
       - dgi_catalog
 
-  portainer:
-    image: portainer/portainer
+  dgi_catalog_portainer:
     container_name: dgi_catalog_portainer
+    image: portainer/portainer
     # restart: always
     volumes:
       - portainer_data:/data
@@ -88,13 +93,14 @@ services:
     networks:
       - dgi_catalog
 
-  geoserver:
-    image: kartoza/geoserver:2.15.0
+  dgi_catalog_geoserver:
     container_name: dgi_catalog_geoserver
+    image: kartoza/geoserver:2.15.0
     # restart: always
     volumes:
       - ./geoserver/geoserverdata:/opt/geoserver/data_dir
       - ./geoserver/grids:/home/data/grids
+      - ./geoserver/web.xml:/usr/local/tomcat/webapps/geoserver/WEB-INF/web.xml
     env_file:
       - ./env/geoserver.env
     ports:
