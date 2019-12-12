@@ -24,6 +24,8 @@ cp nginx.env.EXAMPLE nginx.env
 
 Update the files above with proper settings. The files are environment variables files that contain settings related to the services inside `docker-compose.*.yml` files.
 
+Brief description of each file:
+
 - `portal.env`: [dgi-catalog-frontend
 ](https://github.com/dgi-catalog/dgi-catalog-frontend) website settings;
 - `dgi_catalog_backend.env`: [dgi-catalog-backend
@@ -50,44 +52,69 @@ docker-compose -f docker-compose.dev.yml up
 docker-compose -f docker-compose.prod.yml up -d
 ```
 
+
 ### Geoserver settings
 
-#### Create the styles
+On this section you will import your Shapefile files inside Geoserver using styles.
 
+First, run `docker-compose.*.yml` file and open the Geoserver on `http://<your host>:8089/geoserver`.
 
+Make sure you have all grids saved on Shapefile files. Put all these files inside `geoserver/grids` folder separate by subfolders, for example: the folder "`grid_cbers4_mux`" will have all files from CBERS4 grid Shapefile. There are default Shapefile files inside `geoserver/grids` folder.
 
-#### Add the grids
+Click on `Workspaces` option on left side menu and click on `Add new workspace`. Create a new workspace with the following information:
 
-Follow the steps below to add your satellite grids to your Geoserver:
-
-- Make sure you have all grids saved on Shapefile files. Put all these files inside `geoserver/grids` folder separate by subfolders, for example: the folder "`grid_cbers4_mux`" will have all files from CBERS4 grid Shapefile.
-
-- Run `docker-compose.*.yml` and open `http://<your host>:8089/geoserver`.
-
-- Click on `Workspaces` option on left side menu and click on `Add new workspace`. Create a new workspace with the following information:
-
+```
 Name: vector_data
 
-Namespace URI: `<your host>/vector_data`
+Namespace URI: <your host>/vector_data
+```
 
-- For the steps below, consider each `<data source name>` one element inside the following list: ["`grid_cbers4_mux`", "`grid_ibge_states`", "`grid_landsat_tm_amsul`", "`grid_sentinel_mgrs`"].
 
-    - Click on `Stores` option on left side menu and click on `Add new store`.
+#### Add the Shapefile files
 
-    - Click on `New data source/Vector Data Sources/Shapefile`.
+Follow the steps below to add your Shapefile files to your Geoserver:
 
-    - Fill `Data Source Name` and `Description` with `<data source name>`.
+For the steps below, consider each `<data source name>` one element inside the following list: ["`grid_cbers4_mux`", "`grid_ibge_states`", "`grid_landsat_tm_amsul`", "`grid_sentinel_mgrs`"].
 
-    - Select your Shapefile related to `<data source name>` inside `/home/data/grids/` folder.
+- Click on `Stores` option on left side menu and click on `Add new store`.
+
+- Click on `New data source/Vector Data Sources/Shapefile`.
+
+- Fill `Data Source Name` and `Description` with `<data source name>`.
+
+- Select your Shapefile related to `<data source name>` inside `/home/data/grids/` folder.
+
+- Click on `Save` button.
+
+- `New layer` page will be opened, then click on `Publish` button.
+
+- Inside `Edit Layer` page, make sure all information is correct.
+
+    - Check if `Coordinate Reference Systems` are corrects.
+
+    - Inside `Bounding Boxes` section, compute the native bounding boxes by clicking on `Compute from data` and `Compute from native bounds`.
 
     - Click on `Save` button.
 
-    - `New layer` page will be opened, then click on `Publish` button.
 
-    - Inside `Edit Layer` page, make sure all information is correct.
+#### Create the styles
 
-        - Check if `Coordinate Reference Systems` are corrects.
+Follow the steps below to create styles related to your Shapefile files:
 
-        - Inside `Bounding Boxes` section, compute the native bounding boxes by clicking on `Compute from data` and `Compute from native bounds`.
+- Click on `Styles` option on left side menu and click on `Add a new style`. Create a new style with the following information:
 
-        - Click on `Save` button.
+```
+Name: grids
+
+Workspace: vector_data
+```
+
+- Upload a style file by clicking on `Choose File` and select `geoserver/styles/grids.xml` file. Click on `Upload ...` button.
+
+- Click on `Apply`.
+
+- Click on `Publishing` tab and associate all layers with the `grids` style by clicking on `Associated` checkbox.
+
+- Click on `Submit`.
+
+Follow the same algorithm above to add a new style named `states` with the workspace called `vector_data`. Then, choose the `geoserver/styles/states.xml` file. On `Publishing` tab, associate just `grid_ibge_states` Shapefile file with `states` style.
