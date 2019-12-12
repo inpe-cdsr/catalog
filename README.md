@@ -38,7 +38,53 @@ Brief description of each file:
 - `nginx.env`: Nginx settings.
 
 
+### Docker compose settings
+
+Services:
+
+
+#### dgi_catalog_nginx
+
+Existing volumes:
+
+- `/etc/nginx/conf.d/mysite.template`: Nginx settings file, such as upstreams and locations;
+
+- `/var/www/html/datastore`: this folder should contain all static files that Nginx will serve, such as quicklooks and TIFFs.
+
+Environment variables file is named `./env/nginx.env` and its variables are:
+
+- `NGINX_HOST`: host/server where the Nginx will run, such as `my.server.com`;
+
+- `NGINX_PORT`: port where Nginx will run, such as `80` or `8080`.
+
+
+#### dgi_catalog_portal
+
+Environment variables file is named `./env/portal.env` and its variables are:
+
+- `URL_GEOSERVER`: [Geoserver](https://hub.docker.com/r/kartoza/geoserver/) URL that Nginx serves;
+
+- `URL_VIA_CEP`: CEP webservice, such as `http://viacep.com.br/ws`;
+
+- `URL_STAC_COMPOSE`: [stac-compose](https://github.com/dgi-catalog/stac-compose) URL that Nginx serves;
+
+- `URL_API`: [dgi-catalog-backend](https://github.com/dgi-catalog/dgi-catalog-backend) URL that Nginx serves;
+
+- `PROVIDERS_TOKEN`: list of providers that user credentials will be added before providers URL in order to download their images with authentication;
+
+- `GRIDS`: list of grids saved on Geoserver separate by semicolon (`;`). Each grid has the following standard: `<title>:<layer>:<style>`, where:
+    - `<title>`: a title that will be shown on the web portal;
+    - `<layer>`: layer name on Geoserver;
+    - `<style>`: layer style on Geoserver.
+
+
 ### Run the docker compose:
+
+In order to download all Docker images from DGI registry, you need to log into it.
+
+```
+docker login registry.dpi.inpe.br
+```
 
 - Development:
 
