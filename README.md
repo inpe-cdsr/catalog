@@ -40,10 +40,12 @@ Brief description of each file:
 
 ### Docker compose settings
 
-Services:
+This section describes the services inside `docker-compose.*.yml` files.
 
 
 #### dgi_catalog_nginx
+
+[Nginx](https://hub.docker.com/_/nginx) is a reverse proxy server.
 
 Existing volumes:
 
@@ -53,12 +55,14 @@ Existing volumes:
 
 Environment variables file is named `./env/nginx.env` and its variables are:
 
-- `NGINX_HOST`: host/server where the Nginx will run, such as `my.server.com`;
+- `NGINX_HOST`: host name where the Nginx will run, such as `my.server.com`;
 
-- `NGINX_PORT`: port where Nginx will run, such as `80` or `8080`.
+- `NGINX_PORT`: which port Nginx will run, such as `80` or `8080`.
 
 
 #### dgi_catalog_portal
+
+[dgi_catalog_portal](https://github.com/dgi-catalog/dgi-catalog-frontend) is a service that contains all front-end application. You can build its Docker image [here](https://github.com/dgi-catalog/dgi-catalog-frontend#run-the-application-inside-a-docker-image).
 
 Environment variables file is named `./env/portal.env` and its variables are:
 
@@ -76,6 +80,29 @@ Environment variables file is named `./env/portal.env` and its variables are:
     - `<title>`: a title that will be shown on the web portal;
     - `<layer>`: layer name on Geoserver;
     - `<style>`: layer style on Geoserver.
+
+
+#### dgi_catalog_api
+
+[dgi_catalog_api](https://github.com/dgi-catalog/dgi-catalog-backend) is a back-end service to [dgi_catalog_portal](https://github.com/dgi-catalog/dgi-catalog-frontend) web application. This service provides user authentication and an endpoint to download images.
+
+Environment variables file is named `./env/api.env` and its variables are:
+
+- `ENVIRONMENT`: which environment the service will run, the only acceptable options are: `DevelopmentConfig` or `ProductionConfig`;
+
+- `PORT`: which port the service will run;
+
+- `MYSQL_DB_USER`: MySQL database user;
+
+- `MYSQL_DB_PASSWORD`: MySQL database user password;
+
+- `MYSQL_DB_HOST`: MySQL host name;
+
+- `MYSQL_DB_DATABASE`: MySQL database name;
+
+- `JWT_SECRET`: a JWT secret randomically generate;
+
+- `JWT_ALGORITHM`: JWT algorithm.
 
 
 ### Run the docker compose:
