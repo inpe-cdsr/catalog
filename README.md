@@ -49,3 +49,45 @@ docker-compose -f docker-compose.dev.yml up
 ```
 docker-compose -f docker-compose.prod.yml up -d
 ```
+
+### Geoserver settings
+
+#### Create the styles
+
+
+
+#### Add the grids
+
+Follow the steps below to add your satellite grids to your Geoserver:
+
+- Make sure you have all grids saved on Shapefile files. Put all these files inside `geoserver/grids` folder separate by subfolders, for example: the folder "`grid_cbers4_mux`" will have all files from CBERS4 grid Shapefile.
+
+- Run `docker-compose.*.yml` and open `http://<your host>:8089/geoserver`.
+
+- Click on `Workspaces` option on left side menu and click on `Add new workspace`. Create a new workspace with the following information:
+
+Name: vector_data
+
+Namespace URI: `<your host>/vector_data`
+
+- For the steps below, consider each `<data source name>` one element inside the following list: ["`grid_cbers4_mux`", "`grid_ibge_states`", "`grid_landsat_tm_amsul`", "`grid_sentinel_mgrs`"].
+
+    - Click on `Stores` option on left side menu and click on `Add new store`.
+
+    - Click on `New data source/Vector Data Sources/Shapefile`.
+
+    - Fill `Data Source Name` and `Description` with `<data source name>`.
+
+    - Select your Shapefile related to `<data source name>` inside `/home/data/grids/` folder.
+
+    - Click on `Save` button.
+
+    - `New layer` page will be opened, then click on `Publish` button.
+
+    - Inside `Edit Layer` page, make sure all information is correct.
+
+        - Check if `Coordinate Reference Systems` are corrects.
+
+        - Inside `Bounding Boxes` section, compute the native bounding boxes by clicking on `Compute from data` and `Compute from native bounds`.
+
+        - Click on `Save` button.
