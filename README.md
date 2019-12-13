@@ -38,14 +38,14 @@ Brief description of each file:
 - `nginx.env`: Nginx settings.
 
 
-### Docker compose settings
+### Docker compose services
 
 This section describes the services inside `docker-compose.*.yml` files.
 
 
 #### dgi_catalog_nginx
 
-[dgi_catalog_nginx](https://hub.docker.com/_/nginx) is a reverse proxy server. This service serves all other applications inside `docker-compose.*.yml` files.
+`dgi_catalog_nginx` is a service that runs a [Nginx](https://hub.docker.com/_/nginx) Docker image, that is a reverse proxy server. This service serves all other applications inside `docker-compose.*.yml` files.
 
 Existing volumes:
 
@@ -159,6 +159,20 @@ Environment variables file is named as `./env/stac_compose.env` and its variable
 - `PORT`: which port the server will run inside the Docker container.
 
 
+#### dgi_catalog_portainer
+
+`dgi_catalog_portainer` is a service that runs a [Portainer](https://hub.docker.com/r/portainer/portainer/) Docker image. Its settings can be found on its [repository on Docker hub](https://hub.docker.com/r/portainer/portainer/).
+
+#### dgi_catalog_geoserver
+
+`dgi_catalog_geoserver` is a service that runs a [Geoserver](https://hub.docker.com/r/kartoza/geoserver/) Docker image. Its settings can be found on its [repository on Docker hub](https://hub.docker.com/r/kartoza/geoserver/).
+
+Extra existing volumes:
+
+- `/home/data/grids`: a folder where the grids in Shapefile format are saved to be served by Geoserver.
+
+Environment variables file is named as `./env/geoserver.env` and its variables are described on Geoserver Docker hub on [Run (manual docker commands)](https://hub.docker.com/r/kartoza/geoserver/) section.
+
 ### Run the docker compose:
 
 In order to download all Docker images from DGI registry, you need to log into it.
@@ -167,13 +181,25 @@ In order to download all Docker images from DGI registry, you need to log into i
 docker login registry.dpi.inpe.br
 ```
 
-- Development:
+**Development**
+
+In order to run in development mode, you need to build all development images with the instructions inside each repository linked in [this section](https://github.com/dgi-catalog/docker-compose/tree/dev-rodrigo#docker-compose-settings).
 
 ```
 docker-compose -f docker-compose.dev.yml up
 ```
 
-- Production:
+**Production:**
+
+When you run in production mode, all Docker images will be downloaded. If they are not you can pull all Docker images using the following command:
+
+```
+docker pull <Docker image>
+```
+
+Where `<Docker image>` is the image inside each service on the `docker-compose.prod.yml` file.
+
+With all Docker images downloaded, you can run the docker compose:
 
 ```
 docker-compose -f docker-compose.prod.yml up -d
