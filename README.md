@@ -9,7 +9,7 @@ Docker compose related to DGI Catalog project.
 
 ## Settings
 
-Create the environment files related to each application based on the example ones inside `env` folder:
+Create the environment files related to each application based on the example ones inside [env](./env) folder:
 
 ```
 cd env/
@@ -36,6 +36,8 @@ Brief description of each file:
 ](https://github.com/dgi-catalog/stac-compose) service settings;
 - `geoserver.env`: Geoserver settings;
 - `nginx.env`: Nginx settings.
+
+The content of each file will be described afterwards.
 
 
 ### Docker compose services
@@ -64,6 +66,10 @@ Environment variables file is named as `./env/nginx.env` and its variables are:
 
 [dgi_catalog_portal](https://github.com/dgi-catalog/dgi-catalog-frontend) is a service that contains all front-end application. You can build its Docker image [here](https://github.com/dgi-catalog/dgi-catalog-frontend#run-the-application-inside-a-docker-image).
 
+Existing volumes in development mode:
+
+  - `/app`: this folder needs to point to the [dgi-catalog-frontend](https://github.com/dgi-catalog/dgi-catalog-frontend) source code, that is the [portal/](https://github.com/dgi-catalog/dgi-catalog-frontend/tree/master/portal) folder.
+
 Environment variables file is named as `./env/portal.env` and its variables are:
 
 - `URL_GEOSERVER`: [Geoserver](https://hub.docker.com/r/kartoza/geoserver/) URL that Nginx serves;
@@ -85,6 +91,10 @@ Environment variables file is named as `./env/portal.env` and its variables are:
 #### dgi_catalog_api
 
 [dgi_catalog_api](https://github.com/dgi-catalog/dgi-catalog-backend) is a back-end service to [dgi_catalog_portal](https://github.com/dgi-catalog/dgi-catalog-frontend) web application. This service provides user authentication and an endpoint to download satellite images.
+
+Existing volumes in development mode:
+
+  - `/app`: this folder needs to point to the [dgi-catalog-backend](https://github.com/dgi-catalog/dgi-catalog-backend) source code, that is the [root](https://github.com/dgi-catalog/dgi-catalog-backend) folder.
 
 Environment variables file is named as `./env/api.env` and its variables are:
 
@@ -110,6 +120,10 @@ Environment variables file is named as `./env/api.env` and its variables are:
 #### dgi_catalog_inpe_stac
 
 [dgi_catalog_inpe_stac](https://github.com/gqueiroz/inpe-stac) is a [SpatioTemporal Asset Catalog (STAC)](https://github.com/radiantearth/stac-spec) service. This service is a STAC implementation for INPE Catalog.
+
+Existing volumes in development mode:
+
+  - `/inpe_stac`: this folder needs to point to the [inpe-stac](https://github.com/gqueiroz/inpe-stac) source code, that is the [inpe_stac](https://github.com/gqueiroz/inpe-stac/tree/master/inpe_stac) folder.
 
 Environment variables file is named as `./env/inpe_stac.env` and its variables are:
 
@@ -154,6 +168,10 @@ Existing volumes:
 }
 ```
 
+Existing volumes in development mode:
+
+  - `/bdc-stac-compose`: this folder needs to point to the [stac-compose](https://github.com/dgi-catalog/stac-compose) source code, that is the [root](https://github.com/dgi-catalog/stac-compose) folder.
+
 Environment variables file is named as `./env/stac_compose.env` and its variables are:
 
 - `PORT`: which port the server will run inside the Docker container.
@@ -175,7 +193,7 @@ Environment variables file is named as `./env/geoserver.env` and its variables a
 
 ### Run the docker compose:
 
-In order to download all Docker images from DGI registry, you need to log into it.
+In order to download all Docker images from DGI registry, you need to log in it.
 
 ```
 docker login registry.dpi.inpe.br
