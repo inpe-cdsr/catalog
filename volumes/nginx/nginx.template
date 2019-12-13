@@ -1,7 +1,3 @@
-upstream geoserver {
-    server dgi_catalog_geoserver:8080;
-}
-
 upstream portal {
     server dgi_catalog_portal:8000;
 }
@@ -10,16 +6,20 @@ upstream api {
     server dgi_catalog_api:5001;
 }
 
-upstream staccompose {
-    server dgi_catalog_stac_compose:5002;
-}
-
 upstream inpestac {
     server dgi_catalog_inpe_stac:5000;
 }
 
+upstream staccompose {
+    server dgi_catalog_stac_compose:5002;
+}
+
 upstream portainer {
     server dgi_catalog_portainer:9000;
+}
+
+upstream geoserver {
+    server dgi_catalog_geoserver:8080;
 }
 
 server {
@@ -44,12 +44,17 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 
-    location /portainer {
-        proxy_pass http://portainer;
-        proxy_set_header Host $http_host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
+    location /portainer/ {
+        proxy_http_version 1.1;
+        proxy_set_header Connection "";
+        proxy_pass http://portainer/;
+    }
+
+    location /portainer/ws/ {
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_http_version 1.1;
+        proxy_pass http://portainer/ws/;
     }
 
     location /stac-compose/ {

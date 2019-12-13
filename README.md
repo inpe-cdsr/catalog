@@ -28,13 +28,17 @@ Brief description of each file:
 
 - `portal.env`: [dgi-catalog-frontend
 ](https://github.com/dgi-catalog/dgi-catalog-frontend) website settings;
+
 - `api.env`: [dgi-catalog-backend
 ](https://github.com/dgi-catalog/dgi-catalog-backend) service settings;
+
 - `inpe_stac.env`: [inpe-stac
 ](https://github.com/gqueiroz/inpe-stac) service settings;
 - `stac_compose.env`: [stac-compose
 ](https://github.com/dgi-catalog/stac-compose) service settings;
+
 - `geoserver.env`: Geoserver settings;
+
 - `nginx.env`: Nginx settings.
 
 The content of each file will be described afterwards.
@@ -64,7 +68,7 @@ Environment variables file is named as `./env_file/nginx.env` and its variables 
 
 #### dgi_catalog_portal
 
-[dgi_catalog_portal](https://github.com/dgi-catalog/dgi-catalog-frontend) is a service that contains all front-end application. You can build its Docker image [here](https://github.com/dgi-catalog/dgi-catalog-frontend#run-the-application-inside-a-docker-image).
+[dgi_catalog_portal](https://github.com/dgi-catalog/dgi-catalog-frontend) is a service that contains all front-end application. You can build its Docker image [here](https://github.com/dgi-catalog/dgi-catalog-frontend).
 
 Existing volumes in development mode:
 
@@ -199,15 +203,17 @@ In order to download all Docker images from DGI registry, you need to log in it.
 docker login registry.dpi.inpe.br
 ```
 
-**Development**
 
-In order to run in development mode, you need to build all development images with the instructions inside each repository linked in [this section](https://github.com/dgi-catalog/docker-compose/tree/dev-rodrigo#docker-compose-settings).
+#### Development
+
+In order to run in development mode, you need to build all development images with the instructions inside each repository linked in [this section](#docker-compose-services).
 
 ```
 docker-compose -f docker-compose.dev.yml up
 ```
 
-**Production:**
+
+#### Production
 
 When you run in production mode, all Docker images will be downloaded. If they are not you can pull all Docker images using the following command:
 
@@ -222,6 +228,24 @@ With all Docker images downloaded, you can run the docker compose:
 ```
 docker-compose -f docker-compose.prod.yml up -d
 ```
+
+#### Endpoints
+
+After running the docker compose, Nginx will serve all applications with the host and port you defined inside [env_files/nginx.env](./env_files/nginx.env) file (e.g `http://localhost:8089`).
+
+The following endpoints are now available:
+
+- `/catalogo`: [dgi-catalog-frontend](https://github.com/dgi-catalog/dgi-catalog-frontend) application;
+
+- `/api`: [dgi-catalog-backend](https://github.com/dgi-catalog/dgi-catalog-backend) application;
+
+- `/inpe-stac`: [inpe-stac](https://github.com/gqueiroz/inpe-stac) application;
+
+- `/stac-compose`: [stac-compose](https://github.com/dgi-catalog/stac-compose) application;
+
+- `/geoserver`: [Geoserver](https://hub.docker.com/r/kartoza/geoserver/) application;
+
+- `/portainer`: [portainer](https://hub.docker.com/r/portainer/portainer/) application;
 
 
 ### Geoserver settings
