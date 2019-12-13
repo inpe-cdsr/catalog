@@ -9,10 +9,10 @@ services:
     container_name: dgi_catalog_nginx
     # restart: always
     volumes:
-      - ./nginx/nginx.dev.template:/etc/nginx/conf.d/mysite.template
+      - ./volumes/nginx/nginx.dev.template:/etc/nginx/conf.d/mysite.template
       # - /path/files/png:/var/www/html/datastore
     env_file:
-      - ./env/nginx.env
+      - ./env_file/nginx.env
     command: /bin/bash -c "envsubst '$$NGINX_HOST $$NGINX_PORT' < /etc/nginx/conf.d/mysite.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
     ports:
       - 8089:8089
@@ -31,7 +31,7 @@ services:
     command: npm start
     # restart: always
     env_file:
-      - ./env/portal.env
+      - ./env_files/portal.env
     volumes:
       - ../dgi-catalog-frontend/portal:/app
     ports:
@@ -47,7 +47,7 @@ services:
     volumes:
       - ../dgi-catalog-backend:/app
     env_file:
-      - ./env/api.env
+      - ./env_files/api.env
     ports:
       - "5001:5001"
     networks:
@@ -61,7 +61,7 @@ services:
     volumes:
       - ../inpe-stac/inpe_stac:/inpe_stac
     env_file:
-      - ./env/inpe_stac.env
+      - ./env_files/inpe_stac.env
     ports:
       - "5002:5000"
     networks:
@@ -74,9 +74,9 @@ services:
     # restart: always
     volumes:
       - ../stac-compose:/bdc-stac-compose
-      - ./stac-compose/providers/providers.json:/bdc-stac-compose/bdc_search_stac/providers/static/providers.json
+      - ./volumes/stac-compose/providers/providers.json:/bdc-stac-compose/bdc_search_stac/providers/static/providers.json
     env_file:
-      - ./env/stac_compose.env
+      - ./env_files/stac_compose.env
     ports:
       - "5003:5002"
     networks:
@@ -99,11 +99,11 @@ services:
     image: kartoza/geoserver:2.15.0
     # restart: always
     volumes:
-      - ./geoserver/geoserverdata:/opt/geoserver/data_dir
-      - ./geoserver/grids:/home/data/grids
-      - ./geoserver/web.xml:/usr/local/tomcat/webapps/geoserver/WEB-INF/web.xml
+      - ./volumes/geoserver/geoserverdata:/opt/geoserver/data_dir
+      - ./volumes/geoserver/grids:/home/data/grids
+      - ./volumes/geoserver/web.xml:/usr/local/tomcat/webapps/geoserver/WEB-INF/web.xml
     env_file:
-      - ./env/geoserver.env
+      - ./env_files/geoserver.env
     ports:
       - 9001:8080
     networks:

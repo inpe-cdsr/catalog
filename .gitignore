@@ -1,10 +1,9 @@
 # exclude all files from folders
-env/*
-volumes/
+env_files/*
 
-nginx/nginx.template.backup.*
+volumes/geoserver/geoserverdata
+
+volumes/nginx/nginx.template.backup.*
 
 # just include the '.EXAMPLE' files inside 'env' folder
-!env/*.EXAMPLE
-
-geoserver/geoserverdata
+!env_files/*.EXAMPLE

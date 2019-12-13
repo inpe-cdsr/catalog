@@ -9,10 +9,10 @@ Docker compose related to DGI Catalog project.
 
 ## Settings
 
-Create the environment files related to each application based on the example ones inside [env](./env) folder:
+Create the environment files related to each application based on the example ones inside [env_files](./env_files) folder:
 
 ```
-cd env/
+cd env_files/
 
 cp portal.env.EXAMPLE portal.env && \
 cp api.env.EXAMPLE api.env && \
@@ -28,7 +28,7 @@ Brief description of each file:
 
 - `portal.env`: [dgi-catalog-frontend
 ](https://github.com/dgi-catalog/dgi-catalog-frontend) website settings;
-- `dgi_catalog_backend.env`: [dgi-catalog-backend
+- `api.env`: [dgi-catalog-backend
 ](https://github.com/dgi-catalog/dgi-catalog-backend) service settings;
 - `inpe_stac.env`: [inpe-stac
 ](https://github.com/gqueiroz/inpe-stac) service settings;
@@ -55,7 +55,7 @@ Existing volumes:
 
 - `/var/www/html/datastore`: this folder should contain all static files that Nginx will serve, such as quicklooks and TIFFs.
 
-Environment variables file is named as `./env/nginx.env` and its variables are:
+Environment variables file is named as `./env_file/nginx.env` and its variables are:
 
 - `NGINX_HOST`: host name where the Nginx will run, such as `my.server.com`;
 
@@ -70,7 +70,7 @@ Existing volumes in development mode:
 
   - `/app`: this folder needs to point to the [dgi-catalog-frontend](https://github.com/dgi-catalog/dgi-catalog-frontend) source code, that is the [portal/](https://github.com/dgi-catalog/dgi-catalog-frontend/tree/master/portal) folder.
 
-Environment variables file is named as `./env/portal.env` and its variables are:
+Environment variables file is named as `./env_files/portal.env` and its variables are:
 
 - `URL_GEOSERVER`: [Geoserver](https://hub.docker.com/r/kartoza/geoserver/) URL that Nginx serves;
 
@@ -96,7 +96,7 @@ Existing volumes in development mode:
 
   - `/app`: this folder needs to point to the [dgi-catalog-backend](https://github.com/dgi-catalog/dgi-catalog-backend) source code, that is the [root](https://github.com/dgi-catalog/dgi-catalog-backend) folder.
 
-Environment variables file is named as `./env/api.env` and its variables are:
+Environment variables file is named as `./env_files/api.env` and its variables are:
 
 - `ENVIRONMENT`: which environment the service will run, the only acceptable options are: `DevelopmentConfig` or `ProductionConfig`;
 
@@ -125,7 +125,7 @@ Existing volumes in development mode:
 
   - `/inpe_stac`: this folder needs to point to the [inpe-stac](https://github.com/gqueiroz/inpe-stac) source code, that is the [inpe_stac](https://github.com/gqueiroz/inpe-stac/tree/master/inpe_stac) folder.
 
-Environment variables file is named as `./env/inpe_stac.env` and its variables are:
+Environment variables file is named as `./env_files/inpe_stac.env` and its variables are:
 
 - `BASE_URI`: base URI that Nginx points to `dgi_catalog_inpe_stac` service.
 
@@ -172,7 +172,7 @@ Existing volumes in development mode:
 
   - `/bdc-stac-compose`: this folder needs to point to the [stac-compose](https://github.com/dgi-catalog/stac-compose) source code, that is the [root](https://github.com/dgi-catalog/stac-compose) folder.
 
-Environment variables file is named as `./env/stac_compose.env` and its variables are:
+Environment variables file is named as `./env_files/stac_compose.env` and its variables are:
 
 - `PORT`: which port the server will run inside the Docker container.
 
@@ -189,7 +189,7 @@ Extra existing volumes:
 
 - `/home/data/grids`: a folder where the grids in Shapefile format are saved to be served by Geoserver.
 
-Environment variables file is named as `./env/geoserver.env` and its variables are described on Geoserver Docker hub on [Run (manual docker commands)](https://hub.docker.com/r/kartoza/geoserver/) section.
+Environment variables file is named as `./env_files/geoserver.env` and its variables are described on Geoserver Docker hub on [Run (manual docker commands)](https://hub.docker.com/r/kartoza/geoserver/) section.
 
 ### Run the docker compose:
 
@@ -230,7 +230,7 @@ On this section you will import your Shapefile files inside Geoserver using styl
 
 First, run `docker-compose.*.yml` file and open the Geoserver on `http://<your host>:8089/geoserver`.
 
-Make sure you have all grids saved on Shapefile files. Put all these files inside `geoserver/grids` folder separate by subfolders, for example: the folder "`grid_cbers4_mux`" will have all files from CBERS4 grid Shapefile. There are default Shapefile files inside `geoserver/grids` folder.
+Make sure you have all grids saved on Shapefile files. Put all these files inside `volumes/geoserver/grids` folder separate by subfolders, for example: the folder "`grid_cbers4_mux`" will have all files from CBERS4 grid Shapefile. There are default Shapefile files inside `volumes/geoserver/grids` folder.
 
 Click on `Workspaces` option on left side menu and click on `Add new workspace`. Create a new workspace with the following information:
 
@@ -280,7 +280,7 @@ Name: grids
 Workspace: vector_data
 ```
 
-- Upload a style file by clicking on `Choose File` and select `geoserver/styles/grids.xml` file. Click on `Upload ...` button.
+- Upload a style file by clicking on `Choose File` and select `volumes/geoserver/styles/grids.xml` file. Click on `Upload ...` button.
 
 - Click on `Apply`.
 
@@ -288,4 +288,4 @@ Workspace: vector_data
 
 - Click on `Submit`.
 
-Follow the same algorithm above to add a new style named `states` with the workspace called `vector_data`. Then, choose the `geoserver/styles/states.xml` file. On `Publishing` tab, associate just `grid_ibge_states` Shapefile file with `states` style.
+Follow the same algorithm above to add a new style named `states` with the workspace called `vector_data`. Then, choose the `volumes/geoserver/styles/states.xml` file. On `Publishing` tab, associate just `grid_ibge_states` Shapefile file with `states` style.
