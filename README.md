@@ -45,7 +45,7 @@ This section describes the services inside `docker-compose.*.yml` files.
 
 #### dgi_catalog_nginx
 
-[Nginx](https://hub.docker.com/_/nginx) is a reverse proxy server.
+[dgi_catalog_nginx](https://hub.docker.com/_/nginx) is a reverse proxy server. This service serves all other applications inside `docker-compose.*.yml` files.
 
 Existing volumes:
 
@@ -53,18 +53,18 @@ Existing volumes:
 
 - `/var/www/html/datastore`: this folder should contain all static files that Nginx will serve, such as quicklooks and TIFFs.
 
-Environment variables file is named `./env/nginx.env` and its variables are:
+Environment variables file is named as `./env/nginx.env` and its variables are:
 
 - `NGINX_HOST`: host name where the Nginx will run, such as `my.server.com`;
 
-- `NGINX_PORT`: which port Nginx will run, such as `80` or `8080`.
+- `NGINX_PORT`: which port Nginx will run inside the container, such as `80` or `8080`.
 
 
 #### dgi_catalog_portal
 
 [dgi_catalog_portal](https://github.com/dgi-catalog/dgi-catalog-frontend) is a service that contains all front-end application. You can build its Docker image [here](https://github.com/dgi-catalog/dgi-catalog-frontend#run-the-application-inside-a-docker-image).
 
-Environment variables file is named `./env/portal.env` and its variables are:
+Environment variables file is named as `./env/portal.env` and its variables are:
 
 - `URL_GEOSERVER`: [Geoserver](https://hub.docker.com/r/kartoza/geoserver/) URL that Nginx serves;
 
@@ -84,13 +84,13 @@ Environment variables file is named `./env/portal.env` and its variables are:
 
 #### dgi_catalog_api
 
-[dgi_catalog_api](https://github.com/dgi-catalog/dgi-catalog-backend) is a back-end service to [dgi_catalog_portal](https://github.com/dgi-catalog/dgi-catalog-frontend) web application. This service provides user authentication and an endpoint to download images.
+[dgi_catalog_api](https://github.com/dgi-catalog/dgi-catalog-backend) is a back-end service to [dgi_catalog_portal](https://github.com/dgi-catalog/dgi-catalog-frontend) web application. This service provides user authentication and an endpoint to download satellite images.
 
-Environment variables file is named `./env/api.env` and its variables are:
+Environment variables file is named as `./env/api.env` and its variables are:
 
 - `ENVIRONMENT`: which environment the service will run, the only acceptable options are: `DevelopmentConfig` or `ProductionConfig`;
 
-- `PORT`: which port the service will run;
+- `PORT`: which port the service will run inside the Docker container;
 
 - `MYSQL_DB_USER`: MySQL database user;
 
@@ -100,9 +100,63 @@ Environment variables file is named `./env/api.env` and its variables are:
 
 - `MYSQL_DB_DATABASE`: MySQL database name;
 
-- `JWT_SECRET`: a JWT secret randomically generate;
+- `JWT_SECRET`: a JWT secret randomically generated;
 
 - `JWT_ALGORITHM`: JWT algorithm.
+
+`MYSQL_DB_USER_*` environment variables are related to MySQL database connection and `JWT_*` ones are related to [JWT](https://pyjwt.readthedocs.io/en/latest/) encryption.
+
+
+#### dgi_catalog_inpe_stac
+
+[dgi_catalog_inpe_stac](https://github.com/gqueiroz/inpe-stac) is a [SpatioTemporal Asset Catalog (STAC)](https://github.com/radiantearth/stac-spec) service. This service is a STAC implementation for INPE Catalog.
+
+Environment variables file is named as `./env/inpe_stac.env` and its variables are:
+
+- `BASE_URI`: base URI that Nginx points to `dgi_catalog_inpe_stac` service.
+
+- `FLASK_APP`: file that will be executed when the service starts, default can be used. This can be changed if you build a new image with a new `app.py` location;
+
+- `FLASK_ENV`: which environment the service will run, the only acceptable options are: `development` or `production`;
+
+- `DB_HOST`: MySQL host name and port (e.g `localhost:3306`);
+
+- `DB_USER`: MySQL database user;
+
+- `DB_PASS`: MySQL database user password;
+
+- `DB_NAME`: MySQL database name;
+
+- `FILE_ROOT`: URI that points to a folder where satellite images are;
+
+- `API_VERSION`: STAC application version;
+
+`DB_USER_*` environment variables are related to MySQL database connection.
+
+
+#### dgi_catalog_stac_compose
+
+[dgi_catalog_stac_compose](https://github.com/dgi-catalog/stac-compose) is a [SpatioTemporal Asset Catalog (STAC)](https://github.com/radiantearth/stac-spec) compose service. This service serves various STAC applications, called providers.
+
+Existing volumes:
+
+- `/bdc-stac-compose/bdc_search_stac/providers/static/providers.json`: STAC compose providers on JSON format, following the pattern:
+
+```
+{
+  "<STAC application name>": {
+    "url": "<STAC application URI>",
+    "type":"stac",
+    "version": "<STAC application version>",
+    "method": "<method used by STAC application>"
+  },
+  ...
+}
+```
+
+Environment variables file is named as `./env/stac_compose.env` and its variables are:
+
+- `PORT`: which port the server will run inside the Docker container.
 
 
 ### Run the docker compose:
