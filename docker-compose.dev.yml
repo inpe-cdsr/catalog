@@ -5,8 +5,8 @@ volumes:
 
 services:
   dgi_catalog_nginx:
-    image: nginx:1.17.6
     container_name: dgi_catalog_nginx
+    image: nginx:1.17.6
     # restart: always
     volumes:
       - ./volumes/nginx/nginx.dev.template:/etc/nginx/conf.d/mysite.template
@@ -26,8 +26,8 @@ services:
       - dgi_catalog_stac_compose
 
   dgi_catalog_portal:
-    image: dgi-catalog-frontend
     container_name: dgi_catalog_portal
+    image: dgi-catalog-frontend
     command: npm start
     # restart: always
     env_file:
@@ -40,8 +40,8 @@ services:
       - dgi_catalog
 
   dgi_catalog_api:
-    image: dgi-catalog-backend
     container_name: dgi_catalog_api
+    image: dgi-catalog-backend
     command: python3 manage.py run
     # restart: always
     volumes:
@@ -54,8 +54,8 @@ services:
       - dgi_catalog
 
   dgi_catalog_inpe_stac:
-    image: dgi_catalog_inpe_stac
     container_name: dgi_catalog_inpe_stac
+    image: inpe_stac
     command: flask run --host=0.0.0.0
     # restart: always
     volumes:
@@ -68,8 +68,8 @@ services:
       - dgi_catalog
 
   dgi_catalog_stac_compose:
-    image: dgi_catalog_stac_compose
     container_name: dgi_catalog_stac_compose
+    image: stac_compose
     command: python3 manage.py run
     # restart: always
     volumes:
