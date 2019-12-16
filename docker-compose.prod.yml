@@ -5,7 +5,7 @@ volumes:
 
 services:
   dgi_catalog_nginx:
-    image: nginx
+    image: nginx:1.17.6
     container_name: dgi_catalog_nginx
     restart: always
     volumes:
@@ -73,7 +73,7 @@ services:
 
   dgi_catalog_portainer:
     container_name: dgi_catalog_portainer
-    image: portainer/portainer
+    image: portainer/portainer:1.23.0
     restart: always
     volumes:
       - portainer_data:/data
