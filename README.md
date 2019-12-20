@@ -7,7 +7,23 @@ Docker compose related to DGI Catalog project.
 `docker-compose.prod.yml` file contains production services using Docker images without volumes. The Docker images contain all code inside them and they do not use volumes to keep their code.
 
 
-## Settings
+## Install
+
+Create a new folder where you will let all your repositories, for example `dgi-catalog`:
+
+```
+mkdir dgi-catalog
+```
+
+Clone the [docker-compose](https://github.com/dgi-catalog/docker-compose) repository inside the previous folder:
+
+```
+cd dgi-catalog/
+git clone https://github.com/dgi-catalog/docker-compose
+```
+
+
+### Settings
 
 Create the environment files related to each application based on the example ones inside [env_files](./env_files) folder:
 
@@ -274,6 +290,8 @@ For the steps below, consider each `<data source name>` one element inside the f
 - Click on `Stores` option on left side menu and click on `Add new store`.
 
 - Click on `New data source/Vector Data Sources/Shapefile`.
+
+- Choose the workspace called `vector_data`.
 
 - Fill `Data Source Name` and `Description` with `<data source name>`.
 

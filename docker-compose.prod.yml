@@ -10,12 +10,10 @@ services:
     restart: always
     volumes:
       - ./volumes/nginx/nginx.template:/etc/nginx/conf.d/mysite.template
-      - /path/files/png:/var/www/html/datastore
+      - /data/TIFF/:/var/www/html/datastore
     env_file:
       - ./env_files/nginx.env
     command: /bin/bash -c "envsubst '$$NGINX_HOST $$NGINX_PORT' < /etc/nginx/conf.d/mysite.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
-    ports:
-      - 8089:8089
     networks:
       - dgi_catalog
     depends_on:
@@ -24,29 +22,34 @@ services:
       - dgi_catalog_portainer
       - dgi_catalog_geoserver
       - dgi_catalog_stac_compose
+    ports:
+      - 8089:8089
 
   dgi_catalog_portal:
     #image: registry.dpi.inpe.br/dgi/dgi-catalog-frontend:0.0.9
-    image: registry.dpi.inpe.br/dgi/catalog_app:0.2.0
+    image: registry.dpi.inpe.br/dgi/catalog_app:0.2.4
     container_name: dgi_catalog_portal
     restart: always
     env_file:
       - ./env_files/portal.env
+    networks:
+      - dgi_catalog
     # ports:
     #   - "8002:8000"
-    networks:
-      - dgi_catalog
 
   dgi_catalog_api:
-    image: registry.dpi.inpe.br/dgi/catalog_api:0.0.7
+    image: registry.dpi.inpe.br/dgi/catalog_api:0.0.8
     container_name: dgi_catalog_api
     restart: always
+    volumes:
+      - /data/TIFF/CBERS4:/CBERS4
+      - /data/TIFF/LANDSAT5:/LANDSAT5
     env_file:
       - ./env_files/api.env
-    # ports:
-    #   - "5022:5000"
     networks:
       - dgi_catalog
+    # ports:
+    #   - "5022:5000"
 
   dgi_catalog_inpe_stac:
     image: registry.dpi.inpe.br/dgi/inpe_stac:0.0.3
