@@ -12,13 +12,13 @@ Docker compose related to DGI Catalog project.
 Create a new folder where you will let all your repositories, for example `dgi-catalog`:
 
 ```
-mkdir dgi-catalog
+$ mkdir dgi-catalog
 ```
 
 Clone the [docker-compose](https://github.com/dgi-catalog/docker-compose) repository inside the previous folder:
 
 ```
-cd dgi-catalog/ && \
+$ cd dgi-catalog/ && \
 git clone https://github.com/dgi-catalog/docker-compose && \
 cd docker-compose/
 ```
@@ -29,9 +29,9 @@ cd docker-compose/
 Create the environment files related to each application based on the example ones inside [env_files](./env_files) folder:
 
 ```
-cd env_files/
+$ cd env_files/
 
-cp portal.env.EXAMPLE portal.env && \
+$ cp portal.env.EXAMPLE portal.env && \
 cp api.env.EXAMPLE api.env && \
 cp inpe_stac.env.EXAMPLE inpe_stac.env && \
 cp stac_compose.env.EXAMPLE stac_compose.env && \
@@ -217,7 +217,7 @@ Environment variables file is named as `./env_files/geoserver.env` and its varia
 In order to download all Docker images from DGI registry, you need to log in it.
 
 ```
-docker login registry.dpi.inpe.br
+$ docker login registry.dpi.inpe.br
 ```
 
 
@@ -226,7 +226,7 @@ docker login registry.dpi.inpe.br
 In order to run in development mode, you need to build all development images with the instructions inside each repository linked in [this section](#docker-compose-services).
 
 ```
-docker-compose -f docker-compose.dev.yml up
+$ docker-compose -f docker-compose.dev.yml up
 ```
 
 
@@ -235,7 +235,7 @@ docker-compose -f docker-compose.dev.yml up
 When you run in production mode, all Docker images will be downloaded. If they are not you can pull all Docker images using the following command:
 
 ```
-docker pull <Docker image>
+$ docker pull <Docker image>
 ```
 
 Where `<Docker image>` is the image inside each service on the `docker-compose.prod.yml` file.
@@ -243,7 +243,7 @@ Where `<Docker image>` is the image inside each service on the `docker-compose.p
 With all Docker images downloaded, you can run the docker compose:
 
 ```
-docker-compose -f docker-compose.prod.yml up -d
+$ docker-compose -f docker-compose.prod.yml up -d
 ```
 
 #### Endpoints
