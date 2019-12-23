@@ -267,7 +267,10 @@ The following endpoints are now available:
 
 ### Database settings
 
-On this section you will set a new root password to your [MariaDB](https://mariadb.com/) database.
+On this section you will do some configurations to your [MariaDB](https://mariadb.com/) database.
+
+
+#### Root password
 
 First, run `docker-compose.*.yml` file. After that, get into `dgi_catalog_db` container:
 
@@ -291,6 +294,10 @@ MariaDB [(none)]> ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_password';
 
 Now you are able to open the [MariaDB](https://mariadb.com/) through [phpMyAdmin](https://www.phpmyadmin.net/) on `http://<your host>:8099`.
 
+
+#### Import databases
+
+>>> TODO
 
 ### GeoServer settings
 

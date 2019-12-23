@@ -130,7 +130,7 @@ services:
     container_name: dgi_catalog_publisher
     image: publisher
     restart: always
-    user : 1648:1648
+    user: 1648:1648
     volumes:
       - ./publisher:/app
       - ./publisher:/config
