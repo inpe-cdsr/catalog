@@ -18,8 +18,9 @@ mkdir dgi-catalog
 Clone the [docker-compose](https://github.com/dgi-catalog/docker-compose) repository inside the previous folder:
 
 ```
-cd dgi-catalog/
-git clone https://github.com/dgi-catalog/docker-compose
+cd dgi-catalog/ && \
+git clone https://github.com/dgi-catalog/docker-compose && \
+cd docker-compose/
 ```
 
 

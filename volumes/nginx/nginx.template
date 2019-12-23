@@ -33,7 +33,7 @@ server {
     charset  utf-8;
 
     location /datastore {
-        try_files $uri $uri/ *.png;
+        try_files $uri $uri/ .png;
     }
 
     location /geoserver {

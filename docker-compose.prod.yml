@@ -17,11 +17,12 @@ services:
     networks:
       - dgi_catalog
     depends_on:
+      - dgi_catalog_portal
       - dgi_catalog_api
       - dgi_catalog_inpe_stac
+      - dgi_catalog_stac_compose
       - dgi_catalog_portainer
       - dgi_catalog_geoserver
-      - dgi_catalog_stac_compose
     ports:
       - 8089:8089
 
