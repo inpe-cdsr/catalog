@@ -265,11 +265,38 @@ The following endpoints are now available:
 - `/portainer`: [portainer](https://hub.docker.com/r/portainer/portainer/) application;
 
 
-### Geoserver settings
+### Database settings
 
-On this section you will import your Shapefile files inside Geoserver using styles.
+On this section you will set a new root password to your [MariaDB](https://mariadb.com/) database.
 
-First, run `docker-compose.*.yml` file and open the Geoserver on `http://<your host>:8089/geoserver`.
+First, run `docker-compose.*.yml` file. After that, get into `dgi_catalog_db` container:
+
+```
+$ docker exec -it dgi_catalog_db /bin/bash
+```
+
+Open a [MariaDB](https://mariadb.com/) connection:
+
+```
+# mysql -u root -p
+```
+
+Set a new password to `root` user:
+
+```
+MariaDB [(none)]> FLUSH PRIVILEGES;
+
+MariaDB [(none)]> ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_password';
+```
+
+Now you are able to open the [MariaDB](https://mariadb.com/) through [phpMyAdmin](https://www.phpmyadmin.net/) on `http://<your host>:8099`.
+
+
+### GeoServer settings
+
+On this section you will import your Shapefile files inside [GeoServer](http://geoserver.org/).
+
+First, run `docker-compose.*.yml` file and open the [GeoServer](http://geoserver.org/) on `http://<your host>:8089/geoserver`.
 
 Make sure you have all grids saved on Shapefile files. Put all these files inside `volumes/geoserver/grids` folder separate by subfolders, for example: the folder "`grid_cbers4_mux`" will have all files from CBERS4 grid Shapefile. There are default Shapefile files inside `volumes/geoserver/grids` folder.
 
@@ -284,7 +311,7 @@ Namespace URI: <your host>/vector_data
 
 #### Add the Shapefile files
 
-Follow the steps below to add your Shapefile files to your Geoserver:
+Follow the steps below to add your Shapefile files to your [GeoServer](http://geoserver.org/):
 
 For the steps below, consider each `<data source name>` one element inside the following list: ["`grid_cbers4_mux`", "`grid_ibge_states`", "`grid_landsat_tm_amsul`", "`grid_sentinel_mgrs`"].
 

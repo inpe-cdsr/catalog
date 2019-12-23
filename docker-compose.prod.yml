@@ -102,6 +102,47 @@ services:
     # ports:
     #   - 9003:8080
 
+  dgi_catalog_db:
+    container_name: dgi_catalog_db
+    image: mariadb:10.4.11
+    restart: always
+    volumes:
+      - ./data/mysqldata:/var/lib/mysql
+    env_file:
+      - ./env/db.env
+    networks:
+      - dgi_catalog
+    ports:
+      - 3311:3306
+
+  dgi_catalog_admin:
+    container_name: dgi_catalog_admin
+    image: phpmyadmin/phpmyadmin:4.9
+    restart: always
+    env_file:
+      - ./env/phpmyadmin.env
+    networks:
+      - dgi_catalog
+    ports:
+      - 8099:80
+
+  dgi_catalog_publisher:
+    container_name: dgi_catalog_publisher
+    image: publisher
+    restart: always
+    user : 1648:1648
+    volumes:
+      - ./publisher:/app
+      - ./publisher:/config
+      - /data/TIFF/CBERS4:/CBERS4
+      - /data/TIFF/LANDSAT5:/LANDSAT5
+    env_file:
+      - ./env/publisher.env
+    networks:
+      - dgi_catalog
+    ports:
+      - 5022:5022
+
 networks:
   dgi_catalog:
     driver: bridge
