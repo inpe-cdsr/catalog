@@ -31,12 +31,15 @@ Create the environment files related to each application based on the example on
 ```
 $ cd env_files/
 
-$ cp portal.env.EXAMPLE portal.env && \
-cp api.env.EXAMPLE api.env && \
-cp inpe_stac.env.EXAMPLE inpe_stac.env && \
-cp stac_compose.env.EXAMPLE stac_compose.env && \
-cp geoserver.env.EXAMPLE geoserver.env && \
-cp nginx.env.EXAMPLE nginx.env
+$ cp nginx.env.EXAMPLE nginx.env && \
+  cp portal.env.EXAMPLE portal.env && \
+  cp api.env.EXAMPLE api.env && \
+  cp inpe_stac.env.EXAMPLE inpe_stac.env && \
+  cp stac_compose.env.EXAMPLE stac_compose.env && \
+  cp geoserver.env.EXAMPLE geoserver.env && \
+  cp db.env.EXAMPLE db.env && \
+  cp phpmyadmin.env.EXAMPLE phpmyadmin.env && \
+  cp publisher.env.EXAMPLE publisher.env
 ```
 
 Update the files above with proper settings. The files are environment variables files that contain settings related to the services inside `docker-compose.*.yml` files.
