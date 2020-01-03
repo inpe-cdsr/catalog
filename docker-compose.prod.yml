@@ -43,6 +43,7 @@ services:
     restart: always
     volumes:
       - /data/TIFF/CBERS4:/CBERS4
+      - /data/TIFF/CBERS4A:/CBERS4A
       - /data/TIFF/LANDSAT5:/LANDSAT5
     env_file:
       - ./env_files/api.env
@@ -52,7 +53,7 @@ services:
     #   - "5022:5000"
 
   dgi_catalog_inpe_stac:
-    image: registry.dpi.inpe.br/dgi/inpe_stac:0.0.3
+    image: registry.dpi.inpe.br/dgi/inpe_stac:0.0.4
     container_name: dgi_catalog_inpe_stac
     restart: always
     env_file:
@@ -135,6 +136,7 @@ services:
       - ./publisher:/app
       - ./publisher:/config
       - /data/TIFF/CBERS4:/CBERS4
+      - /data/TIFF/CBERS4A:/CBERS4A
       - /data/TIFF/LANDSAT5:/LANDSAT5
     env_file:
       - ./env/publisher.env
