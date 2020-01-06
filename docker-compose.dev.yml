@@ -14,30 +14,31 @@ services:
     env_file:
       - ./env_files/nginx.env
     command: /bin/bash -c "envsubst '$$NGINX_HOST $$NGINX_PORT' < /etc/nginx/conf.d/mysite.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
-    ports:
-      - 8089:8089
     networks:
       - dgi_catalog
     depends_on:
+      - dgi_catalog_portal
       - dgi_catalog_api
       - dgi_catalog_inpe_stac
+      - dgi_catalog_stac_compose
       - dgi_catalog_portainer
       - dgi_catalog_geoserver
-      - dgi_catalog_stac_compose
+    ports:
+      - 8089:8089
 
   dgi_catalog_portal:
-    container_name: dgi_catalog_portal
     image: dgi-catalog-frontend
+    container_name: dgi_catalog_portal
     command: npm start
     # restart: always
     env_file:
       - ./env_files/portal.env
     volumes:
       - ../dgi-catalog-frontend/portal:/app
-    ports:
-      - "5000:8000"
     networks:
       - dgi_catalog
+    ports:
+      - 5000:8000
 
   dgi_catalog_api:
     container_name: dgi_catalog_api
@@ -48,10 +49,10 @@ services:
       - ../dgi-catalog-backend:/app
     env_file:
       - ./env_files/api.env
-    ports:
-      - "5001:5001"
     networks:
       - dgi_catalog
+    ports:
+      - 5001:5001
 
   dgi_catalog_inpe_stac:
     container_name: dgi_catalog_inpe_stac
@@ -62,10 +63,10 @@ services:
       - ../inpe-stac/inpe_stac:/inpe_stac
     env_file:
       - ./env_files/inpe_stac.env
-    ports:
-      - "5002:5000"
     networks:
       - dgi_catalog
+    ports:
+      - 5002:5000
 
   dgi_catalog_stac_compose:
     container_name: dgi_catalog_stac_compose
@@ -77,10 +78,10 @@ services:
       - ./volumes/stac-compose/providers/providers.json:/bdc-stac-compose/bdc_search_stac/providers/static/providers.json
     env_file:
       - ./env_files/stac_compose.env
-    ports:
-      - "5003:5002"
     networks:
       - dgi_catalog
+    ports:
+      - 5003:5002
 
   dgi_catalog_portainer:
     container_name: dgi_catalog_portainer
@@ -89,10 +90,10 @@ services:
     volumes:
       - portainer_data:/data
       - /var/run/docker.sock:/var/run/docker.sock
-    ports:
-      - 9000:9000
     networks:
       - dgi_catalog
+    ports:
+      - 9000:9000
 
   dgi_catalog_geoserver:
     container_name: dgi_catalog_geoserver
@@ -104,10 +105,10 @@ services:
       - ./volumes/geoserver/web.xml:/usr/local/tomcat/webapps/geoserver/WEB-INF/web.xml
     env_file:
       - ./env_files/geoserver.env
-    ports:
-      - 9001:8080
     networks:
       - dgi_catalog
+    ports:
+      - 9001:8080
 
   dgi_catalog_db:
     container_name: dgi_catalog_db
@@ -116,7 +117,7 @@ services:
     volumes:
       - ./data/mysqldata:/var/lib/mysql
     env_file:
-      - ./env/db.env
+      - ./env_files/db.env
     networks:
       - dgi_catalog
     ports:
@@ -127,7 +128,7 @@ services:
     image: phpmyadmin/phpmyadmin:4.9
     restart: always
     env_file:
-      - ./env/phpmyadmin.env
+      - ./env_files/phpmyadmin.env
     networks:
       - dgi_catalog
     ports:
@@ -139,12 +140,12 @@ services:
   #   restart: always
   #   user: 1648:1648
   #   volumes:
-  #     - ./publisher:/app
-  #     - ./publisher:/config
+  #     - ../publisher:/app
+  #     - ../publisher:/config
   #     - /data/TIFF/CBERS4:/CBERS4
   #     - /data/TIFF/LANDSAT5:/LANDSAT5
   #   env_file:
-  #     - ./env/publisher.env
+  #     - ./env_files/publisher.env
   #   networks:
   #     - dgi_catalog
   #   ports:

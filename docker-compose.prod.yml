@@ -5,8 +5,8 @@ volumes:
 
 services:
   dgi_catalog_nginx:
-    image: nginx:1.17.6
     container_name: dgi_catalog_nginx
+    image: nginx:1.17.6
     restart: always
     volumes:
       - ./volumes/nginx/nginx.template:/etc/nginx/conf.d/mysite.template
@@ -27,8 +27,8 @@ services:
       - 8089:8089
 
   dgi_catalog_portal:
-    image: registry.dpi.inpe.br/dgi/catalog_app:0.2.4
     container_name: dgi_catalog_portal
+    image: registry.dpi.inpe.br/dgi/catalog_app:0.2.4
     restart: always
     env_file:
       - ./env_files/portal.env
@@ -38,8 +38,8 @@ services:
     #   - "8002:8000"
 
   dgi_catalog_api:
-    image: registry.dpi.inpe.br/dgi/catalog_api:0.0.8
     container_name: dgi_catalog_api
+    image: registry.dpi.inpe.br/dgi/catalog_api:0.0.8
     restart: always
     volumes:
       - /data/TIFF/CBERS4:/CBERS4
@@ -53,8 +53,8 @@ services:
     #   - "5022:5000"
 
   dgi_catalog_inpe_stac:
-    image: registry.dpi.inpe.br/dgi/inpe_stac:0.0.4
     container_name: dgi_catalog_inpe_stac
+    image: registry.dpi.inpe.br/dgi/inpe_stac:0.0.4
     restart: always
     env_file:
       - ./env_files/inpe_stac.env
@@ -64,8 +64,8 @@ services:
     #  - 5002:5000
 
   dgi_catalog_stac_compose:
-    image: registry.dpi.inpe.br/dgi/stac_compose:0.1.1
     container_name: dgi_catalog_stac_compose
+    image: registry.dpi.inpe.br/dgi/stac_compose:0.1.1
     restart: always
     env_file:
       - ./env_files/stac_compose.env
@@ -110,7 +110,7 @@ services:
     volumes:
       - ./data/mysqldata:/var/lib/mysql
     env_file:
-      - ./env/db.env
+      - ./env_files/db.env
     networks:
       - dgi_catalog
     ports:
@@ -121,7 +121,7 @@ services:
     image: phpmyadmin/phpmyadmin:4.9
     restart: always
     env_file:
-      - ./env/phpmyadmin.env
+      - ./env_files/phpmyadmin.env
     networks:
       - dgi_catalog
     ports:
@@ -133,13 +133,13 @@ services:
     restart: always
     user: 1648:1648
     volumes:
-      - ./publisher:/app
-      - ./publisher:/config
+      - ../publisher:/app
+      - ../publisher:/config
       - /data/TIFF/CBERS4:/CBERS4
       - /data/TIFF/CBERS4A:/CBERS4A
       - /data/TIFF/LANDSAT5:/LANDSAT5
     env_file:
-      - ./env/publisher.env
+      - ./env_files/publisher.env
     networks:
       - dgi_catalog
     ports:
