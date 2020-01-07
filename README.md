@@ -1,26 +1,28 @@
-# docker-compose
+# catalog
 
-Docker compose related to DGI Catalog project.
+This is the main repository related to CDSR Catalog project.
 
-`docker-compose.dev.yml` file contains development services using Docker images with volumes. The Docker images do not contain all code inside them, the code is added into the Docker containers through volumes.
+The repository contains two docker composes to run the project applications:
 
-`docker-compose.prod.yml` file contains production services using Docker images without volumes. The Docker images contain all code inside them and they do not use volumes to keep their code.
+- `docker-compose.dev.yml` file contains development services using Docker images with volumes. The Docker images do not contain all code inside them, the code is added into the Docker containers through volumes.
+
+- `docker-compose.prod.yml` file contains production services using Docker images without volumes. The Docker images contain all code inside them and they do not use volumes to keep their code.
 
 
 ## Install
 
-Create a new folder where you will let all your repositories, for example `dgi-catalog`:
+Create a new folder where you will let all your repositories, for example `inpe-cdsr`:
 
 ```
-$ mkdir dgi-catalog
+$ mkdir inpe-cdsr
 ```
 
-Clone the [docker-compose](https://github.com/dgi-catalog/docker-compose) repository inside the previous folder:
+Clone the [catalog](https://github.com/inpe-cdsr/catalog) repository inside the previous folder:
 
 ```
-$ cd dgi-catalog/ && \
-git clone https://github.com/dgi-catalog/docker-compose && \
-cd docker-compose/
+$ cd inpe-cdsr/ && \
+git clone https://github.com/inpe-cdsr/catalog && \
+cd catalog/
 ```
 
 
@@ -46,16 +48,16 @@ Update the files above with proper settings. The files are environment variables
 
 Brief description of each file:
 
-- `portal.env`: [dgi-catalog-frontend
-](https://github.com/dgi-catalog/dgi-catalog-frontend) website settings;
+- `portal.env`: [catalog-frontend
+](https://github.com/inpe-cdsr/catalog-frontend) website settings;
 
-- `api.env`: [dgi-catalog-backend
-](https://github.com/dgi-catalog/dgi-catalog-backend) service settings;
+- `api.env`: [catalog-backend
+](https://github.com/inpe-cdsr/catalog-backend) service settings;
 
 - `inpe_stac.env`: [inpe-stac
-](https://github.com/gqueiroz/inpe-stac) service settings;
+](https://github.com/inpe-cdsr/inpe-stac) service settings;
 - `stac_compose.env`: [stac-compose
-](https://github.com/dgi-catalog/stac-compose) service settings;
+](https://github.com/inpe-cdsr/stac-compose) service settings;
 
 - `geoserver.env`: Geoserver settings;
 
@@ -88,11 +90,11 @@ Environment variables file is named as `./env_file/nginx.env` and its variables 
 
 #### dgi_catalog_portal
 
-[dgi_catalog_portal](https://github.com/dgi-catalog/dgi-catalog-frontend) is a service that contains all front-end application. You can build its Docker image [here](https://github.com/dgi-catalog/dgi-catalog-frontend).
+[dgi_catalog_portal](https://github.com/inpe-cdsr/catalog-frontend) is a service that contains all front-end application. You can build its Docker image [here](https://github.com/inpe-cdsr/catalog-frontend).
 
 Existing volumes in development mode:
 
-  - `/app`: this folder needs to point to the [dgi-catalog-frontend](https://github.com/dgi-catalog/dgi-catalog-frontend) source code, that is the [portal/](https://github.com/dgi-catalog/dgi-catalog-frontend/tree/master/portal) folder.
+  - `/app`: this folder needs to point to the [catalog-frontend](https://github.com/inpe-cdsr/catalog-frontend) source code, that is the [portal/](https://github.com/inpe-cdsr/catalog-frontend/tree/master/portal) folder.
 
 Environment variables file is named as `./env_files/portal.env` and its variables are:
 
@@ -100,9 +102,9 @@ Environment variables file is named as `./env_files/portal.env` and its variable
 
 - `URL_VIA_CEP`: CEP webservice, such as `http://viacep.com.br/ws`;
 
-- `URL_STAC_COMPOSE`: [stac-compose](https://github.com/dgi-catalog/stac-compose) URL that Nginx serves;
+- `URL_STAC_COMPOSE`: [stac-compose](https://github.com/inpe-cdsr/stac-compose) URL that Nginx serves;
 
-- `URL_API`: [dgi-catalog-backend](https://github.com/dgi-catalog/dgi-catalog-backend) URL that Nginx serves;
+- `URL_API`: [catalog-backend](https://github.com/inpe-cdsr/catalog-backend) URL that Nginx serves;
 
 - `PROVIDERS_TOKEN`: list of providers that user credentials will be added before providers URL in order to download their images with authentication;
 
@@ -114,11 +116,11 @@ Environment variables file is named as `./env_files/portal.env` and its variable
 
 #### dgi_catalog_api
 
-[dgi_catalog_api](https://github.com/dgi-catalog/dgi-catalog-backend) is a back-end service to [dgi_catalog_portal](https://github.com/dgi-catalog/dgi-catalog-frontend) web application. This service provides user authentication and an endpoint to download satellite images.
+[dgi_catalog_api](https://github.com/inpe-cdsr/catalog-backend) is a back-end service to [dgi_catalog_portal](https://github.com/inpe-cdsr/catalog-frontend) web application. This service provides user authentication and an endpoint to download satellite images.
 
 Existing volumes in development mode:
 
-  - `/app`: this folder needs to point to the [dgi-catalog-backend](https://github.com/dgi-catalog/dgi-catalog-backend) source code, that is the [root](https://github.com/dgi-catalog/dgi-catalog-backend) folder.
+  - `/app`: this folder needs to point to the [catalog-backend](https://github.com/inpe-cdsr/catalog-backend) source code, that is the [root](https://github.com/inpe-cdsr/catalog-backend) folder.
 
 Environment variables file is named as `./env_files/api.env` and its variables are:
 
@@ -143,11 +145,11 @@ Environment variables file is named as `./env_files/api.env` and its variables a
 
 #### dgi_catalog_inpe_stac
 
-[dgi_catalog_inpe_stac](https://github.com/gqueiroz/inpe-stac) is a [SpatioTemporal Asset Catalog (STAC)](https://github.com/radiantearth/stac-spec) service. This service is a STAC implementation for INPE Catalog.
+[dgi_catalog_inpe_stac](https://github.com/inpe-cdsr/inpe-stac) is a [SpatioTemporal Asset Catalog (STAC)](https://github.com/radiantearth/stac-spec) service. This service is a STAC implementation for INPE Catalog.
 
 Existing volumes in development mode:
 
-  - `/inpe_stac`: this folder needs to point to the [inpe-stac](https://github.com/gqueiroz/inpe-stac) source code, that is the [inpe_stac](https://github.com/gqueiroz/inpe-stac/tree/master/inpe_stac) folder.
+  - `/inpe_stac`: this folder needs to point to the [inpe-stac](https://github.com/inpe-cdsr/inpe-stac) source code, that is the [inpe_stac](https://github.com/inpe-cdsr/inpe-stac/tree/master/inpe_stac) folder.
 
 Environment variables file is named as `./env_files/inpe_stac.env` and its variables are:
 
@@ -174,7 +176,7 @@ Environment variables file is named as `./env_files/inpe_stac.env` and its varia
 
 #### dgi_catalog_stac_compose
 
-[dgi_catalog_stac_compose](https://github.com/dgi-catalog/stac-compose) is a [SpatioTemporal Asset Catalog (STAC)](https://github.com/radiantearth/stac-spec) compose service. This service serves various STAC applications, called providers.
+[dgi_catalog_stac_compose](https://github.com/inpe-cdsr/stac-compose) is a [SpatioTemporal Asset Catalog (STAC)](https://github.com/radiantearth/stac-spec) compose service. This service serves various STAC applications, called providers.
 
 Existing volumes:
 
@@ -194,7 +196,7 @@ Existing volumes:
 
 Existing volumes in development mode:
 
-  - `/bdc-stac-compose`: this folder needs to point to the [stac-compose](https://github.com/dgi-catalog/stac-compose) source code, that is the [root](https://github.com/dgi-catalog/stac-compose) folder.
+  - `/bdc-stac-compose`: this folder needs to point to the [stac-compose](https://github.com/inpe-cdsr/stac-compose) source code, that is the [root](https://github.com/inpe-cdsr/stac-compose) folder.
 
 Environment variables file is named as `./env_files/stac_compose.env` and its variables are:
 
@@ -255,13 +257,13 @@ After running the docker compose, Nginx will serve all applications with the hos
 
 The following endpoints are now available:
 
-- `/catalogo`: [dgi-catalog-frontend](https://github.com/dgi-catalog/dgi-catalog-frontend) application;
+- `/catalogo`: [catalog-frontend](https://github.com/inpe-cdsr/catalog-frontend) application;
 
-- `/api`: [dgi-catalog-backend](https://github.com/dgi-catalog/dgi-catalog-backend) application;
+- `/api`: [catalog-backend](https://github.com/inpe-cdsr/catalog-backend) application;
 
-- `/inpe-stac`: [inpe-stac](https://github.com/gqueiroz/inpe-stac) application;
+- `/inpe-stac`: [inpe-stac](https://github.com/inpe-cdsr/inpe-stac) application;
 
-- `/stac-compose`: [stac-compose](https://github.com/dgi-catalog/stac-compose) application;
+- `/stac-compose`: [stac-compose](https://github.com/inpe-cdsr/stac-compose) application;
 
 - `/geoserver`: [Geoserver](https://hub.docker.com/r/kartoza/geoserver/) application;
 
