@@ -48,6 +48,8 @@ Update the files above with proper settings. The files are environment variables
 
 Brief description of each file:
 
+- `nginx.env`: [Nginx](https://hub.docker.com/_/nginx) settings;
+
 - `portal.env`: [catalog-frontend
 ](https://github.com/inpe-cdsr/catalog-frontend) website settings;
 
@@ -56,12 +58,17 @@ Brief description of each file:
 
 - `inpe_stac.env`: [inpe-stac
 ](https://github.com/inpe-cdsr/inpe-stac) service settings;
+
 - `stac_compose.env`: [stac-compose
 ](https://github.com/inpe-cdsr/stac-compose) service settings;
 
-- `geoserver.env`: Geoserver settings;
+- `geoserver.env`: [GeoServer](https://hub.docker.com/r/kartoza/geoserver/) settings;
 
-- `nginx.env`: Nginx settings.
+- `db.env`: [MariaDB](https://hub.docker.com/_/mariadb) database settings;
+
+- `phpmyadmin.env`: [phpMyAdmin](https://hub.docker.com/r/phpmyadmin/phpmyadmin/) settings;
+
+- `publisher.env`: Publisher settings.
 
 The content of each file will be described afterwards.
 
@@ -81,7 +88,7 @@ Existing volumes:
 
 - `/var/www/html/datastore`: this folder should contain all static files that Nginx will serve, such as quicklooks and TIFFs.
 
-Environment variables file is named as `./env_file/nginx.env` and its variables are:
+Environment variables file is named as `./env_files/nginx.env` and its variables are:
 
 - `NGINX_HOST`: host name where the Nginx will run, such as `my.server.com`;
 
@@ -209,13 +216,57 @@ Environment variables file is named as `./env_files/stac_compose.env` and its va
 
 #### dgi_catalog_geoserver
 
-`dgi_catalog_geoserver` is a service that runs a [Geoserver](https://hub.docker.com/r/kartoza/geoserver/) Docker image. Its settings can be found on its [repository on Docker hub](https://hub.docker.com/r/kartoza/geoserver/).
+`dgi_catalog_geoserver` is a service that runs a [GeoServer](https://hub.docker.com/r/kartoza/geoserver/) Docker image. Its settings can be found on its [repository on Docker hub](https://hub.docker.com/r/kartoza/geoserver/).
 
 Extra existing volumes:
 
 - `/home/data/grids`: a folder where the grids in Shapefile format are saved to be served by Geoserver.
 
 Environment variables file is named as `./env_files/geoserver.env` and its variables are described on Geoserver Docker hub on [Run (manual docker commands)](https://hub.docker.com/r/kartoza/geoserver/) section.
+
+
+#### dgi_catalog_db
+
+`dgi_catalog_db` is a service that runs a [MariaDB](https://hub.docker.com/_/mariadb) Docker image, that is a database server.
+
+Existing volumes:
+
+- `/var/lib/mysql`: MariaDB folder and files.
+
+Environment variables file is named as `./env_files/db.env` and its variables are:
+
+- `MYSQL_ROOT_PASSWORD`: default password to MariaDB database;
+
+
+#### dgi_catalog_admin
+
+`dgi_catalog_admin` is a service that runs a [phpMyAdmin](https://hub.docker.com/r/phpmyadmin/phpmyadmin/) Docker image.
+
+Environment variables file is named as `./env_files/phpmyadmin.env` and its variables are described on phpMyAdmin Docker hub on [Environment variables summary](https://hub.docker.com/r/phpmyadmin/phpmyadmin/) section.
+
+
+#### dgi_catalog_publisher
+
+`dgi_catalog_publisher` is a service that runs a Publisher Docker image.
+
+Existing volumes:
+
+- `/app`: Publisher source code;
+
+- `/config`: Publisher source code;
+
+- `/CBERS4`: folder with scenes from CBERS4 satellite;
+
+- `/LANDSAT5`: folder with scenes from LANDSAT5 satellite.
+
+Environment variables file is named as `./env_files/db.env` and its variables are:
+
+- `DB_HOST`: MySQL host name and port (e.g `localhost:3306`);
+
+- `DB_USER`: MySQL database user;
+
+- `DB_PASS`: MySQL database user password.
+
 
 ### Run the docker compose:
 
