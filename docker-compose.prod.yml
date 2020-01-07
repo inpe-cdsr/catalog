@@ -35,7 +35,7 @@ services:
     networks:
       - dgi_catalog
     # ports:
-    #   - "8002:8000"
+    #   - 8002:8000
 
   dgi_catalog_api:
     container_name: dgi_catalog_api
@@ -50,7 +50,7 @@ services:
     networks:
       - dgi_catalog
     # ports:
-    #   - "5022:5000"
+    #   - 5022:5000
 
   dgi_catalog_inpe_stac:
     container_name: dgi_catalog_inpe_stac
@@ -74,7 +74,7 @@ services:
     networks:
       - dgi_catalog
     # ports:
-    #   - "5001:8002"
+    #   - 5001:8002
 
   dgi_catalog_portainer:
     container_name: dgi_catalog_portainer
@@ -108,7 +108,7 @@ services:
     image: mariadb:10.4.11
     restart: always
     volumes:
-      - ./data/mysqldata:/var/lib/mysql
+      - ../data/mysqldata:/var/lib/mysql
     env_file:
       - ./env_files/db.env
     networks:
