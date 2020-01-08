@@ -1,26 +1,28 @@
-# docker-compose
+# catalog
 
-Docker compose related to DGI Catalog project.
+This is the main repository related to CDSR Catalog project.
 
-`docker-compose.dev.yml` file contains development services using Docker images with volumes. The Docker images do not contain all code inside them, the code is added into the Docker containers through volumes.
+The repository contains two docker composes to run the project applications:
 
-`docker-compose.prod.yml` file contains production services using Docker images without volumes. The Docker images contain all code inside them and they do not use volumes to keep their code.
+- `docker-compose.dev.yml` file contains development services using Docker images with volumes. The Docker images do not contain all code inside them, the code is added into the Docker containers through volumes.
+
+- `docker-compose.prod.yml` file contains production services using Docker images without volumes. The Docker images contain all code inside them and they do not use volumes to keep their code.
 
 
 ## Install
 
-Create a new folder where you will let all your repositories, for example `dgi-catalog`:
+Create a new folder where you will let all your repositories, for example `inpe-cdsr`:
 
 ```
-$ mkdir dgi-catalog
+$ mkdir inpe-cdsr
 ```
 
-Clone the [docker-compose](https://github.com/dgi-catalog/docker-compose) repository inside the previous folder:
+Clone the [catalog](https://github.com/inpe-cdsr/catalog) repository inside the previous folder:
 
 ```
-$ cd dgi-catalog/ && \
-git clone https://github.com/dgi-catalog/docker-compose && \
-cd docker-compose/
+$ cd inpe-cdsr/ && \
+git clone https://github.com/inpe-cdsr/catalog && \
+cd catalog/
 ```
 
 
@@ -46,20 +48,27 @@ Update the files above with proper settings. The files are environment variables
 
 Brief description of each file:
 
-- `portal.env`: [dgi-catalog-frontend
-](https://github.com/dgi-catalog/dgi-catalog-frontend) website settings;
+- `nginx.env`: [Nginx](https://hub.docker.com/_/nginx) settings;
 
-- `api.env`: [dgi-catalog-backend
-](https://github.com/dgi-catalog/dgi-catalog-backend) service settings;
+- `portal.env`: [catalog-frontend
+](https://github.com/inpe-cdsr/catalog-frontend) website settings;
+
+- `api.env`: [catalog-backend
+](https://github.com/inpe-cdsr/catalog-backend) service settings;
 
 - `inpe_stac.env`: [inpe-stac
-](https://github.com/gqueiroz/inpe-stac) service settings;
+](https://github.com/inpe-cdsr/inpe-stac) service settings;
+
 - `stac_compose.env`: [stac-compose
-](https://github.com/dgi-catalog/stac-compose) service settings;
+](https://github.com/inpe-cdsr/stac-compose) service settings;
 
-- `geoserver.env`: Geoserver settings;
+- `geoserver.env`: [GeoServer](https://hub.docker.com/r/kartoza/geoserver/) settings;
 
-- `nginx.env`: Nginx settings.
+- `db.env`: [MariaDB](https://hub.docker.com/_/mariadb) database settings;
+
+- `phpmyadmin.env`: [phpMyAdmin](https://hub.docker.com/r/phpmyadmin/phpmyadmin/) settings;
+
+- `publisher.env`: Publisher settings.
 
 The content of each file will be described afterwards.
 
@@ -79,7 +88,7 @@ Existing volumes:
 
 - `/var/www/html/datastore`: this folder should contain all static files that Nginx will serve, such as quicklooks and TIFFs.
 
-Environment variables file is named as `./env_file/nginx.env` and its variables are:
+Environment variables file is named as `./env_files/nginx.env` and its variables are:
 
 - `NGINX_HOST`: host name where the Nginx will run, such as `my.server.com`;
 
@@ -88,11 +97,11 @@ Environment variables file is named as `./env_file/nginx.env` and its variables 
 
 #### dgi_catalog_portal
 
-[dgi_catalog_portal](https://github.com/dgi-catalog/dgi-catalog-frontend) is a service that contains all front-end application. You can build its Docker image [here](https://github.com/dgi-catalog/dgi-catalog-frontend).
+[dgi_catalog_portal](https://github.com/inpe-cdsr/catalog-frontend) is a service that contains all front-end application. You can build its Docker image [here](https://github.com/inpe-cdsr/catalog-frontend).
 
 Existing volumes in development mode:
 
-  - `/app`: this folder needs to point to the [dgi-catalog-frontend](https://github.com/dgi-catalog/dgi-catalog-frontend) source code, that is the [portal/](https://github.com/dgi-catalog/dgi-catalog-frontend/tree/master/portal) folder.
+  - `/app`: this folder needs to point to the [catalog-frontend](https://github.com/inpe-cdsr/catalog-frontend) source code, that is the [portal/](https://github.com/inpe-cdsr/catalog-frontend/tree/master/portal) folder.
 
 Environment variables file is named as `./env_files/portal.env` and its variables are:
 
@@ -100,9 +109,9 @@ Environment variables file is named as `./env_files/portal.env` and its variable
 
 - `URL_VIA_CEP`: CEP webservice, such as `http://viacep.com.br/ws`;
 
-- `URL_STAC_COMPOSE`: [stac-compose](https://github.com/dgi-catalog/stac-compose) URL that Nginx serves;
+- `URL_STAC_COMPOSE`: [stac-compose](https://github.com/inpe-cdsr/stac-compose) URL that Nginx serves;
 
-- `URL_API`: [dgi-catalog-backend](https://github.com/dgi-catalog/dgi-catalog-backend) URL that Nginx serves;
+- `URL_API`: [catalog-backend](https://github.com/inpe-cdsr/catalog-backend) URL that Nginx serves;
 
 - `PROVIDERS_TOKEN`: list of providers that user credentials will be added before providers URL in order to download their images with authentication;
 
@@ -114,11 +123,11 @@ Environment variables file is named as `./env_files/portal.env` and its variable
 
 #### dgi_catalog_api
 
-[dgi_catalog_api](https://github.com/dgi-catalog/dgi-catalog-backend) is a back-end service to [dgi_catalog_portal](https://github.com/dgi-catalog/dgi-catalog-frontend) web application. This service provides user authentication and an endpoint to download satellite images.
+[dgi_catalog_api](https://github.com/inpe-cdsr/catalog-backend) is a back-end service to [dgi_catalog_portal](https://github.com/inpe-cdsr/catalog-frontend) web application. This service provides user authentication and an endpoint to download satellite images.
 
 Existing volumes in development mode:
 
-  - `/app`: this folder needs to point to the [dgi-catalog-backend](https://github.com/dgi-catalog/dgi-catalog-backend) source code, that is the [root](https://github.com/dgi-catalog/dgi-catalog-backend) folder.
+  - `/app`: this folder needs to point to the [catalog-backend](https://github.com/inpe-cdsr/catalog-backend) source code, that is the [root](https://github.com/inpe-cdsr/catalog-backend) folder.
 
 Environment variables file is named as `./env_files/api.env` and its variables are:
 
@@ -143,11 +152,11 @@ Environment variables file is named as `./env_files/api.env` and its variables a
 
 #### dgi_catalog_inpe_stac
 
-[dgi_catalog_inpe_stac](https://github.com/gqueiroz/inpe-stac) is a [SpatioTemporal Asset Catalog (STAC)](https://github.com/radiantearth/stac-spec) service. This service is a STAC implementation for INPE Catalog.
+[dgi_catalog_inpe_stac](https://github.com/inpe-cdsr/inpe-stac) is a [SpatioTemporal Asset Catalog (STAC)](https://github.com/radiantearth/stac-spec) service. This service is a STAC implementation for INPE Catalog.
 
 Existing volumes in development mode:
 
-  - `/inpe_stac`: this folder needs to point to the [inpe-stac](https://github.com/gqueiroz/inpe-stac) source code, that is the [inpe_stac](https://github.com/gqueiroz/inpe-stac/tree/master/inpe_stac) folder.
+  - `/inpe_stac`: this folder needs to point to the [inpe-stac](https://github.com/inpe-cdsr/inpe-stac) source code, that is the [inpe_stac](https://github.com/inpe-cdsr/inpe-stac/tree/master/inpe_stac) folder.
 
 Environment variables file is named as `./env_files/inpe_stac.env` and its variables are:
 
@@ -174,7 +183,7 @@ Environment variables file is named as `./env_files/inpe_stac.env` and its varia
 
 #### dgi_catalog_stac_compose
 
-[dgi_catalog_stac_compose](https://github.com/dgi-catalog/stac-compose) is a [SpatioTemporal Asset Catalog (STAC)](https://github.com/radiantearth/stac-spec) compose service. This service serves various STAC applications, called providers.
+[dgi_catalog_stac_compose](https://github.com/inpe-cdsr/stac-compose) is a [SpatioTemporal Asset Catalog (STAC)](https://github.com/radiantearth/stac-spec) compose service. This service serves various STAC applications, called providers.
 
 Existing volumes:
 
@@ -194,7 +203,7 @@ Existing volumes:
 
 Existing volumes in development mode:
 
-  - `/bdc-stac-compose`: this folder needs to point to the [stac-compose](https://github.com/dgi-catalog/stac-compose) source code, that is the [root](https://github.com/dgi-catalog/stac-compose) folder.
+  - `/bdc-stac-compose`: this folder needs to point to the [stac-compose](https://github.com/inpe-cdsr/stac-compose) source code, that is the [root](https://github.com/inpe-cdsr/stac-compose) folder.
 
 Environment variables file is named as `./env_files/stac_compose.env` and its variables are:
 
@@ -207,13 +216,57 @@ Environment variables file is named as `./env_files/stac_compose.env` and its va
 
 #### dgi_catalog_geoserver
 
-`dgi_catalog_geoserver` is a service that runs a [Geoserver](https://hub.docker.com/r/kartoza/geoserver/) Docker image. Its settings can be found on its [repository on Docker hub](https://hub.docker.com/r/kartoza/geoserver/).
+`dgi_catalog_geoserver` is a service that runs a [GeoServer](https://hub.docker.com/r/kartoza/geoserver/) Docker image. Its settings can be found on its [repository on Docker hub](https://hub.docker.com/r/kartoza/geoserver/).
 
 Extra existing volumes:
 
 - `/home/data/grids`: a folder where the grids in Shapefile format are saved to be served by Geoserver.
 
 Environment variables file is named as `./env_files/geoserver.env` and its variables are described on Geoserver Docker hub on [Run (manual docker commands)](https://hub.docker.com/r/kartoza/geoserver/) section.
+
+
+#### dgi_catalog_db
+
+`dgi_catalog_db` is a service that runs a [MariaDB](https://hub.docker.com/_/mariadb) Docker image, that is a database server.
+
+Existing volumes:
+
+- `/var/lib/mysql`: MariaDB folder and files.
+
+Environment variables file is named as `./env_files/db.env` and its variables are:
+
+- `MYSQL_ROOT_PASSWORD`: default password to MariaDB database;
+
+
+#### dgi_catalog_admin
+
+`dgi_catalog_admin` is a service that runs a [phpMyAdmin](https://hub.docker.com/r/phpmyadmin/phpmyadmin/) Docker image.
+
+Environment variables file is named as `./env_files/phpmyadmin.env` and its variables are described on phpMyAdmin Docker hub on [Environment variables summary](https://hub.docker.com/r/phpmyadmin/phpmyadmin/) section.
+
+
+#### dgi_catalog_publisher
+
+`dgi_catalog_publisher` is a service that runs a Publisher Docker image.
+
+Existing volumes:
+
+- `/app`: Publisher source code;
+
+- `/config`: Publisher source code;
+
+- `/CBERS4`: folder with scenes from CBERS4 satellite;
+
+- `/LANDSAT5`: folder with scenes from LANDSAT5 satellite.
+
+Environment variables file is named as `./env_files/db.env` and its variables are:
+
+- `DB_HOST`: MySQL host name and port (e.g `localhost:3306`);
+
+- `DB_USER`: MySQL database user;
+
+- `DB_PASS`: MySQL database user password.
+
 
 ### Run the docker compose:
 
@@ -255,13 +308,13 @@ After running the docker compose, Nginx will serve all applications with the hos
 
 The following endpoints are now available:
 
-- `/catalogo`: [dgi-catalog-frontend](https://github.com/dgi-catalog/dgi-catalog-frontend) application;
+- `/catalogo`: [catalog-frontend](https://github.com/inpe-cdsr/catalog-frontend) application;
 
-- `/api`: [dgi-catalog-backend](https://github.com/dgi-catalog/dgi-catalog-backend) application;
+- `/api`: [catalog-backend](https://github.com/inpe-cdsr/catalog-backend) application;
 
-- `/inpe-stac`: [inpe-stac](https://github.com/gqueiroz/inpe-stac) application;
+- `/inpe-stac`: [inpe-stac](https://github.com/inpe-cdsr/inpe-stac) application;
 
-- `/stac-compose`: [stac-compose](https://github.com/dgi-catalog/stac-compose) application;
+- `/stac-compose`: [stac-compose](https://github.com/inpe-cdsr/stac-compose) application;
 
 - `/geoserver`: [Geoserver](https://hub.docker.com/r/kartoza/geoserver/) application;
 
