@@ -4,6 +4,7 @@
     "type":"stac",
     "version": "0.7.0",
     "method": "GET",
+    "filter_mult_collection": 1,
     "require_credentials": 1,
     "downloadable": 1
   },
@@ -12,6 +13,7 @@
     "type":"stac",
     "version": "0.6.0",
     "method": "POST",
+    "filter_mult_collection": 0,
     "require_credentials": 0,
     "downloadable": 0
   },
@@ -20,6 +22,7 @@
     "type":"stac",
     "version": "0.7.0",
     "method": "GET",
+    "filter_mult_collection": 0,
     "require_credentials": 0,
     "downloadable": 0
   }
