@@ -187,19 +187,35 @@ Environment variables file is named as `./env_files/inpe_stac.env` and its varia
 
 Existing volumes:
 
-- `/bdc-stac-compose/bdc_search_stac/providers/static/providers.json`: STAC compose providers on JSON format, following the pattern:
+- `/bdc-stac-compose/bdc_search_stac/providers/static/providers.json`: STAC compose providers on a JSON object format, where the key is the STAC application name and its internal keys are:
 
-```
-{
-  "<STAC application name>": {
-    "url": "<STAC application URI>",
-    "type":"stac",
-    "version": "<STAC application version>",
-    "method": "<method used by STAC application>"
-  },
-  ...
-}
-```
+    - `url`: string. STAC application URI;
+
+    - `type`: string. Application type, in other words, `stac`;
+
+    - `version`: string. STAC application version;
+
+    - `method`: string. HTTP method used to access the STAC application;
+
+    - `filter_mult_collection`: boolean.
+
+        - 1: if this STAC application accepts multiple collection search;
+
+        - 0: if this STAC application does not accept multiple collection search.
+
+    - `require_credentials`: boolean.
+
+        - 1: if to download the file requires user credentials;
+
+        - 0: if to download the file does not require user credentials.
+
+    - `downloadable`: boolean.
+
+        - 1: if the files, this STAC provides, are downloadable on the portal;
+
+        - 0: if the files, this STAC provides, are not downloadable on the portal.
+
+An example file can be found in [`./volumes/stac-compose/providers/providers.json`](./volumes/stac-compose/providers/providers.json). This file will be used by [stac-compose](https://github.com/inpe-cdsr/stac-compose) that runs inside `docker-compose.*.yml` files. In order to add a new provider, just insert a new key inside the JSON object in the file and fill it with the correct settings.
 
 Existing volumes in development mode:
 
