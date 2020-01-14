@@ -33,7 +33,7 @@ server {
     charset  utf-8;
 
     location /datastore {
-        try_files $uri $uri/ *.png;
+        try_files $uri $uri/ .png;
     }
 
     location /geoserver {
@@ -57,20 +57,19 @@ server {
         proxy_pass http://portainer/ws/;
     }
 
-    location /stac-compose {
-        proxy_pass http://staccompose;
+    location /stac-compose/ {
+	    proxy_pass http://staccompose;
         proxy_set_header Host $http_host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 
-    location /inpe-stac/ {
-        proxy_pass http://inpestac/;
+    location /inpe-stac {
+        rewrite /inpe-stac/(.*) /$1  break;
+        proxy_pass http://inpestac;
+        proxy_redirect off;
         proxy_set_header Host $http_host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
     }
 
     location /api/ {
