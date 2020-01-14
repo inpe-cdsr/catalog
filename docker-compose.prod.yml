@@ -17,8 +17,8 @@ services:
     networks:
       - dgi_catalog
     depends_on:
-      - dgi_catalog_portal
-      - dgi_catalog_api
+      - dgi_catalog_frontend
+      - dgi_catalog_backend
       - dgi_catalog_inpe_stac
       - dgi_catalog_stac_compose
       - dgi_catalog_portainer
@@ -26,8 +26,8 @@ services:
     ports:
       - 8089:8089
 
-  dgi_catalog_portal:
-    container_name: dgi_catalog_portal
+  dgi_catalog_frontend:
+    container_name: dgi_catalog_frontend
     image: registry.dpi.inpe.br/dgi/catalog_app:0.2.5
     restart: always
     env_file:
@@ -37,8 +37,8 @@ services:
     # ports:
     #   - 8002:8000
 
-  dgi_catalog_api:
-    container_name: dgi_catalog_api
+  dgi_catalog_backend:
+    container_name: dgi_catalog_backend
     image: registry.dpi.inpe.br/dgi/catalog_api:0.0.8
     restart: always
     volumes:
