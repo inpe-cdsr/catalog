@@ -25,5 +25,14 @@
     "filter_mult_collection": 0,
     "require_credentials": 0,
     "downloadable": 0
+  },
+  "BRAZILDATACUBE": {
+    "url": "http://brazildatacube.dpi.inpe.br/bdc-stac/0.7.0",
+    "type":"stac",
+    "version": "0.7.0",
+    "method": "GET",
+    "filter_mult_collection": 0,
+    "require_credentials": 0,
+    "downloadable": 0
   }
 }
