@@ -17,8 +17,8 @@ services:
     networks:
       - dgi_catalog
     depends_on:
-      - dgi_catalog_portal
-      - dgi_catalog_api
+      - dgi_catalog_frontend
+      - dgi_catalog_backend
       - dgi_catalog_inpe_stac
       - dgi_catalog_stac_compose
       - dgi_catalog_portainer
@@ -26,8 +26,8 @@ services:
     ports:
       - 8089:8089
 
-  dgi_catalog_portal:
-    container_name: dgi_catalog_portal
+  dgi_catalog_frontend:
+    container_name: dgi_catalog_frontend
     image: dgi-catalog-frontend
     command: npm start
     # restart: always
@@ -40,8 +40,8 @@ services:
     ports:
       - 5000:8000
 
-  dgi_catalog_api:
-    container_name: dgi_catalog_api
+  dgi_catalog_backend:
+    container_name: dgi_catalog_backend
     image: dgi-catalog-backend
     command: python3 manage.py run
     # restart: always

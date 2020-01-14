@@ -1,9 +1,9 @@
-upstream portal {
-    server dgi_catalog_portal:8000;
+upstream frontend {
+    server dgi_catalog_frontend:8000;
 }
 
-upstream api {
-    server dgi_catalog_api:5001;
+upstream backend {
+    server dgi_catalog_backend:5001;
 }
 
 upstream inpestac {
@@ -73,7 +73,7 @@ server {
     }
 
     location /api/ {
-        proxy_pass http://api;
+        proxy_pass http://backend;
         proxy_set_header Host $http_host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -81,7 +81,7 @@ server {
     }
 
     location /catalogo {
-        proxy_pass http://portal;
+        proxy_pass http://frontend;
         proxy_redirect off;
         proxy_set_header Host $http_host;
         proxy_set_header X-Real-IP $remote_addr;
