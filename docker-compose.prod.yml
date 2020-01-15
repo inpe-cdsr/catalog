@@ -31,7 +31,7 @@ services:
     image: registry.dpi.inpe.br/dgi/catalog_app:0.2.5
     restart: always
     env_file:
-      - ./env_files/portal.env
+      - ./env_files/frontend.env
     networks:
       - dgi_catalog
     # ports:
@@ -46,7 +46,7 @@ services:
       - /data/TIFF/CBERS4A:/CBERS4A
       - /data/TIFF/LANDSAT5:/LANDSAT5
     env_file:
-      - ./env_files/api.env
+      - ./env_files/backend.env
     networks:
       - dgi_catalog
     # ports:
@@ -116,8 +116,8 @@ services:
     ports:
       - 3311:3306
 
-  dgi_catalog_admin:
-    container_name: dgi_catalog_admin
+  dgi_catalog_phpmyadmin:
+    container_name: dgi_catalog_phpmyadmin
     image: phpmyadmin/phpmyadmin:4.9
     restart: always
     env_file:

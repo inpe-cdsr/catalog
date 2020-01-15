@@ -34,8 +34,8 @@ Create the environment files related to each application based on the example on
 $ cd env_files/
 
 $ cp nginx.env.EXAMPLE nginx.env && \
-  cp portal.env.EXAMPLE portal.env && \
-  cp api.env.EXAMPLE api.env && \
+  cp frontend.env.EXAMPLE frontend.env && \
+  cp backend.env.EXAMPLE backend.env && \
   cp inpe_stac.env.EXAMPLE inpe_stac.env && \
   cp stac_compose.env.EXAMPLE stac_compose.env && \
   cp geoserver.env.EXAMPLE geoserver.env && \
@@ -50,10 +50,10 @@ Brief description of each file:
 
 - `nginx.env`: [Nginx](https://hub.docker.com/_/nginx) settings;
 
-- `portal.env`: [catalog-frontend
+- `frontend.env`: [catalog-frontend
 ](https://github.com/inpe-cdsr/catalog-frontend) website settings;
 
-- `api.env`: [catalog-backend
+- `backend.env`: [catalog-backend
 ](https://github.com/inpe-cdsr/catalog-backend) service settings;
 
 - `inpe_stac.env`: [inpe-stac
@@ -95,15 +95,15 @@ Environment variables file is named as `./env_files/nginx.env` and its variables
 - `NGINX_PORT`: which port Nginx will run inside the container, such as `80` or `8080`.
 
 
-#### dgi_catalog_portal
+#### dgi_catalog_frontend
 
-[dgi_catalog_portal](https://github.com/inpe-cdsr/catalog-frontend) is a service that contains all front-end application. You can build its Docker image [here](https://github.com/inpe-cdsr/catalog-frontend).
+[dgi_catalog_frontend](https://github.com/inpe-cdsr/catalog-frontend) is a service that contains all front-end application. You can build its Docker image [here](https://github.com/inpe-cdsr/catalog-frontend).
 
 Existing volumes in development mode:
 
-  - `/app`: this folder needs to point to the [catalog-frontend](https://github.com/inpe-cdsr/catalog-frontend) source code, that is the [portal/](https://github.com/inpe-cdsr/catalog-frontend/tree/master/portal) folder.
+  - `/app`: this folder needs to point to the [catalog-frontend](https://github.com/inpe-cdsr/catalog-frontend) source code, that is the [portal](https://github.com/inpe-cdsr/catalog-frontend/tree/master/portal) folder.
 
-Environment variables file is named as `./env_files/portal.env` and its variables are:
+Environment variables file is named as `./env_files/frontend.env` and its variables are:
 
 - `URL_GEOSERVER`: [Geoserver](https://hub.docker.com/r/kartoza/geoserver/) URL that Nginx serves;
 
@@ -113,23 +113,21 @@ Environment variables file is named as `./env_files/portal.env` and its variable
 
 - `URL_API`: [catalog-backend](https://github.com/inpe-cdsr/catalog-backend) URL that Nginx serves;
 
-- `PROVIDERS_TOKEN`: list of providers that user credentials will be added before providers URL in order to download their images with authentication;
-
 - `GRIDS`: list of grids saved on Geoserver separate by semicolon (`;`). Each grid has the following standard: `<title>:<layer>:<style>`, where:
     - `<title>`: a title that will be shown on the web portal;
     - `<layer>`: layer name on Geoserver;
     - `<style>`: layer style on Geoserver.
 
 
-#### dgi_catalog_api
+#### dgi_catalog_backend
 
-[dgi_catalog_api](https://github.com/inpe-cdsr/catalog-backend) is a back-end service to [dgi_catalog_portal](https://github.com/inpe-cdsr/catalog-frontend) web application. This service provides user authentication and an endpoint to download satellite images.
+[dgi_catalog_backend](https://github.com/inpe-cdsr/catalog-backend) is a back-end service to [dgi_catalog_frontend](https://github.com/inpe-cdsr/catalog-frontend) web application. This service provides user authentication and an endpoint to download satellite images.
 
 Existing volumes in development mode:
 
   - `/app`: this folder needs to point to the [catalog-backend](https://github.com/inpe-cdsr/catalog-backend) source code, that is the [root](https://github.com/inpe-cdsr/catalog-backend) folder.
 
-Environment variables file is named as `./env_files/api.env` and its variables are:
+Environment variables file is named as `./env_files/backend.env` and its variables are:
 
 - `ENVIRONMENT`: which environment the service will run, the only acceptable options are: `DevelopmentConfig` or `ProductionConfig`;
 
