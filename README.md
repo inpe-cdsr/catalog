@@ -282,7 +282,7 @@ Environment variables file is named as `./env_files/db.env` and its variables ar
 - `DB_PASS`: MySQL database user password.
 
 
-### Run the docker compose:
+### Run the docker compose
 
 In order to download all Docker images from DGI registry, you need to log in it.
 
