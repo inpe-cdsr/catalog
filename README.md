@@ -17,7 +17,7 @@ Create a new folder where you will let all your repositories, for example `inpe-
 $ mkdir inpe-cdsr
 ```
 
-Clone the [catalog](https://github.com/inpe-cdsr/catalog) repository inside the previous folder:
+Clone the [catalog](https://github.com/inpe-cdsr/catalog) repository inside the previous folder and get into it:
 
 ```
 $ cd inpe-cdsr/ && \
@@ -339,14 +339,10 @@ The following endpoints are now available:
 
 ### Database settings
 
-On this section you will do some configurations to your [MariaDB](https://mariadb.com/) database.
+Follow the instructions of the [README.md](https://github.com/inpe-cdsr/database/blob/master/README.md) file inside the [database](https://github.com/inpe-cdsr/database) repository to initialize correctly your [MariaDB](https://mariadb.com/) database.
 
 In order to open [MariaDB](https://mariadb.com/), access [phpMyAdmin](https://www.phpmyadmin.net/) on `http://<your host>:8099`.
 
-
-#### Import databases
-
->>> TODO
 
 ### GeoServer settings
 
