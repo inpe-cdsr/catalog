@@ -10,7 +10,7 @@ services:
     restart: always
     volumes:
       - ./volumes/nginx/nginx.template:/etc/nginx/conf.d/mysite.template
-      - /data/TIFF/:/var/www/html/datastore
+      - /data/TIFF:/var/www/html/datastore/TIFF
     env_file:
       - ./env_files/nginx.env
     command: /bin/bash -c "envsubst '$$NGINX_HOST $$NGINX_PORT' < /etc/nginx/conf.d/mysite.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
@@ -42,9 +42,7 @@ services:
     image: registry.dpi.inpe.br/dgi/catalog_api:0.0.8
     restart: always
     volumes:
-      - /data/TIFF/CBERS4:/CBERS4
-      - /data/TIFF/CBERS4A:/CBERS4A
-      - /data/TIFF/LANDSAT5:/LANDSAT5
+      - /data/TIFF:/TIFF
     env_file:
       - ./env_files/backend.env
     networks:
@@ -127,23 +125,23 @@ services:
     ports:
       - 8099:80
 
-  dgi_catalog_publisher:
-    container_name: dgi_catalog_publisher
-    image: publisher
-    restart: always
-    user: 1648:1648
-    volumes:
-      - ../publisher:/app
-      - ../publisher:/config
-      - /data/TIFF/CBERS4:/CBERS4
-      - /data/TIFF/CBERS4A:/CBERS4A
-      - /data/TIFF/LANDSAT5:/LANDSAT5
-    env_file:
-      - ./env_files/publisher.env
-    networks:
-      - dgi_catalog
-    ports:
-      - 5022:5022
+  # dgi_catalog_publisher:
+  #   container_name: dgi_catalog_publisher
+  #   image: publisher
+  #   restart: always
+  #   user: 1648:1648
+  #   volumes:
+  #     - ../publisher:/app
+  #     - ../publisher:/config
+  #     - /data/TIFF/CBERS4:/CBERS4
+  #     - /data/TIFF/CBERS4A:/CBERS4A
+  #     - /data/TIFF/LANDSAT5:/LANDSAT5
+  #   env_file:
+  #     - ./env_files/publisher.env
+  #   networks:
+  #     - dgi_catalog
+  #   ports:
+  #     - 5022:5022
 
 networks:
   dgi_catalog:

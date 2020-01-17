@@ -3,7 +3,8 @@ env_files/*
 
 volumes/geoserver/geoserverdata
 
-volumes/nginx/nginx.template.backup.*
+volumes/nginx/nginx.*.backup.*
+volumes/nginx/nginx.*.test
 
 # just include the '.EXAMPLE' files inside 'env' folder
 !env_files/*.EXAMPLE
