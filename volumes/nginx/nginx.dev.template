@@ -1,25 +1,25 @@
 upstream frontend {
-    server dgi_catalog_frontend:8000;
+    server inpe_cdsr_frontend:8000;
 }
 
 upstream backend {
-    server dgi_catalog_backend:5001;
+    server inpe_cdsr_backend:5001;
 }
 
 upstream inpestac {
-    server dgi_catalog_inpe_stac:5000;
+    server inpe_cdsr_inpe_stac:5000;
 }
 
 upstream staccompose {
-    server dgi_catalog_stac_compose:5002;
+    server inpe_cdsr_stac_compose:5002;
 }
 
 upstream portainer {
-    server dgi_catalog_portainer:9000;
+    server inpe_cdsr_portainer:9000;
 }
 
 upstream geoserver {
-    server dgi_catalog_geoserver:8080;
+    server inpe_cdsr_geoserver:8080;
 }
 
 server {

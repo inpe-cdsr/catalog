@@ -1,6 +1,6 @@
 {
   "INPE-CDSR": {
-    "url": "http://dgi_catalog_nginx:8089/inpe-stac",
+    "url": "http://inpe_cdsr_nginx:8089/inpe-stac",
     "type":"stac",
     "version": "0.7.0",
     "method": "GET",

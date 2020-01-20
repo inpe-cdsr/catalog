@@ -4,8 +4,8 @@ volumes:
   portainer_data:
 
 services:
-  dgi_catalog_nginx:
-    container_name: dgi_catalog_nginx
+  inpe_cdsr_nginx:
+    container_name: inpe_cdsr_nginx
     image: nginx:1.17.6
     # restart: always
     volumes:
@@ -15,19 +15,19 @@ services:
       - ./env_files/nginx.env
     command: /bin/bash -c "envsubst '$$NGINX_HOST $$NGINX_PORT' < /etc/nginx/conf.d/mysite.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
     networks:
-      - dgi_catalog
+      - inpe_cdsr
     depends_on:
-      - dgi_catalog_frontend
-      - dgi_catalog_backend
-      - dgi_catalog_inpe_stac
-      - dgi_catalog_stac_compose
-      - dgi_catalog_portainer
-      - dgi_catalog_geoserver
+      - inpe_cdsr_frontend
+      - inpe_cdsr_backend
+      - inpe_cdsr_inpe_stac
+      - inpe_cdsr_stac_compose
+      - inpe_cdsr_portainer
+      - inpe_cdsr_geoserver
     ports:
       - 8089:8089
 
-  dgi_catalog_frontend:
-    container_name: dgi_catalog_frontend
+  inpe_cdsr_frontend:
+    container_name: inpe_cdsr_frontend
     image: dgi-catalog-frontend
     command: npm start
     # restart: always
@@ -36,12 +36,12 @@ services:
     volumes:
       - ../catalog-frontend/portal:/app
     networks:
-      - dgi_catalog
+      - inpe_cdsr
     ports:
       - 5000:8000
 
-  dgi_catalog_backend:
-    container_name: dgi_catalog_backend
+  inpe_cdsr_backend:
+    container_name: inpe_cdsr_backend
     image: dgi-catalog-backend
     command: python3 manage.py run
     # restart: always
@@ -51,26 +51,26 @@ services:
     env_file:
       - ./env_files/backend.env
     networks:
-      - dgi_catalog
+      - inpe_cdsr
     ports:
       - 5001:5001
 
-  dgi_catalog_inpe_stac:
-    container_name: dgi_catalog_inpe_stac
+  inpe_cdsr_inpe_stac:
+    container_name: inpe_cdsr_inpe_stac
     image: inpe_stac
-    command: flask run --host=0.0.0.0
+    command: flask run
     # restart: always
     volumes:
       - ../inpe-stac/inpe_stac:/inpe_stac
     env_file:
       - ./env_files/inpe_stac.env
     networks:
-      - dgi_catalog
+      - inpe_cdsr
     ports:
       - 5002:5000
 
-  dgi_catalog_stac_compose:
-    container_name: dgi_catalog_stac_compose
+  inpe_cdsr_stac_compose:
+    container_name: inpe_cdsr_stac_compose
     image: stac_compose
     command: python3 manage.py run
     # restart: always
@@ -80,24 +80,24 @@ services:
     env_file:
       - ./env_files/stac_compose.env
     networks:
-      - dgi_catalog
+      - inpe_cdsr
     ports:
       - 5003:5002
 
-  dgi_catalog_portainer:
-    container_name: dgi_catalog_portainer
+  inpe_cdsr_portainer:
+    container_name: inpe_cdsr_portainer
     image: portainer/portainer:1.23.0
     # restart: always
     volumes:
       - portainer_data:/data
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
-      - dgi_catalog
+      - inpe_cdsr
     ports:
       - 9000:9000
 
-  dgi_catalog_geoserver:
-    container_name: dgi_catalog_geoserver
+  inpe_cdsr_geoserver:
+    container_name: inpe_cdsr_geoserver
     image: kartoza/geoserver:2.15.2
     # restart: always
     volumes:
@@ -107,12 +107,12 @@ services:
     env_file:
       - ./env_files/geoserver.env
     networks:
-      - dgi_catalog
+      - inpe_cdsr
     ports:
       - 9001:8080
 
-  dgi_catalog_db:
-    container_name: dgi_catalog_db
+  inpe_cdsr_db:
+    container_name: inpe_cdsr_db
     image: mariadb:10.4.11
     # restart: always
     volumes:
@@ -120,21 +120,21 @@ services:
     env_file:
       - ./env_files/db.env
     networks:
-      - dgi_catalog
+      - inpe_cdsr
     ports:
       - 3311:3306
 
-  dgi_catalog_phpmyadmin:
-    container_name: dgi_catalog_phpmyadmin
+  inpe_cdsr_phpmyadmin:
+    container_name: inpe_cdsr_phpmyadmin
     image: phpmyadmin/phpmyadmin:4.9
     # restart: always
     env_file:
       - ./env_files/phpmyadmin.env
     networks:
-      - dgi_catalog
+      - inpe_cdsr
     ports:
       - 8099:80
 
 networks:
-  dgi_catalog:
+  inpe_cdsr:
     driver: bridge
