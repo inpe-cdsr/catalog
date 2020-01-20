@@ -40,8 +40,7 @@ $ cp nginx.env.EXAMPLE nginx.env && \
   cp stac_compose.env.EXAMPLE stac_compose.env && \
   cp geoserver.env.EXAMPLE geoserver.env && \
   cp db.env.EXAMPLE db.env && \
-  cp phpmyadmin.env.EXAMPLE phpmyadmin.env && \
-  cp publisher.env.EXAMPLE publisher.env
+  cp phpmyadmin.env.EXAMPLE phpmyadmin.env
 ```
 
 Update the files above with proper settings. The files are environment variables files that contain settings related to the services inside `docker-compose.*.yml` files.
@@ -66,9 +65,7 @@ Brief description of each file:
 
 - `db.env`: [MariaDB](https://hub.docker.com/_/mariadb) database settings;
 
-- `phpmyadmin.env`: [phpMyAdmin](https://hub.docker.com/r/phpmyadmin/phpmyadmin/) settings;
-
-- `publisher.env`: Publisher settings.
+- `phpmyadmin.env`: [phpMyAdmin](https://hub.docker.com/r/phpmyadmin/phpmyadmin/) settings.
 
 The content of each file will be described afterwards.
 
@@ -78,9 +75,9 @@ The content of each file will be described afterwards.
 This section describes the services inside `docker-compose.*.yml` files.
 
 
-#### dgi_catalog_nginx
+#### inpe_cdsr_nginx
 
-`dgi_catalog_nginx` is a service that runs a [Nginx](https://hub.docker.com/_/nginx) Docker image, that is a reverse proxy server. This service serves all other applications inside `docker-compose.*.yml` files.
+`inpe_cdsr_nginx` is a service that runs a [Nginx](https://hub.docker.com/_/nginx) Docker image, that is a reverse proxy server. This service serves all other applications inside `docker-compose.*.yml` files.
 
 Existing volumes:
 
@@ -95,9 +92,9 @@ Environment variables file is named as `./env_files/nginx.env` and its variables
 - `NGINX_PORT`: which port Nginx will run inside the container, such as `80` or `8080`.
 
 
-#### dgi_catalog_frontend
+#### inpe_cdsr_frontend
 
-[dgi_catalog_frontend](https://github.com/inpe-cdsr/catalog-frontend) is a service that contains all front-end application. You can build its Docker image [here](https://github.com/inpe-cdsr/catalog-frontend).
+[inpe_cdsr_frontend](https://github.com/inpe-cdsr/catalog-frontend) is a service that contains all front-end application. You can build its Docker image [here](https://github.com/inpe-cdsr/catalog-frontend).
 
 Existing volumes in development mode:
 
@@ -119,9 +116,9 @@ Environment variables file is named as `./env_files/frontend.env` and its variab
     - `<style>`: layer style on Geoserver.
 
 
-#### dgi_catalog_backend
+#### inpe_cdsr_backend
 
-[dgi_catalog_backend](https://github.com/inpe-cdsr/catalog-backend) is a back-end service to [dgi_catalog_frontend](https://github.com/inpe-cdsr/catalog-frontend) web application. This service provides user authentication and an endpoint to download satellite images.
+[inpe_cdsr_backend](https://github.com/inpe-cdsr/catalog-backend) is a back-end service to [inpe_cdsr_frontend](https://github.com/inpe-cdsr/catalog-frontend) web application. This service provides user authentication and an endpoint to download satellite images.
 
 Existing volumes in development mode:
 
@@ -148,9 +145,9 @@ Environment variables file is named as `./env_files/backend.env` and its variabl
 `MYSQL_DB_USER_*` environment variables are related to MySQL database connection and `JWT_*` ones are related to [JWT](https://pyjwt.readthedocs.io/en/latest/) encryption.
 
 
-#### dgi_catalog_inpe_stac
+#### inpe_cdsr_inpe_stac
 
-[dgi_catalog_inpe_stac](https://github.com/inpe-cdsr/inpe-stac) is a [SpatioTemporal Asset Catalog (STAC)](https://github.com/radiantearth/stac-spec) service. This service is a STAC implementation for INPE Catalog.
+[inpe_cdsr_inpe_stac](https://github.com/inpe-cdsr/inpe-stac) is a [SpatioTemporal Asset Catalog (STAC)](https://github.com/radiantearth/stac-spec) service. This service is a STAC implementation for INPE Catalog.
 
 Existing volumes in development mode:
 
@@ -158,7 +155,7 @@ Existing volumes in development mode:
 
 Environment variables file is named as `./env_files/inpe_stac.env` and its variables are:
 
-- `BASE_URI`: base URI that Nginx points to `dgi_catalog_inpe_stac` service.
+- `BASE_URI`: base URI that Nginx points to `inpe_cdsr_inpe_stac` service.
 
 - `FLASK_APP`: file that will be executed when the service starts, default can be used. This can be changed if you build a new image with a new `app.py` location;
 
@@ -179,9 +176,9 @@ Environment variables file is named as `./env_files/inpe_stac.env` and its varia
 `DB_USER_*` environment variables are related to MySQL database connection.
 
 
-#### dgi_catalog_stac_compose
+#### inpe_cdsr_stac_compose
 
-[dgi_catalog_stac_compose](https://github.com/inpe-cdsr/stac-compose) is a [SpatioTemporal Asset Catalog (STAC)](https://github.com/radiantearth/stac-spec) compose service. This service serves various STAC applications, called providers.
+[inpe_cdsr_stac_compose](https://github.com/inpe-cdsr/stac-compose) is a [SpatioTemporal Asset Catalog (STAC)](https://github.com/radiantearth/stac-spec) compose service. This service serves various STAC applications, called providers.
 
 Existing volumes:
 
@@ -224,13 +221,13 @@ Environment variables file is named as `./env_files/stac_compose.env` and its va
 - `PORT`: which port the server will run inside the Docker container.
 
 
-#### dgi_catalog_portainer
+#### inpe_cdsr_portainer
 
-`dgi_catalog_portainer` is a service that runs a [Portainer](https://hub.docker.com/r/portainer/portainer/) Docker image. Its settings can be found on its [repository on Docker hub](https://hub.docker.com/r/portainer/portainer/).
+`inpe_cdsr_portainer` is a service that runs a [Portainer](https://hub.docker.com/r/portainer/portainer/) Docker image. Its settings can be found on its [repository on Docker hub](https://hub.docker.com/r/portainer/portainer/).
 
-#### dgi_catalog_geoserver
+#### inpe_cdsr_geoserver
 
-`dgi_catalog_geoserver` is a service that runs a [GeoServer](https://hub.docker.com/r/kartoza/geoserver/) Docker image. Its settings can be found on its [repository on Docker hub](https://hub.docker.com/r/kartoza/geoserver/).
+`inpe_cdsr_geoserver` is a service that runs a [GeoServer](https://hub.docker.com/r/kartoza/geoserver/) Docker image. Its settings can be found on its [repository on Docker hub](https://hub.docker.com/r/kartoza/geoserver/).
 
 Extra existing volumes:
 
@@ -239,9 +236,9 @@ Extra existing volumes:
 Environment variables file is named as `./env_files/geoserver.env` and its variables are described on Geoserver Docker hub on [Run (manual docker commands)](https://hub.docker.com/r/kartoza/geoserver/) section.
 
 
-#### dgi_catalog_db
+#### inpe_cdsr_db
 
-`dgi_catalog_db` is a service that runs a [MariaDB](https://hub.docker.com/_/mariadb) Docker image, that is a database server.
+`inpe_cdsr_db` is a service that runs a [MariaDB](https://hub.docker.com/_/mariadb) Docker image, that is a database server.
 
 Existing volumes:
 
@@ -252,34 +249,11 @@ Environment variables file is named as `./env_files/db.env` and its variables ar
 - `MYSQL_ROOT_PASSWORD`: default password to MariaDB database;
 
 
-#### dgi_catalog_admin
+#### inpe_cdsr_admin
 
-`dgi_catalog_admin` is a service that runs a [phpMyAdmin](https://hub.docker.com/r/phpmyadmin/phpmyadmin/) Docker image.
+`inpe_cdsr_admin` is a service that runs a [phpMyAdmin](https://hub.docker.com/r/phpmyadmin/phpmyadmin/) Docker image.
 
 Environment variables file is named as `./env_files/phpmyadmin.env` and its variables are described on phpMyAdmin Docker hub on [Environment variables summary](https://hub.docker.com/r/phpmyadmin/phpmyadmin/) section.
-
-
-#### dgi_catalog_publisher
-
-`dgi_catalog_publisher` is a service that runs a Publisher Docker image.
-
-Existing volumes:
-
-- `/app`: Publisher source code;
-
-- `/config`: Publisher source code;
-
-- `/CBERS4`: folder with scenes from CBERS4 satellite;
-
-- `/LANDSAT5`: folder with scenes from LANDSAT5 satellite.
-
-Environment variables file is named as `./env_files/db.env` and its variables are:
-
-- `DB_HOST`: MySQL host name and port (e.g `localhost:3306`);
-
-- `DB_USER`: MySQL database user;
-
-- `DB_PASS`: MySQL database user password.
 
 
 ### Run the docker compose

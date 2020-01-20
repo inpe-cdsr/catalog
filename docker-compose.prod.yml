@@ -125,24 +125,6 @@ services:
     ports:
       - 8099:80
 
-  # inpe_cdsr_publisher:
-  #   container_name: inpe_cdsr_publisher
-  #   image: publisher
-  #   restart: always
-  #   user: 1648:1648
-  #   volumes:
-  #     - ../publisher:/app
-  #     - ../publisher:/config
-  #     - /data/TIFF/CBERS4:/CBERS4
-  #     - /data/TIFF/CBERS4A:/CBERS4A
-  #     - /data/TIFF/LANDSAT5:/LANDSAT5
-  #   env_file:
-  #     - ./env_files/publisher.env
-  #   networks:
-  #     - inpe_cdsr
-  #   ports:
-  #     - 5022:5022
-
 networks:
   inpe_cdsr:
     driver: bridge
