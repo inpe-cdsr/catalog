@@ -31,10 +31,9 @@ services:
     image: inpe-cdsr-catalog-frontend
     command: npm start
     # restart: always
-    env_file:
-      - ./env_files/frontend.env
     volumes:
       - ../catalog-frontend/portal:/app
+      - ./volumes/catalog-frontend/env.js:/app/src/assets/env.js
     networks:
       - inpe_cdsr
     ports:

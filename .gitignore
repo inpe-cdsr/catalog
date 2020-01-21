@@ -1,10 +1,12 @@
-# exclude all files from folders
+# exclude all files and just include the '.EXAMPLE' files
 env_files/*
+!env_files/*.EXAMPLE
+
+# exclude all files and just include the '.EXAMPLE' files
+volumes/catalog-frontend/*
+!volumes/catalog-frontend/*.EXAMPLE
 
 volumes/geoserver/geoserverdata
 
 volumes/nginx/nginx.*.backup.*
 volumes/nginx/nginx.*.test
-
-# just include the '.EXAMPLE' files inside 'env' folder
-!env_files/*.EXAMPLE

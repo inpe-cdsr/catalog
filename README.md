@@ -98,7 +98,9 @@ Environment variables file is named as `./env_files/nginx.env` and its variables
 
 Existing volumes in development mode:
 
-  - `/app`: this folder needs to point to the [catalog-frontend](https://github.com/inpe-cdsr/catalog-frontend) source code, that is the [portal](https://github.com/inpe-cdsr/catalog-frontend/tree/master/portal) folder.
+- `/app`: this folder needs to point to the [catalog-frontend](https://github.com/inpe-cdsr/catalog-frontend) source code, that is the [portal](https://github.com/inpe-cdsr/catalog-frontend/tree/master/portal) folder;
+
+- `/app/src/assets/env.js`: this file contains the environment variables to run the application in development mode. In development mode, the Angular does not read `./env_files/frontend.env` file. `env.js` contains the same variables than `frontend.env` file.
 
 Environment variables file is named as `./env_files/frontend.env` and its variables are:
 
@@ -114,6 +116,8 @@ Environment variables file is named as `./env_files/frontend.env` and its variab
     - `<title>`: a title that will be shown on the web portal;
     - `<layer>`: layer name on Geoserver;
     - `<style>`: layer style on Geoserver.
+
+The file `./env_files/frontend.env` is just read in production mode.
 
 
 #### inpe_cdsr_backend
@@ -311,7 +315,14 @@ git clone https://github.com/inpe-cdsr/stac-compose.git
 
 For each repository you cloned before, you need to build its development Docker image by following the instructions inside each repository: [catalog-frontend](https://github.com/inpe-cdsr/catalog-frontend), [catalog-backend](https://github.com/inpe-cdsr/catalog-backend), [inpe-stac](https://github.com/inpe-cdsr/inpe-stac) and [stac-compose](https://github.com/inpe-cdsr/stac-compose).
 
-After you build each Docker image, you are able to run the development file:
+Angular does not read environment variables because it is executed on the interface, then you need to create a JavaScript file with the necessary variables in development mode. In order to do that, get into the `catalog-frontend` volume folder, copy the environment file and edit it if it is necessary:
+
+```
+$ cd catalog/volumes/catalog-frontend/ && \
+  cp env.js.EXAMPLE env.js
+```
+
+After the steps above, you are able to run the development file:
 
 ```
 $ docker-compose -f docker-compose.dev.yml up
