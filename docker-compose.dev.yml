@@ -28,7 +28,7 @@ services:
 
   inpe_cdsr_frontend:
     container_name: inpe_cdsr_frontend
-    image: dgi-catalog-frontend
+    image: inpe_cdsr-catalog-frontend
     command: npm start
     # restart: always
     env_file:
@@ -42,7 +42,7 @@ services:
 
   inpe_cdsr_backend:
     container_name: inpe_cdsr_backend
-    image: dgi-catalog-backend
+    image: inpe_cdsr-catalog-backend
     command: python3 manage.py run
     # restart: always
     volumes:
@@ -57,7 +57,7 @@ services:
 
   inpe_cdsr_inpe_stac:
     container_name: inpe_cdsr_inpe_stac
-    image: inpe_stac
+    image: inpe_cdsr-inpe-stac
     command: flask run
     # restart: always
     volumes:
@@ -71,7 +71,7 @@ services:
 
   inpe_cdsr_stac_compose:
     container_name: inpe_cdsr_stac_compose
-    image: stac_compose
+    image: inpe_cdsr-stac-compose
     command: python3 -u manage.py run
     # restart: always
     volumes:

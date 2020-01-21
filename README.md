@@ -21,7 +21,7 @@ Clone the [catalog](https://github.com/inpe-cdsr/catalog) repository inside the 
 
 ```
 $ cd inpe-cdsr/ && \
-git clone https://github.com/inpe-cdsr/catalog && \
+git clone https://github.com/inpe-cdsr/catalog.git && \
 cd catalog/
 ```
 
@@ -297,7 +297,21 @@ $ docker login registry.dpi.inpe.br
 
 #### Development
 
-In order to run in development mode, you need to build all development images with the instructions inside each repository linked in [this section](#docker-compose-services).
+`docker-compose.dev.yml` file uses volumes that point to the source code of some services, hence you need download the other repositories first, in order to execute this file.
+
+Assuming that you are inside `catalog` folder, go back one folder and clone the other repositories:
+
+```
+$ cd .. && \
+git clone https://github.com/inpe-cdsr/catalog-frontend.git && \
+git clone https://github.com/inpe-cdsr/catalog-backend.git && \
+git clone https://github.com/inpe-cdsr/inpe-stac.git && \
+git clone https://github.com/inpe-cdsr/stac-compose.git
+```
+
+For each repository you cloned before, you need to build its development Docker image by following the instructions inside each repository: [catalog-frontend](https://github.com/inpe-cdsr/catalog-frontend), [catalog-backend](https://github.com/inpe-cdsr/catalog-backend), [inpe-stac](https://github.com/inpe-cdsr/inpe-stac) and [stac-compose](https://github.com/inpe-cdsr/stac-compose).
+
+After you build each Docker image, you are able to run the development file:
 
 ```
 $ docker-compose -f docker-compose.dev.yml up
