@@ -4,9 +4,10 @@
     "type":"stac",
     "version": "0.7.0",
     "method": "GET",
-    "filter_mult_collection": 1,
+    "filter_mult_collection": 0,
     "require_credentials": 1,
-    "downloadable": 1
+    "downloadable": 1,
+    "ignore_provider_validation": 1
   },
   "LANDAST8-SENTINEL2-AWS": {
     "url": "https://sat-api.developmentseed.org",
@@ -15,7 +16,8 @@
     "method": "POST",
     "filter_mult_collection": 0,
     "require_credentials": 0,
-    "downloadable": 0
+    "downloadable": 0,
+    "ignore_provider_validation": 0
   },
   "CBERS4-AWS": {
     "url": "https://stac.amskepler.com/v07",
@@ -24,7 +26,8 @@
     "method": "GET",
     "filter_mult_collection": 0,
     "require_credentials": 0,
-    "downloadable": 0
+    "downloadable": 0,
+    "ignore_provider_validation": 0
   },
   "BRAZILDATACUBE": {
     "url": "http://brazildatacube.dpi.inpe.br/bdc-stac/0.7.0",
@@ -33,6 +36,7 @@
     "method": "GET",
     "filter_mult_collection": 0,
     "require_credentials": 0,
-    "downloadable": 0
+    "downloadable": 0,
+    "ignore_provider_validation": 0
   }
 }
