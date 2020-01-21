@@ -11,7 +11,7 @@ The repository contains two docker composes to run the project applications:
 
 ## Install
 
-Create a new folder where you will let all your repositories, for example `inpe-cdsr`:
+Create a new folder where you will let all your repositories called `inpe-cdsr`:
 
 ```
 $ mkdir inpe-cdsr
@@ -83,13 +83,13 @@ Existing volumes:
 
 - `/etc/nginx/conf.d/mysite.template`: Nginx settings file, such as upstreams and locations;
 
-- `/var/www/html/datastore`: this folder should contain all static files that Nginx will serve, such as quicklooks and TIFFs.
+- `/var/www/html/datastore/TIFF`: this folder should contain all static files that Nginx will serve, such as quick looks and TIFFs.
 
 Environment variables file is named as `./env_files/nginx.env` and its variables are:
 
-- `NGINX_HOST`: host name where the Nginx will run, such as `my.server.com`;
+- `NGINX_HOST`: which host name the Nginx service will run inside the Docker container, such as `my.server.com`;
 
-- `NGINX_PORT`: which port Nginx will run inside the container, such as `80` or `8080`.
+- `NGINX_PORT`: which port the Nginx service will run inside the Docker container, such as `80` or `8080`.
 
 
 #### inpe_cdsr_frontend
@@ -119,6 +119,10 @@ Environment variables file is named as `./env_files/frontend.env` and its variab
 #### inpe_cdsr_backend
 
 [inpe_cdsr_backend](https://github.com/inpe-cdsr/catalog-backend) is a back-end service to [inpe_cdsr_frontend](https://github.com/inpe-cdsr/catalog-frontend) web application. This service provides user authentication and an endpoint to download satellite images.
+
+Existing volumes:
+
+- `/TIFF`: this folder should contain all static files, such as quick looks and TIFFs.
 
 Existing volumes in development mode:
 
@@ -161,6 +165,10 @@ Environment variables file is named as `./env_files/inpe_stac.env` and its varia
 
 - `FLASK_ENV`: which environment the service will run, the only acceptable options are: `development` or `production`;
 
+- `FLASK_RUN_HOST`: which host name the service will run inside the Docker container;
+
+- `FLASK_RUN_PORT`: which port the service will run inside the Docker container;
+
 - `DB_HOST`: MySQL host name and port (e.g `localhost:3306`);
 
 - `DB_USER`: MySQL database user;
@@ -171,7 +179,7 @@ Environment variables file is named as `./env_files/inpe_stac.env` and its varia
 
 - `FILE_ROOT`: URI that points to a folder where satellite images are;
 
-- `API_VERSION`: STAC application version;
+- `API_VERSION`: STAC application version.
 
 `DB_USER_*` environment variables are related to MySQL database connection.
 
@@ -210,6 +218,12 @@ Existing volumes:
 
         - 0: if the files, this STAC provides, are not downloadable on the portal.
 
+    - `ignore_provider_validation`: boolean.
+
+        - 1: if the service is not allowed to validate the provider before using it;
+
+        - 0: if the service is allowed to validate the provider before using it.
+
 An example file can be found in [`./volumes/stac-compose/providers/providers.json`](./volumes/stac-compose/providers/providers.json). This file will be used by [stac-compose](https://github.com/inpe-cdsr/stac-compose) that runs inside `docker-compose.*.yml` files. In order to add a new provider, just insert a new key inside the JSON object in the file and fill it with the correct settings.
 
 Existing volumes in development mode:
@@ -218,20 +232,36 @@ Existing volumes in development mode:
 
 Environment variables file is named as `./env_files/stac_compose.env` and its variables are:
 
-- `PORT`: which port the server will run inside the Docker container.
+- `FLASK_ENV`: which environment the service will run, the only acceptable options are: `development` or `production`;
+
+- `SERVER_HOST`: which host name the service will run inside the Docker container;
+
+- `SERVER_PORT`: which port the service will run inside the Docker container.
 
 
 #### inpe_cdsr_portainer
 
-`inpe_cdsr_portainer` is a service that runs a [Portainer](https://hub.docker.com/r/portainer/portainer/) Docker image. Its settings can be found on its [repository on Docker hub](https://hub.docker.com/r/portainer/portainer/).
+`inpe_cdsr_portainer` is a service that runs a [Portainer](https://hub.docker.com/r/portainer/portainer/) Docker image. Its settings can be found on its [repository on Docker hub](https://hub.docker.com/r/portainer/portainer/) or [documentation](https://portainer.readthedocs.io/en/1.23.0/index.html).
+
+Existing volumes:
+
+- `/data`: a folder where Portainer will persist its data;
+
+- `/var/run/docker.sock`: path where Portainer will attempt to connect to the local Docker engine.
 
 #### inpe_cdsr_geoserver
 
 `inpe_cdsr_geoserver` is a service that runs a [GeoServer](https://hub.docker.com/r/kartoza/geoserver/) Docker image. Its settings can be found on its [repository on Docker hub](https://hub.docker.com/r/kartoza/geoserver/).
 
+Existing volumes:
+
+- `/opt/geoserver/data_dir`: a folder where GeoServer will persist its data;
+
+- `/usr/local/tomcat/webapps/geoserver/WEB-INF/web.xml`: GeoServer settings file.
+
 Extra existing volumes:
 
-- `/home/data/grids`: a folder where the grids in Shapefile format are saved to be served by Geoserver.
+- `/home/data/grids`: a folder where the grids in Shapefile format are saved to be served by GeoServer.
 
 Environment variables file is named as `./env_files/geoserver.env` and its variables are described on Geoserver Docker hub on [Run (manual docker commands)](https://hub.docker.com/r/kartoza/geoserver/) section.
 
@@ -242,11 +272,11 @@ Environment variables file is named as `./env_files/geoserver.env` and its varia
 
 Existing volumes:
 
-- `/var/lib/mysql`: MariaDB folder and files.
+- `/var/lib/mysql`: folder where MySQL will persist its data.
 
 Environment variables file is named as `./env_files/db.env` and its variables are:
 
-- `MYSQL_ROOT_PASSWORD`: default password to MariaDB database;
+- `MYSQL_ROOT_PASSWORD`: default password to MySQL database.
 
 
 #### inpe_cdsr_admin
