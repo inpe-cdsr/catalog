@@ -292,14 +292,10 @@ Environment variables file is named as `./env_files/phpmyadmin.env` and its vari
 
 ### Run the docker compose
 
-In order to download all Docker images from DGI registry, you need to log in it.
-
-```
-$ docker login registry.dpi.inpe.br
-```
+This section describes how to run the `docker-compose.*.yml` files, in development and production mode, and the available endpoints.
 
 
-#### Development
+#### Development mode
 
 `docker-compose.dev.yml` file uses volumes that point to the source code of some services, hence you need download the other repositories first, in order to execute this file.
 
@@ -329,17 +325,23 @@ $ docker-compose -f docker-compose.dev.yml up
 ```
 
 
-#### Production
+#### Production mode
 
-When you run in production mode, all Docker images will be downloaded. If they are not you can pull all Docker images using the following command:
+Before running in production mode, you must log in the following registry in order to download all necessary Docker images:
+
+```
+$ docker login registry.dpi.inpe.br
+```
+
+When you run in production mode for the first time, all Docker images will be downloaded. If they are not downloaded, for some reason, you can pull all Docker images using the following command:
 
 ```
 $ docker pull <Docker image>
 ```
 
-Where `<Docker image>` is the image inside each service on the `docker-compose.prod.yml` file.
+Where `<Docker image>` is the image used inside each service on the `docker-compose.prod.yml` file.
 
-With all Docker images downloaded, you can run the docker compose:
+Use the following command to run in production mode:
 
 ```
 $ docker-compose -f docker-compose.prod.yml up -d
@@ -347,7 +349,7 @@ $ docker-compose -f docker-compose.prod.yml up -d
 
 #### Endpoints
 
-After running the docker compose, Nginx will serve all applications with the host and port you defined inside [env_files/nginx.env](./env_files/nginx.env) file (e.g `http://localhost:8089`).
+After running the docker compose, Nginx will serve all applications with the host and port you defined inside [env_files/nginx.env](./env_files/nginx.env) file (e.g. `http://localhost:8089`).
 
 The following endpoints are now available:
 
