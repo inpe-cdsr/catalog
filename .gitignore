@@ -10,3 +10,5 @@ volumes/geoserver/geoserverdata
 
 volumes/nginx/nginx.*.backup.*
 volumes/nginx/nginx.*.test
+
+.vscode/*

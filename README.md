@@ -341,11 +341,20 @@ $ docker pull <Docker image>
 
 Where `<Docker image>` is the image used inside each service on the `docker-compose.prod.yml` file.
 
-Use the following command to run in production mode:
+Use the following commands to run in production mode:
+
+- Run containers in the foreground:
+
+```
+$ docker-compose -f docker-compose.prod.yml up
+```
+
+- Run containers in the background:
 
 ```
 $ docker-compose -f docker-compose.prod.yml up -d
 ```
+
 
 #### Endpoints
 
