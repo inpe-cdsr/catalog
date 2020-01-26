@@ -370,7 +370,7 @@ The following endpoints are now available:
 
 - `/stac-compose`: [stac-compose](https://github.com/inpe-cdsr/stac-compose) application;
 
-- `/geoserver`: [Geoserver](https://hub.docker.com/r/kartoza/geoserver/) application;
+- `/geoserver`: [GeoServer](https://hub.docker.com/r/kartoza/geoserver/) application;
 
 - `/portainer`: [portainer](https://hub.docker.com/r/portainer/portainer/) application;
 

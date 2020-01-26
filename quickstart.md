@@ -20,7 +20,9 @@ $ mkdir inpe-cdsr
 Clone the [catalog](https://github.com/inpe-cdsr/catalog) repository inside the previous folder and get into it:
 
 ```
-$ cd inpe-cdsr/ && \?utm_source=Facebook&utm_medium=Social&utm_campaign=Extra
+$ cd inpe-cdsr/ && \
+git clone https://github.com/inpe-cdsr/catalog.git && \
+cd catalog/
 ```
 
 
@@ -44,7 +46,7 @@ $ cp nginx.env.EXAMPLE nginx.env && \
 
 #### Environment variables settings
 
-Open `nginx.env` file and set a host name and port that Nginx will use to serve all the applications publicly. These settings need to be edited on another files as well, such as `frontend.env` and `inpe_stac.env` , by updating the URLs according to domain and port you chose, in other words, you must replace `localhost:8089` by your configuration or let these ones if you are running locally.
+Open `nginx.env` file and set a host name and port that Nginx will use to serve all the applications publicly. These settings need to be edited on another files as well, such as `frontend.env` and `inpe_stac.env`, by updating the URLs according to domain and port you chose, in other words, you must replace `localhost:8089` by your configuration or let these ones if you are running locally.
 
 `docker-compose.*.yml` files expect your TIFF files are mounted in `/data/TIFF` folder, hence you must mount them in this folder. Satellites folders are expected to be inside `/data/TIFF` folder. For example: you have TIFF files related to CBERS-4 and Landsat 5 satellites, then their folders must be mounted in `/data/TIFF/CBERS4` and `/data/TIFF/LANDSAT5` respectively. All subfolders inside `/data/TIFF` folder are considered satellites folders.  
 
@@ -99,3 +101,22 @@ $ docker exec -i inpe_cdsr_db sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD"'
 
 $ docker exec -i inpe_cdsr_db sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD"' < db_structure/cadastro.sql
 ```
+
+
+#### Endpoints
+
+After running the docker compose, Nginx will serve all applications with the host and port you defined inside [env_files/nginx.env](./env_files/nginx.env) file (e.g. `http://localhost:8089`).
+
+The following endpoints are now available:
+
+- `/catalogo`: [catalog-frontend](https://github.com/inpe-cdsr/catalog-frontend) application;
+
+- `/api`: [catalog-backend](https://github.com/inpe-cdsr/catalog-backend) application;
+
+- `/inpe-stac`: [inpe-stac](https://github.com/inpe-cdsr/inpe-stac) application;
+
+- `/stac-compose`: [stac-compose](https://github.com/inpe-cdsr/stac-compose) application;
+
+- `/geoserver`: [GeoServer](https://hub.docker.com/r/kartoza/geoserver/) application;
+
+- `/portainer`: [portainer](https://hub.docker.com/r/portainer/portainer/) application;
