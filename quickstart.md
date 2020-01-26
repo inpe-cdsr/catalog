@@ -103,20 +103,20 @@ $ docker exec -i inpe_cdsr_db sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD"'
 ```
 
 
-#### Endpoints
+### Endpoints
 
 After running the docker compose, Nginx will serve all applications with the host and port you defined inside [env_files/nginx.env](./env_files/nginx.env) file (e.g. `http://localhost:8089`).
 
 The following endpoints are now available:
 
-- `/catalogo`: [catalog-frontend](https://github.com/inpe-cdsr/catalog-frontend) application;
+- [/catalogo](http://localhost:8089/catalogo): [catalog-frontend](https://github.com/inpe-cdsr/catalog-frontend) application;
 
-- `/api`: [catalog-backend](https://github.com/inpe-cdsr/catalog-backend) application;
+- [/api](http://localhost:8089/api): [catalog-backend](https://github.com/inpe-cdsr/catalog-backend) application;
 
-- `/inpe-stac`: [inpe-stac](https://github.com/inpe-cdsr/inpe-stac) application;
+- [/inpe-stac](http://localhost:8089/inpe-stac): [inpe-stac](https://github.com/inpe-cdsr/inpe-stac) application;
 
-- `/stac-compose`: [stac-compose](https://github.com/inpe-cdsr/stac-compose) application;
+- [/stac-compose](http://localhost:8089/stac-compose): [stac-compose](https://github.com/inpe-cdsr/stac-compose) application;
 
-- `/geoserver`: [GeoServer](https://hub.docker.com/r/kartoza/geoserver/) application;
+- [/geoserver](http://localhost:8089/geoserver): [GeoServer](https://hub.docker.com/r/kartoza/geoserver/) application;
 
-- `/portainer`: [portainer](https://hub.docker.com/r/portainer/portainer/) application;
+- [/portainer](http://localhost:8089/portainer): [portainer](https://hub.docker.com/r/portainer/portainer/) application;
