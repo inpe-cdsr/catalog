@@ -333,6 +333,21 @@ Before running in production mode, you must log in the following registry in ord
 $ docker login registry.dpi.inpe.br
 ```
 
+If you get any error related to invalid certificate, you must insert `registry.dpi.inpe.br` registry in the list of insecure registries. In order to do that, create or edit the `/etc/docker/daemon.json` file and add te following line:
+
+```
+{
+  "insecure-registries" : ["registry.dpi.inpe.br"],
+  [...]
+}
+```
+
+Restart Docker with the following command and try to log in the above registry again.
+
+```
+sudo service docker restart
+```
+
 When you run in production mode for the first time, all Docker images will be downloaded. If they are not downloaded, for some reason, you can pull all Docker images using the following command:
 
 ```

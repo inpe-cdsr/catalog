@@ -48,7 +48,7 @@ $ cp nginx.env.EXAMPLE nginx.env && \
 
 Open `nginx.env` file and set a host name and port that Nginx will use to serve all the applications publicly. These settings need to be edited on another files as well, such as `frontend.env` and `inpe_stac.env`, by updating the URLs according to domain and port you chose, in other words, you must replace `localhost:8089` by your configuration or let these ones if you are running locally.
 
-`docker-compose.*.yml` files expect your TIFF files are mounted in `/data/TIFF` folder, hence you must mount them in this folder. Satellites folders are expected to be inside `/data/TIFF` folder. For example: you have TIFF files related to CBERS-4 and Landsat 5 satellites, then their folders must be mounted in `/data/TIFF/CBERS4` and `/data/TIFF/LANDSAT5` respectively. All subfolders inside `/data/TIFF` folder are considered satellites folders.  
+`docker-compose.*.yml` files expect your TIFF files are mounted in `/data/TIFF` folder, hence you must mount them in this folder. Satellites folders are expected to be inside `/data/TIFF` folder. For example: you have TIFF files related to CBERS-4 and Landsat 5 satellites, then their folders must be mounted in `/data/TIFF/CBERS4` and `/data/TIFF/LANDSAT5` respectively. All subfolders inside `/data/TIFF` folder are considered satellites folders.
 
 
 ### Run the docker-compose in production mode
@@ -57,6 +57,21 @@ Before running in production mode, you must log in the following registry in ord
 
 ```
 $ docker login registry.dpi.inpe.br
+```
+
+If you get any error related to invalid certificate, you must insert `registry.dpi.inpe.br` registry in the list of insecure registries. In order to do that, create or edit the `/etc/docker/daemon.json` file and add te following line:
+
+```
+{
+  "insecure-registries" : ["registry.dpi.inpe.br"],
+  [...]
+}
+```
+
+Restart Docker with the following command and try to log in the above registry again.
+
+```
+sudo service docker restart
 ```
 
 When you run in production mode for the first time, all Docker images will be downloaded. If they are not downloaded, for some reason, you can pull all Docker images using the following command:
