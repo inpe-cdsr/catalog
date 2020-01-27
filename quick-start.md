@@ -43,7 +43,7 @@ Environment variables advanced settings can be found in [this section](./README.
 
 ## Run the docker compose files
 
-This section describes how to run the `docker-compose.*.yml` files, in development and production mode, and the available endpoints.
+This section describes how to run the `docker-compose.*.yml` files, in development and production mode, and show the available endpoints.
 
 
 ### Development mode
@@ -62,7 +62,7 @@ git clone https://github.com/inpe-cdsr/stac-compose.git
 
 For each repository you cloned before, you need to build its development Docker image by following the instructions inside each repository: [catalog-frontend](https://github.com/inpe-cdsr/catalog-frontend), [catalog-backend](https://github.com/inpe-cdsr/catalog-backend), [inpe-stac](https://github.com/inpe-cdsr/inpe-stac) and [stac-compose](https://github.com/inpe-cdsr/stac-compose).
 
-Angular does not read environment variables because it is executed in the browser, then you need to create a JavaScript file with the necessary variables in development mode. In order to do that, get in the `catalog-frontend` volume folder, copy the environment file and edit it if it is necessary:
+Angular does not read environment variables because it is executed in the browser, then you need to create a JavaScript file with the necessary variables in development mode. In order to do that, get in the `catalog-frontend` volume folder, copy the environment file and edit it if necessary:
 
 ```
 $ cd catalog/volumes/catalog-frontend/ && \
