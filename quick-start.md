@@ -1,6 +1,6 @@
 # Quick Start
 
-This is a quick start related to CDSR project. This file explains how to install the project and do the basic settings.
+This is a quick start file related to CDSR project. This file explains how to install the project and do the basic settings.
 
 
 ## Install
@@ -15,8 +15,8 @@ Clone the [catalog](https://github.com/inpe-cdsr/catalog) repository inside the 
 
 ```
 $ cd inpe-cdsr/ && \
-git clone https://github.com/inpe-cdsr/catalog.git && \
-cd catalog/
+  git clone https://github.com/inpe-cdsr/catalog.git && \
+  cd catalog/
 ```
 
 
@@ -26,17 +26,19 @@ Get in [env_files](./env_files) folder and create the environment files related 
 
 ```
 $ cd env_files/ && \
-  for i in *.env.EXAMPLE; do cp "$i" "${i/.EXAMPLE}"; done
+  for file in *.env.EXAMPLE; do cp "$file" "${file/.EXAMPLE}"; done
 ```
 
 Update the files above with proper settings. The files are environment variables files that contain settings related to the services inside `docker-compose.*.yml` files.
 
 
-#### Environment variables settings
+#### Environment variables basic settings
 
-Open `nginx.env` file and set a host name and port that Nginx will use to serve all the applications publicly. These settings need to be edited on another files as well, such as `frontend.env` and `inpe_stac.env`, by updating the URLs according to domain and port you chose, in other words, you must replace `localhost:8089` by your configuration or let these ones if you are running locally.
+Open `nginx.env` file and set a host name and port that Nginx will use to serve all the applications publicly. These settings need to be edited on another files as well, such as `frontend.env` and `inpe_stac.env`, by updating the URLs according to domain and port you chose, in other words, you must replace `localhost:8089` by your configuration or leave these ones if you are running locally.
 
-`docker-compose.*.yml` files expect your TIFF files are mounted in `/data/TIFF` folder, hence you must mount them in this folder. Satellites folders are expected to be inside that folder. For example: you have TIFF files related to CBERS-4 and Landsat 5 satellites, then their folders must be mounted in `/data/TIFF/CBERS4` and `/data/TIFF/LANDSAT5` folders respectively. All subfolders inside `/data/TIFF` folder are considered satellites folders.
+`docker-compose.*.yml` files expect your TIFF files are mounted in `/data/TIFF` folder, ergo you must mount them in this folder. Satellites folders are expected to be inside that folder. For example: you have TIFF files related to CBERS-4 and Landsat 5 satellites, then their folders must be mounted in `/data/TIFF/CBERS4` and `/data/TIFF/LANDSAT5` folders respectively. All subfolders inside `/data/TIFF` folder are considered satellites folders.
+
+Environment variables advanced settings can be found in [this section](./README.md#docker-compose-services).
 
 
 ## Run the docker compose files
