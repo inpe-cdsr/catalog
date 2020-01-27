@@ -155,7 +155,7 @@ The following endpoints are now available:
 - [/portainer](http://localhost:8089/portainer): [portainer](https://hub.docker.com/r/portainer/portainer/) application;
 
 
-### Database settings
+## Database settings
 
 This section assumes you have run a `docker-compose.*.yml` file before continuing.
 
@@ -175,4 +175,4 @@ $ docker exec -i inpe_cdsr_db sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD"'
 $ docker exec -i inpe_cdsr_db sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD"' < db_structure/cadastro.sql
 ```
 
-In order to open [MariaDB](https://mariadb.com/), access [phpMyAdmin](https://www.phpmyadmin.net/) on `http://<your host>:8099`.
+In order to open [MariaDB](https://mariadb.com/), access [phpMyAdmin](https://www.phpmyadmin.net/) on `http://<your host>:8099` (e.g. `http://localhost:8099`).
