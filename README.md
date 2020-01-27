@@ -45,30 +45,6 @@ $ cp nginx.env.EXAMPLE nginx.env && \
 
 Update the files above with proper settings. The files are environment variables files that contain settings related to the services inside `docker-compose.*.yml` files.
 
-Brief description of each file:
-
-- `nginx.env`: [Nginx](https://hub.docker.com/_/nginx) settings;
-
-- `frontend.env`: [catalog-frontend
-](https://github.com/inpe-cdsr/catalog-frontend) website settings;
-
-- `backend.env`: [catalog-backend
-](https://github.com/inpe-cdsr/catalog-backend) service settings;
-
-- `inpe_stac.env`: [inpe-stac
-](https://github.com/inpe-cdsr/inpe-stac) service settings;
-
-- `stac_compose.env`: [stac-compose
-](https://github.com/inpe-cdsr/stac-compose) service settings;
-
-- `geoserver.env`: [GeoServer](https://hub.docker.com/r/kartoza/geoserver/) settings;
-
-- `db.env`: [MariaDB](https://hub.docker.com/_/mariadb) database settings;
-
-- `phpmyadmin.env`: [phpMyAdmin](https://hub.docker.com/r/phpmyadmin/phpmyadmin/) settings.
-
-The content of each file will be described afterwards.
-
 
 ### Docker compose services
 

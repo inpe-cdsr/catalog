@@ -43,6 +43,8 @@ $ cp nginx.env.EXAMPLE nginx.env && \
   cp phpmyadmin.env.EXAMPLE phpmyadmin.env
 ```
 
+Update the files above with proper settings. The files are environment variables files that contain settings related to the services inside `docker-compose.*.yml` files.
+
 
 #### Environment variables settings
 
