@@ -1,17 +1,17 @@
 # Quick Start
 
-This is a quick start related to CDSR project.
+This is a quick start related to CDSR project. This file explains how to install the project and do the basic settings.
 
 
 ## Install
 
-Create a new folder where you will let all your repositories called `inpe-cdsr`:
+Create a new folder called `inpe-cdsr`, where you are going to put [catalog](https://github.com/inpe-cdsr/catalog) repository:
 
 ```
 $ mkdir inpe-cdsr
 ```
 
-Clone the [catalog](https://github.com/inpe-cdsr/catalog) repository inside the previous folder and get into it:
+Clone the [catalog](https://github.com/inpe-cdsr/catalog) repository inside the previous folder and get in it:
 
 ```
 $ cd inpe-cdsr/ && \
@@ -22,19 +22,11 @@ cd catalog/
 
 ### Settings
 
-Create the environment files related to each application based on the example ones inside [env_files](./env_files) folder:
+Get in [env_files](./env_files) folder and create the environment files related to each application based on the example ones inside it:
 
 ```
-$ cd env_files/
-
-$ cp nginx.env.EXAMPLE nginx.env && \
-  cp frontend.env.EXAMPLE frontend.env && \
-  cp backend.env.EXAMPLE backend.env && \
-  cp inpe_stac.env.EXAMPLE inpe_stac.env && \
-  cp stac_compose.env.EXAMPLE stac_compose.env && \
-  cp geoserver.env.EXAMPLE geoserver.env && \
-  cp db.env.EXAMPLE db.env && \
-  cp phpmyadmin.env.EXAMPLE phpmyadmin.env
+$ cd env_files/ && \
+  for i in *.env.EXAMPLE; do cp "$i" "${i/.EXAMPLE}"; done
 ```
 
 Update the files above with proper settings. The files are environment variables files that contain settings related to the services inside `docker-compose.*.yml` files.
@@ -68,7 +60,7 @@ git clone https://github.com/inpe-cdsr/stac-compose.git
 
 For each repository you cloned before, you need to build its development Docker image by following the instructions inside each repository: [catalog-frontend](https://github.com/inpe-cdsr/catalog-frontend), [catalog-backend](https://github.com/inpe-cdsr/catalog-backend), [inpe-stac](https://github.com/inpe-cdsr/inpe-stac) and [stac-compose](https://github.com/inpe-cdsr/stac-compose).
 
-Angular does not read environment variables because it is executed in the browser, then you need to create a JavaScript file with the necessary variables in development mode. In order to do that, get into the `catalog-frontend` volume folder, copy the environment file and edit it if it is necessary:
+Angular does not read environment variables because it is executed in the browser, then you need to create a JavaScript file with the necessary variables in development mode. In order to do that, get in the `catalog-frontend` volume folder, copy the environment file and edit it if it is necessary:
 
 ```
 $ cd catalog/volumes/catalog-frontend/ && \
