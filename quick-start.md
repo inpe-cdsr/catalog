@@ -75,10 +75,18 @@ $ cd catalog/volumes/catalog-frontend/ && \
   cp env.js.EXAMPLE env.js
 ```
 
-After the steps above, you are able to run the development file:
+Use the following commands to run in development mode:
+
+- Run containers in the foreground:
 
 ```
 $ docker-compose -f docker-compose.dev.yml up
+```
+
+- Run containers in the background:
+
+```
+$ docker-compose -f docker-compose.dev.yml up -d
 ```
 
 
