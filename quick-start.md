@@ -47,7 +47,42 @@ Open `nginx.env` file and set a host name and port that Nginx will use to serve 
 `docker-compose.*.yml` files expect your TIFF files are mounted in `/data/TIFF` folder, hence you must mount them in this folder. Satellites folders are expected to be inside `/data/TIFF` folder. For example: you have TIFF files related to CBERS-4 and Landsat 5 satellites, then their folders must be mounted in `/data/TIFF/CBERS4` and `/data/TIFF/LANDSAT5` respectively. All subfolders inside `/data/TIFF` folder are considered satellites folders.
 
 
-### Run the docker-compose in production mode
+## Run the docker compose files
+
+This section describes how to run the `docker-compose.*.yml` files, in development and production mode, and the available endpoints.
+
+
+### Development mode
+
+`docker-compose.dev.yml` file uses volumes that point to the source code of some services, hence you need download the other repositories first, in order to execute this file.
+
+Assuming that you are inside `catalog` folder, go back one folder and clone the other repositories:
+
+```
+$ cd .. && \
+git clone https://github.com/inpe-cdsr/catalog-frontend.git && \
+git clone https://github.com/inpe-cdsr/catalog-backend.git && \
+git clone https://github.com/inpe-cdsr/inpe-stac.git && \
+git clone https://github.com/inpe-cdsr/stac-compose.git
+```
+
+For each repository you cloned before, you need to build its development Docker image by following the instructions inside each repository: [catalog-frontend](https://github.com/inpe-cdsr/catalog-frontend), [catalog-backend](https://github.com/inpe-cdsr/catalog-backend), [inpe-stac](https://github.com/inpe-cdsr/inpe-stac) and [stac-compose](https://github.com/inpe-cdsr/stac-compose).
+
+Angular does not read environment variables because it is executed in the browser, then you need to create a JavaScript file with the necessary variables in development mode. In order to do that, get into the `catalog-frontend` volume folder, copy the environment file and edit it if it is necessary:
+
+```
+$ cd catalog/volumes/catalog-frontend/ && \
+  cp env.js.EXAMPLE env.js
+```
+
+After the steps above, you are able to run the development file:
+
+```
+$ docker-compose -f docker-compose.dev.yml up
+```
+
+
+### Production mode
 
 Before running in production mode, you must log in the following registry in order to download all necessary Docker images:
 
@@ -93,6 +128,25 @@ $ docker-compose -f docker-compose.prod.yml up -d
 ```
 
 
+### Endpoints
+
+After running the docker compose, Nginx will serve all applications with the host and port you defined inside [env_files/nginx.env](./env_files/nginx.env) file (e.g. `http://localhost:8089`).
+
+The following endpoints are now available:
+
+- [/catalogo](http://localhost:8089/catalogo): [catalog-frontend](https://github.com/inpe-cdsr/catalog-frontend) application;
+
+- [/api](http://localhost:8089/api): [catalog-backend](https://github.com/inpe-cdsr/catalog-backend) application;
+
+- [/inpe-stac](http://localhost:8089/inpe-stac): [inpe-stac](https://github.com/inpe-cdsr/inpe-stac) application;
+
+- [/stac-compose](http://localhost:8089/stac-compose): [stac-compose](https://github.com/inpe-cdsr/stac-compose) application;
+
+- [/geoserver](http://localhost:8089/geoserver): [GeoServer](https://hub.docker.com/r/kartoza/geoserver/) application;
+
+- [/portainer](http://localhost:8089/portainer): [portainer](https://hub.docker.com/r/portainer/portainer/) application;
+
+
 ### Database settings
 
 This section assumes you have run a `docker-compose.*.yml` file before continuing.
@@ -114,22 +168,3 @@ $ docker exec -i inpe_cdsr_db sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD"'
 ```
 
 In order to open [MariaDB](https://mariadb.com/), access [phpMyAdmin](https://www.phpmyadmin.net/) on `http://<your host>:8099`.
-
-
-### Endpoints
-
-After running the docker compose, Nginx will serve all applications with the host and port you defined inside [env_files/nginx.env](./env_files/nginx.env) file (e.g. `http://localhost:8089`).
-
-The following endpoints are now available:
-
-- [/catalogo](http://localhost:8089/catalogo): [catalog-frontend](https://github.com/inpe-cdsr/catalog-frontend) application;
-
-- [/api](http://localhost:8089/api): [catalog-backend](https://github.com/inpe-cdsr/catalog-backend) application;
-
-- [/inpe-stac](http://localhost:8089/inpe-stac): [inpe-stac](https://github.com/inpe-cdsr/inpe-stac) application;
-
-- [/stac-compose](http://localhost:8089/stac-compose): [stac-compose](https://github.com/inpe-cdsr/stac-compose) application;
-
-- [/geoserver](http://localhost:8089/geoserver): [GeoServer](https://hub.docker.com/r/kartoza/geoserver/) application;
-
-- [/portainer](http://localhost:8089/portainer): [portainer](https://hub.docker.com/r/portainer/portainer/) application;
