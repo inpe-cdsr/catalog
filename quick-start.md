@@ -86,7 +86,7 @@ $ docker-compose -f docker-compose.dev.yml up -d
 
 ### Production mode
 
-Before running in production mode, you must log in the following registry in order to download all necessary Docker images:
+Before running in production mode, you must log in the following Docker registry in order to download all necessary Docker images:
 
 ```
 $ docker login registry.dpi.inpe.br
@@ -132,7 +132,7 @@ $ docker-compose -f docker-compose.prod.yml up -d
 
 ### Endpoints
 
-After running the docker compose, Nginx will serve all applications with the host and port you defined inside [env_files/nginx.env](./env_files/nginx.env) file (e.g. `http://localhost:8089`).
+After running the docker compose file, Nginx will serve all applications with the host and port you defined inside [env_files/nginx.env](./env_files/nginx.env) file (e.g. `http://localhost:8089`).
 
 The following endpoints are now available:
 
@@ -153,15 +153,15 @@ The following endpoints are now available:
 
 This section assumes you have run a `docker-compose.*.yml` file before continuing.
 
-On another console, clone the [database](https://github.com/inpe-cdsr/database) repository inside `inpe-cdsr` folder and get into it:
+On another console, clone the [database](https://github.com/inpe-cdsr/database) repository inside `inpe-cdsr` folder and get in it:
 
 ```
 $ cd ../ && \
-git clone https://github.com/inpe-cdsr/database.git && \
-cd database/
+  git clone https://github.com/inpe-cdsr/database.git && \
+  cd database/
 ```
 
-Create the database schemas with the following commands:
+Create the database schemas based on the scripts inside `db_structure` with the following commands:
 
 ```
 $ docker exec -i inpe_cdsr_db sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD"' < db_structure/catalogo.sql
@@ -169,4 +169,4 @@ $ docker exec -i inpe_cdsr_db sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD"'
 $ docker exec -i inpe_cdsr_db sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD"' < db_structure/cadastro.sql
 ```
 
-In order to open [MariaDB](https://mariadb.com/), access [phpMyAdmin](https://www.phpmyadmin.net/) on `http://<your host>:8099` (e.g. `http://localhost:8099`).
+In order to open [MariaDB](https://mariadb.com/), access [phpMyAdmin](https://www.phpmyadmin.net/) on `http://<your host>:8099` (e.g. [http://localhost:8099](http://localhost:8099)).
