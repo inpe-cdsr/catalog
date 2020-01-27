@@ -1,6 +1,6 @@
 # catalog
 
-This is the main repository related to CDSR Catalog project.
+This is the main repository related to CDSR project.
 
 The repository contains two docker composes to run the project applications:
 
@@ -8,50 +8,15 @@ The repository contains two docker composes to run the project applications:
 
 - `docker-compose.prod.yml` file contains production services using Docker images without volumes. The Docker images contain all code inside them and they do not use volumes to keep their code.
 
-
-## Install
-
-Create a new folder where you will let all your repositories called `inpe-cdsr`:
-
-```
-$ mkdir inpe-cdsr
-```
-
-Clone the [catalog](https://github.com/inpe-cdsr/catalog) repository inside the previous folder and get into it:
-
-```
-$ cd inpe-cdsr/ && \
-git clone https://github.com/inpe-cdsr/catalog.git && \
-cd catalog/
-```
+Start reading the [quick start](./quick-start.md) and follow its instructions. This quick start provides the basic configuration to run the CDSR project for the first time. The following sections describe advanced configuration.
 
 
-### Settings
-
-Create the environment files related to each application based on the example ones inside [env_files](./env_files) folder:
-
-```
-$ cd env_files/
-
-$ cp nginx.env.EXAMPLE nginx.env && \
-  cp frontend.env.EXAMPLE frontend.env && \
-  cp backend.env.EXAMPLE backend.env && \
-  cp inpe_stac.env.EXAMPLE inpe_stac.env && \
-  cp stac_compose.env.EXAMPLE stac_compose.env && \
-  cp geoserver.env.EXAMPLE geoserver.env && \
-  cp db.env.EXAMPLE db.env && \
-  cp phpmyadmin.env.EXAMPLE phpmyadmin.env
-```
-
-Update the files above with proper settings. The files are environment variables files that contain settings related to the services inside `docker-compose.*.yml` files.
-
-
-### Docker compose services
+## Docker compose services
 
 This section describes the services inside `docker-compose.*.yml` files.
 
 
-#### inpe_cdsr_nginx
+### inpe_cdsr_nginx
 
 `inpe_cdsr_nginx` is a service that runs a [Nginx](https://hub.docker.com/_/nginx) Docker image, that is a reverse proxy server. This service serves all other applications inside `docker-compose.*.yml` files.
 
@@ -68,7 +33,7 @@ Environment variables file is named as `./env_files/nginx.env` and its variables
 - `NGINX_PORT`: which port the Nginx service will run inside the Docker container, such as `80` or `8080`.
 
 
-#### inpe_cdsr_frontend
+### inpe_cdsr_frontend
 
 [inpe_cdsr_frontend](https://github.com/inpe-cdsr/catalog-frontend) is a service that contains all front-end application. You can build its Docker image [here](https://github.com/inpe-cdsr/catalog-frontend).
 
@@ -96,7 +61,7 @@ Environment variables file is named as `./env_files/frontend.env` and its variab
 The file `./env_files/frontend.env` is just read in production mode.
 
 
-#### inpe_cdsr_backend
+### inpe_cdsr_backend
 
 [inpe_cdsr_backend](https://github.com/inpe-cdsr/catalog-backend) is a back-end service to [inpe_cdsr_frontend](https://github.com/inpe-cdsr/catalog-frontend) web application. This service provides user authentication and an endpoint to download satellite images.
 
@@ -129,7 +94,7 @@ Environment variables file is named as `./env_files/backend.env` and its variabl
 `MYSQL_DB_USER_*` environment variables are related to MySQL database connection and `JWT_*` ones are related to [JWT](https://pyjwt.readthedocs.io/en/latest/) encryption.
 
 
-#### inpe_cdsr_inpe_stac
+### inpe_cdsr_inpe_stac
 
 [inpe_cdsr_inpe_stac](https://github.com/inpe-cdsr/inpe-stac) is a [SpatioTemporal Asset Catalog (STAC)](https://github.com/radiantearth/stac-spec) service. This service is a STAC implementation for INPE Catalog.
 
@@ -164,7 +129,7 @@ Environment variables file is named as `./env_files/inpe_stac.env` and its varia
 `DB_USER_*` environment variables are related to MySQL database connection.
 
 
-#### inpe_cdsr_stac_compose
+### inpe_cdsr_stac_compose
 
 [inpe_cdsr_stac_compose](https://github.com/inpe-cdsr/stac-compose) is a [SpatioTemporal Asset Catalog (STAC)](https://github.com/radiantearth/stac-spec) compose service. This service serves various STAC applications, called providers.
 
@@ -219,7 +184,7 @@ Environment variables file is named as `./env_files/stac_compose.env` and its va
 - `SERVER_PORT`: which port the service will run inside the Docker container.
 
 
-#### inpe_cdsr_portainer
+### inpe_cdsr_portainer
 
 `inpe_cdsr_portainer` is a service that runs a [Portainer](https://hub.docker.com/r/portainer/portainer/) Docker image. Its settings can be found on its [repository on Docker hub](https://hub.docker.com/r/portainer/portainer/) or [documentation](https://portainer.readthedocs.io/en/1.23.0/index.html).
 
@@ -229,7 +194,7 @@ Existing volumes:
 
 - `/var/run/docker.sock`: path where Portainer will attempt to connect to the local Docker engine.
 
-#### inpe_cdsr_geoserver
+### inpe_cdsr_geoserver
 
 `inpe_cdsr_geoserver` is a service that runs a [GeoServer](https://hub.docker.com/r/kartoza/geoserver/) Docker image. Its settings can be found on its [repository on Docker hub](https://hub.docker.com/r/kartoza/geoserver/).
 
@@ -246,7 +211,7 @@ Extra existing volumes:
 Environment variables file is named as `./env_files/geoserver.env` and its variables are described on Geoserver Docker hub on [Run (manual docker commands)](https://hub.docker.com/r/kartoza/geoserver/) section.
 
 
-#### inpe_cdsr_db
+### inpe_cdsr_db
 
 `inpe_cdsr_db` is a service that runs a [MariaDB](https://hub.docker.com/_/mariadb) Docker image, that is a database server.
 
@@ -259,19 +224,19 @@ Environment variables file is named as `./env_files/db.env` and its variables ar
 - `MYSQL_ROOT_PASSWORD`: default password to MySQL database.
 
 
-#### inpe_cdsr_admin
+### inpe_cdsr_admin
 
 `inpe_cdsr_admin` is a service that runs a [phpMyAdmin](https://hub.docker.com/r/phpmyadmin/phpmyadmin/) Docker image.
 
 Environment variables file is named as `./env_files/phpmyadmin.env` and its variables are described on phpMyAdmin Docker hub on [Environment variables summary](https://hub.docker.com/r/phpmyadmin/phpmyadmin/) section.
 
 
-### Run the docker compose
+## Run the docker compose
 
 This section describes how to run the `docker-compose.*.yml` files, in development and production mode, and the available endpoints.
 
 
-#### Development mode
+### Development mode
 
 `docker-compose.dev.yml` file uses volumes that point to the source code of some services, hence you need download the other repositories first, in order to execute this file.
 
@@ -301,7 +266,7 @@ $ docker-compose -f docker-compose.dev.yml up
 ```
 
 
-#### Production mode
+### Production mode
 
 Before running in production mode, you must log in the following registry in order to download all necessary Docker images:
 
@@ -347,7 +312,7 @@ $ docker-compose -f docker-compose.prod.yml up -d
 ```
 
 
-#### Endpoints
+### Endpoints
 
 After running the docker compose, Nginx will serve all applications with the host and port you defined inside [env_files/nginx.env](./env_files/nginx.env) file (e.g. `http://localhost:8089`).
 
@@ -366,14 +331,14 @@ The following endpoints are now available:
 - [/portainer](http://localhost:8089/portainer): [portainer](https://hub.docker.com/r/portainer/portainer/) application;
 
 
-### Database settings
+## Database settings
 
 Follow the instructions of the [README.md](https://github.com/inpe-cdsr/database/blob/master/README.md) file inside the [database](https://github.com/inpe-cdsr/database) repository to initialize correctly your [MariaDB](https://mariadb.com/) database.
 
 In order to open [MariaDB](https://mariadb.com/), access [phpMyAdmin](https://www.phpmyadmin.net/) on `http://<your host>:8099`.
 
 
-### GeoServer settings
+## GeoServer settings
 
 On this section you will import your Shapefile files inside [GeoServer](http://geoserver.org/).
 
@@ -390,7 +355,7 @@ Namespace URI: <your host>/vector_data
 ```
 
 
-#### Add the Shapefile files
+### Add the Shapefile files
 
 Follow the steps below to add your Shapefile files to your [GeoServer](http://geoserver.org/):
 
@@ -419,7 +384,7 @@ For the steps below, consider each `<data source name>` one element inside the f
     - Click on `Save` button.
 
 
-#### Create the styles
+### Create the styles
 
 Follow the steps below to create styles related to your Shapefile files:
 

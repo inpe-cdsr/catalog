@@ -1,12 +1,6 @@
 # Quick Start
 
-This is a quick start related to CDSR Catalog project.
-
-The repository contains two docker composes to run the project applications:
-
-- `docker-compose.dev.yml` file contains development services using Docker images with volumes. The Docker images do not contain all code inside them, the code is added into the Docker containers through volumes.
-
-- `docker-compose.prod.yml` file contains production services using Docker images without volumes. The Docker images contain all code inside them and they do not use volumes to keep their code.
+This is a quick start related to CDSR project.
 
 
 ## Install
