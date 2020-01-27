@@ -231,7 +231,7 @@ Environment variables file is named as `./env_files/db.env` and its variables ar
 Environment variables file is named as `./env_files/phpmyadmin.env` and its variables are described on phpMyAdmin Docker hub on [Environment variables summary](https://hub.docker.com/r/phpmyadmin/phpmyadmin/) section.
 
 
-## Run the docker compose
+## Run the docker compose files
 
 This section describes how to run the `docker-compose.*.yml` files, in development and production mode, and the available endpoints.
 
@@ -252,7 +252,7 @@ git clone https://github.com/inpe-cdsr/stac-compose.git
 
 For each repository you cloned before, you need to build its development Docker image by following the instructions inside each repository: [catalog-frontend](https://github.com/inpe-cdsr/catalog-frontend), [catalog-backend](https://github.com/inpe-cdsr/catalog-backend), [inpe-stac](https://github.com/inpe-cdsr/inpe-stac) and [stac-compose](https://github.com/inpe-cdsr/stac-compose).
 
-Angular does not read environment variables because it is executed on the interface, then you need to create a JavaScript file with the necessary variables in development mode. In order to do that, get into the `catalog-frontend` volume folder, copy the environment file and edit it if it is necessary:
+Angular does not read environment variables because it is executed in the browser, then you need to create a JavaScript file with the necessary variables in development mode. In order to do that, get into the `catalog-frontend` volume folder, copy the environment file and edit it if it is necessary:
 
 ```
 $ cd catalog/volumes/catalog-frontend/ && \
@@ -329,13 +329,6 @@ The following endpoints are now available:
 - [/geoserver](http://localhost:8089/geoserver): [GeoServer](https://hub.docker.com/r/kartoza/geoserver/) application;
 
 - [/portainer](http://localhost:8089/portainer): [portainer](https://hub.docker.com/r/portainer/portainer/) application;
-
-
-## Database settings
-
-Follow the instructions of the [README.md](https://github.com/inpe-cdsr/database/blob/master/README.md) file inside the [database](https://github.com/inpe-cdsr/database) repository to initialize correctly your [MariaDB](https://mariadb.com/) database.
-
-In order to open [MariaDB](https://mariadb.com/), access [phpMyAdmin](https://www.phpmyadmin.net/) on `http://<your host>:8099`.
 
 
 ## GeoServer settings
