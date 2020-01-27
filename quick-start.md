@@ -44,7 +44,7 @@ Update the files above with proper settings. The files are environment variables
 
 Open `nginx.env` file and set a host name and port that Nginx will use to serve all the applications publicly. These settings need to be edited on another files as well, such as `frontend.env` and `inpe_stac.env`, by updating the URLs according to domain and port you chose, in other words, you must replace `localhost:8089` by your configuration or let these ones if you are running locally.
 
-`docker-compose.*.yml` files expect your TIFF files are mounted in `/data/TIFF` folder, hence you must mount them in this folder. Satellites folders are expected to be inside `/data/TIFF` folder. For example: you have TIFF files related to CBERS-4 and Landsat 5 satellites, then their folders must be mounted in `/data/TIFF/CBERS4` and `/data/TIFF/LANDSAT5` respectively. All subfolders inside `/data/TIFF` folder are considered satellites folders.
+`docker-compose.*.yml` files expect your TIFF files are mounted in `/data/TIFF` folder, hence you must mount them in this folder. Satellites folders are expected to be inside that folder. For example: you have TIFF files related to CBERS-4 and Landsat 5 satellites, then their folders must be mounted in `/data/TIFF/CBERS4` and `/data/TIFF/LANDSAT5` folders respectively. All subfolders inside `/data/TIFF` folder are considered satellites folders.
 
 
 ## Run the docker compose files

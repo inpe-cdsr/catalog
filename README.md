@@ -2,13 +2,13 @@
 
 This is the main repository related to CDSR project.
 
-The repository contains two docker composes to run the project applications:
+The repository contains two docker compose files to run the project applications:
 
 - `docker-compose.dev.yml` file contains development services using Docker images with volumes. The Docker images do not contain all code inside them, the code is added into the Docker containers through volumes.
 
 - `docker-compose.prod.yml` file contains production services using Docker images without volumes. The Docker images contain all code inside them and they do not use volumes to keep their code.
 
-Start reading the [quick start](./quick-start.md) and follow its instructions. This quick start provides the basic configuration to run the CDSR project for the first time. The following sections describe advanced configuration.
+Start reading the [quick start](./quick-start.md) file and follow its instructions. This quick start file provides the basic configuration to run the CDSR project for the first time. The following sections describe advanced settings.
 
 
 ## Docker compose services
@@ -24,7 +24,7 @@ Existing volumes:
 
 - `/etc/nginx/conf.d/mysite.template`: Nginx settings file, such as upstreams and locations;
 
-- `/var/www/html/datastore/TIFF`: this folder should contain all static files that Nginx will serve, such as quick looks and TIFFs.
+- `/var/www/html/datastore/TIFF`: this folder should contain all static files that Nginx will serve, such as quick looks and TIFFs. Satellites folders are expected to be inside that folder. For example: you have TIFF files related to CBERS-4 and Landsat 5 satellites, then their folders must be found in `/var/www/html/datastore/TIFF/CBERS4` and `/var/www/html/datastore/TIFF/LANDSAT5` folders respectively. All subfolders inside that folder are considered satellites folders.
 
 Environment variables file is named as `./env_files/nginx.env` and its variables are:
 
