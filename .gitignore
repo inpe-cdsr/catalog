@@ -11,4 +11,6 @@ volumes/geoserver/geoserverdata
 volumes/nginx/nginx.*.backup.*
 volumes/nginx/nginx.*.test
 
+volumes/stac-compose/providers/providers*.json
+
 .vscode/*
