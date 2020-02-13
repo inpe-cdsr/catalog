@@ -52,7 +52,7 @@ services:
 
   inpe_cdsr_inpe_stac:
     container_name: inpe_cdsr_inpe_stac
-    image: registry.dpi.inpe.br/inpe-cdsr/inpe-stac:0.0.1
+    image: registry.dpi.inpe.br/inpe-cdsr/inpe-stac:0.0.2
     restart: always
     env_file:
       - ./env_files/inpe_stac.env
