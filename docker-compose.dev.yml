@@ -42,7 +42,7 @@ services:
   inpe_cdsr_backend:
     container_name: inpe_cdsr_backend
     image: inpe-cdsr-catalog-backend
-    command: python3 manage.py run
+    command: python3 -u manage.py run
     # restart: always
     volumes:
       - ../catalog-backend:/app
