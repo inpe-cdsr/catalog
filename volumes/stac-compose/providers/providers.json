@@ -9,6 +9,16 @@
     "downloadable": 1,
     "ignore_provider_validation": 1
   },
+  "INPE-CBERS": {
+    "url": "http://inpe_cdsr_nginx:8089/inpe-stac-cbers",
+    "type":"stac",
+    "version": "0.7.0",
+    "method": "GET",
+    "filter_mult_collection": 0,
+    "require_credentials": 1,
+    "downloadable": 1,
+    "ignore_provider_validation": 1
+  },
   "LANDAST8-SENTINEL2-AWS": {
     "url": "https://sat-api.developmentseed.org",
     "type":"stac",

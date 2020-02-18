@@ -10,6 +10,10 @@ upstream inpestac {
     server inpe_cdsr_inpe_stac:5000;
 }
 
+upstream inpestaccbers {
+    server inpe_cdsr_inpe_stac_cbers:5003;
+}
+
 upstream staccompose {
     server inpe_cdsr_stac_compose:5002;
 }
@@ -58,7 +62,7 @@ server {
     }
 
     location /stac-compose/ {
-	    proxy_pass http://staccompose;
+        proxy_pass http://staccompose;
         proxy_set_header Host $http_host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -72,8 +76,15 @@ server {
         proxy_set_header Host $http_host;
     }
 
+    location /inpe-stac-cbers {
+        rewrite /inpe-stac-cbers/(.*) /$1  break;
+        proxy_pass http://inpestaccbers;
+        proxy_redirect off;
+        proxy_set_header Host $http_host;
+    }
+
     location /api/ {
-	    proxy_pass http://backend;
+        proxy_pass http://backend;
         proxy_set_header Host $http_host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
