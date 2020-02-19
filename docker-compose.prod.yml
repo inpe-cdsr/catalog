@@ -61,17 +61,6 @@ services:
     # ports:
     #  - 5002:5000
 
-  inpe_cdsr_inpe_stac_cbers:
-    container_name: inpe_cdsr_inpe_stac_cbers
-    image: registry.dpi.inpe.br/inpe-cdsr/inpe-stac:0.0.2
-    restart: always
-    env_file:
-      - ./env_files/inpe_stac_cbers.env
-    networks:
-      - inpe_cdsr
-    # ports:
-    #  - 5003:5003
-
   inpe_cdsr_stac_compose:
     container_name: inpe_cdsr_stac_compose
     image: registry.dpi.inpe.br/inpe-cdsr/stac-compose:0.0.2
