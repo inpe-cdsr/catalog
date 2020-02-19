@@ -12,6 +12,5 @@ volumes/nginx/nginx.*.backup.*
 volumes/nginx/nginx.*.test
 
 volumes/stac-compose/providers/providers*.json
-!volumes/stac-compose/providers/providers.dev.json
 
 .vscode/*

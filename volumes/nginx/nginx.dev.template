@@ -10,6 +10,10 @@ upstream inpestac {
     server inpe_cdsr_inpe_stac:5000;
 }
 
+upstream inpestaccbers {
+    server inpe_cdsr_inpe_stac_cbers:5003;
+}
+
 upstream staccompose {
     server inpe_cdsr_stac_compose:5002;
 }
@@ -68,6 +72,13 @@ server {
     location /inpe-stac {
         rewrite /inpe-stac/(.*) /$1  break;
         proxy_pass http://inpestac;
+        proxy_redirect off;
+        proxy_set_header Host $http_host;
+    }
+
+    location /inpe-stac-cbers {
+        rewrite /inpe-stac-cbers/(.*) /$1  break;
+        proxy_pass http://inpestaccbers;
         proxy_redirect off;
         proxy_set_header Host $http_host;
     }
