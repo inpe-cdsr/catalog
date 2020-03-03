@@ -20,7 +20,6 @@ services:
       - inpe_cdsr_frontend
       - inpe_cdsr_backend
       - inpe_cdsr_inpe_stac
-      - inpe_cdsr_inpe_stac_cbers
       - inpe_cdsr_stac_compose
       - inpe_cdsr_portainer
       - inpe_cdsr_geoserver
@@ -69,28 +68,14 @@ services:
     ports:
       - 5003:5000
 
-  inpe_cdsr_inpe_stac_cbers:
-    container_name: inpe_cdsr_inpe_stac_cbers
-    image: inpe-cdsr-inpe-stac
-    command: flask run
-    # restart: always
-    volumes:
-      - ../inpe-stac/inpe_stac:/inpe_stac
-    env_file:
-      - ./env_files/inpe_stac_cbers.env
-    networks:
-      - inpe_cdsr
-    ports:
-     - 5004:5003
-
   inpe_cdsr_stac_compose:
     container_name: inpe_cdsr_stac_compose
     image: inpe-cdsr-stac-compose
     command: python3 -u manage.py run
     # restart: always
     volumes:
-      - ../stac-compose:/bdc-stac-compose
-      - ./volumes/stac-compose/providers/providers.json:/bdc-stac-compose/bdc_search_stac/providers/static/providers.json
+      - ../stac-compose:/app
+      - ./volumes/stac-compose/providers/providers.json:/app/stac_compose/providers/static/providers.json
     env_file:
       - ./env_files/stac_compose.env
     networks:

@@ -68,7 +68,7 @@ services:
     env_file:
       - ./env_files/stac_compose.env
     volumes:
-      - ./volumes/stac-compose/providers/providers.json:/bdc-stac-compose/bdc_search_stac/providers/static/providers.json
+      - ./volumes/stac-compose/providers/providers.json:/app/stac_compose/providers/static/providers.json
     networks:
       - inpe_cdsr
     # ports:

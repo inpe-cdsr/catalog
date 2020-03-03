@@ -4,16 +4,18 @@
     "type":"stac",
     "version": "0.7.0",
     "method": "GET",
-    "filter_mult_collection": 0,
+    "search_collection_as_property": 0,
+    "filter_mult_collection": 1,
     "require_credentials": 1,
     "downloadable": 1,
     "ignore_provider_validation": 1
   },
-  "LANDAST8-SENTINEL2-AWS": {
+  "LANDSAT8-SENTINEL2-AWS": {
     "url": "https://sat-api.developmentseed.org",
     "type":"stac",
     "version": "0.6.0",
     "method": "POST",
+    "search_collection_as_property": 1,
     "filter_mult_collection": 0,
     "require_credentials": 0,
     "downloadable": 0,
@@ -24,6 +26,7 @@
     "type":"stac",
     "version": "0.7.0",
     "method": "GET",
+    "search_collection_as_property": 0,
     "filter_mult_collection": 0,
     "require_credentials": 0,
     "downloadable": 0,
