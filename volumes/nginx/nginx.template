@@ -32,6 +32,9 @@ server {
     server_name _;
     charset  utf-8;
 
+    fastcgi_read_timeout 180;
+    proxy_read_timeout 180;
+
     location /datastore {
         try_files $uri $uri/ .png;
     }
