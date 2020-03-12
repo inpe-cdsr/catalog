@@ -36,7 +36,7 @@ server {
     proxy_read_timeout 180;
 
     location /datastore {
-        try_files $uri $uri/ .png;
+        try_files $uri $uri/ .png .xml .tif .json .txt;
     }
 
     location /geoserver {
