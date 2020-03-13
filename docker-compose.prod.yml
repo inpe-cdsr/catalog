@@ -120,6 +120,8 @@ services:
     restart: always
     env_file:
       - ./env_files/phpmyadmin.env
+    volumes:
+      - ./volumes/phpmyadmin/php.ini:/usr/local/etc/php/php.ini
     networks:
       - inpe_cdsr
     ports:
