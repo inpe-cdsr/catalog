@@ -87,7 +87,7 @@ Environment variables file is named as `./env_files/backend.env` and its variabl
 
 - `MYSQL_DB_DATABASE`: MySQL database name;
 
-- `JWT_SECRET`: a JWT secret randomically generated;
+- `JWT_SECRET`: a JWT secret randomically generated. You could use [this](https://gist.github.com/didip/823887) code;
 
 - `JWT_ALGORITHM`: JWT algorithm.
 

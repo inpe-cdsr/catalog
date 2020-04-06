@@ -1,9 +1,13 @@
 upstream frontend {
-    server inpe_cdsr_frontend:8000;
+    server inpe_cdsr_catalog_frontend:8000;
 }
 
 upstream backend {
-    server inpe_cdsr_backend:5001;
+    server inpe_cdsr_catalog_backend:5001;
+}
+
+upstream dash {
+    server inpe_cdsr_catalog_dash:8050;
 }
 
 upstream inpestac {
@@ -73,6 +77,14 @@ server {
         proxy_pass http://inpestac;
         proxy_redirect off;
         proxy_set_header Host $http_host;
+    }
+
+    location /catalog-dash {
+        proxy_pass http://dash;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
     }
 
     location /api/ {

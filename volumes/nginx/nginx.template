@@ -1,9 +1,9 @@
 upstream frontend {
-    server inpe_cdsr_frontend:8000;
+    server inpe_cdsr_catalog_frontend:8000;
 }
 
 upstream backend {
-    server inpe_cdsr_backend:5001;
+    server inpe_cdsr_catalog_backend:5001;
 }
 
 upstream inpestac {

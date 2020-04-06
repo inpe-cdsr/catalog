@@ -11,14 +11,16 @@ services:
     volumes:
       - ./volumes/nginx/nginx.dev.template:/etc/nginx/conf.d/mysite.template
       - /data/TIFF:/var/www/html/datastore/TIFF
+      # - ../catalog-dash/assets:/var/www/html/assets
     env_file:
       - ./env_files/nginx.env
     command: /bin/bash -c "envsubst '$$NGINX_HOST $$NGINX_PORT' < /etc/nginx/conf.d/mysite.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
     networks:
       - inpe_cdsr
     depends_on:
-      - inpe_cdsr_frontend
-      - inpe_cdsr_backend
+      - inpe_cdsr_catalog_frontend
+      - inpe_cdsr_catalog_backend
+      - inpe_cdsr_catalog_dash
       - inpe_cdsr_inpe_stac
       - inpe_cdsr_stac_compose
       - inpe_cdsr_portainer
@@ -26,8 +28,8 @@ services:
     ports:
       - 8089:8089
 
-  inpe_cdsr_frontend:
-    container_name: inpe_cdsr_frontend
+  inpe_cdsr_catalog_frontend:
+    container_name: inpe_cdsr_catalog_frontend
     image: inpe-cdsr-catalog-frontend
     command: npm start
     # restart: always
@@ -39,8 +41,8 @@ services:
     ports:
       - 5001:8000
 
-  inpe_cdsr_backend:
-    container_name: inpe_cdsr_backend
+  inpe_cdsr_catalog_backend:
+    container_name: inpe_cdsr_catalog_backend
     image: inpe-cdsr-catalog-backend
     command: python3 -u manage.py run
     # restart: always
@@ -54,6 +56,21 @@ services:
     ports:
       - 5002:5001
 
+  inpe_cdsr_catalog_dash:
+    container_name: inpe_cdsr_catalog_dash
+    image: inpe-cdsr-catalog-dash
+    # restart: always
+    volumes:
+      - ../catalog-dash:/app
+    env_file:
+      - ./env_files/catalog_dash.env
+    networks:
+      - inpe_cdsr
+    depends_on:
+      - inpe_cdsr_db
+    ports:
+      - 5003:8050
+
   inpe_cdsr_inpe_stac:
     container_name: inpe_cdsr_inpe_stac
     image: inpe-cdsr-inpe-stac
@@ -66,7 +83,7 @@ services:
     networks:
       - inpe_cdsr
     ports:
-      - 5003:5000
+      - 5004:5000
 
   inpe_cdsr_stac_compose:
     container_name: inpe_cdsr_stac_compose
@@ -121,7 +138,7 @@ services:
     networks:
       - inpe_cdsr
     ports:
-      - 3311:3306
+      - 9004:3306
 
   inpe_cdsr_phpmyadmin:
     container_name: inpe_cdsr_phpmyadmin

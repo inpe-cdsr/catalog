@@ -17,8 +17,8 @@ services:
     networks:
       - inpe_cdsr
     depends_on:
-      - inpe_cdsr_frontend
-      - inpe_cdsr_backend
+      - inpe_cdsr_catalog_frontend
+      - inpe_cdsr_catalog_backend
       - inpe_cdsr_inpe_stac
       - inpe_cdsr_stac_compose
       - inpe_cdsr_portainer
@@ -26,8 +26,8 @@ services:
     ports:
       - 8089:8089
 
-  inpe_cdsr_frontend:
-    container_name: inpe_cdsr_frontend
+  inpe_cdsr_catalog_frontend:
+    container_name: inpe_cdsr_catalog_frontend
     image: registry.dpi.inpe.br/inpe-cdsr/catalog-frontend:0.0.5
     restart: always
     env_file:
@@ -37,8 +37,8 @@ services:
     # ports:
     #   - 8002:8000
 
-  inpe_cdsr_backend:
-    container_name: inpe_cdsr_backend
+  inpe_cdsr_catalog_backend:
+    container_name: inpe_cdsr_catalog_backend
     image: registry.dpi.inpe.br/inpe-cdsr/catalog-backend:0.0.5
     restart: always
     volumes:
