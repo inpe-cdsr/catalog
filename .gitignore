@@ -10,6 +10,7 @@ volumes/geoserver/geoserverdata
 
 volumes/nginx/nginx.*.backup.*
 volumes/nginx/nginx.*.test
+volumes/nginx/log
 
 volumes/stac-compose/providers/providers*.json
 

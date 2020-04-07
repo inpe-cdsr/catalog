@@ -1,3 +1,9 @@
+map $request_uri $loggable {
+    ~^.*_reload-hash.*$  0;
+    ~^.*_dash-.*$  0;
+    default 1;
+}
+
 upstream frontend {
     server inpe_cdsr_catalog_frontend:8000;
 }
@@ -6,7 +12,7 @@ upstream backend {
     server inpe_cdsr_catalog_backend:5001;
 }
 
-upstream dash {
+upstream catalog_dash {
     server inpe_cdsr_catalog_dash:8050;
 }
 
@@ -80,7 +86,8 @@ server {
     }
 
     location /catalog-dash {
-        proxy_pass http://dash;
+        proxy_pass http://catalog_dash;
+        proxy_redirect off;
         proxy_set_header Host $http_host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

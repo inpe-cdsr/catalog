@@ -19,6 +19,7 @@ services:
     depends_on:
       - inpe_cdsr_catalog_frontend
       - inpe_cdsr_catalog_backend
+      - inpe_cdsr_catalog_dash
       - inpe_cdsr_inpe_stac
       - inpe_cdsr_stac_compose
       - inpe_cdsr_portainer
@@ -49,6 +50,21 @@ services:
       - inpe_cdsr
     # ports:
     #   - 5022:5000
+
+  inpe_cdsr_catalog_dash:
+    container_name: inpe_cdsr_catalog_dash
+    image: registry.dpi.inpe.br/inpe-cdsr/catalog-dash:0.0.1
+    restart: always
+    volumes:
+      - ../catalog-dash:/app
+    env_file:
+      - ./env_files/catalog_dash.env
+    networks:
+      - inpe_cdsr
+    depends_on:
+      - inpe_cdsr_db
+    # ports:
+    #   - 5003:8050
 
   inpe_cdsr_inpe_stac:
     container_name: inpe_cdsr_inpe_stac
