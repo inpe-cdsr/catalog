@@ -53,7 +53,7 @@ services:
 
   inpe_cdsr_catalog_dash:
     container_name: inpe_cdsr_catalog_dash
-    image: registry.dpi.inpe.br/inpe-cdsr/catalog-dash:0.0.1
+    image: registry.dpi.inpe.br/inpe-cdsr/catalog-dash:0.0.2
     restart: always
     volumes:
       - ../catalog-dash:/app
