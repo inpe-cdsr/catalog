@@ -45,6 +45,8 @@ server {
     fastcgi_read_timeout 180;
     proxy_read_timeout 180;
 
+    access_log /var/log/nginx/access.log combined if=$loggable;
+
     location /datastore {
         try_files $uri $uri/ .png .xml .tif .json .txt;
     }
