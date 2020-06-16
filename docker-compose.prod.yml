@@ -29,7 +29,7 @@ services:
 
   inpe_cdsr_catalog_frontend:
     container_name: inpe_cdsr_catalog_frontend
-    image: registry.dpi.inpe.br/inpe-cdsr/catalog-frontend:0.0.8
+    image: registry.dpi.inpe.br/inpe-cdsr/catalog-frontend:0.0.9
     restart: always
     env_file:
       - ./env_files/frontend.env
@@ -119,7 +119,7 @@ services:
 
   inpe_cdsr_db:
     container_name: inpe_cdsr_db
-    image: mariadb:10.4.11
+    image: mariadb:10.5.3
     restart: always
     volumes:
       - ../data/mysqldata:/var/lib/mysql
