@@ -37,8 +37,11 @@ services:
       - ./volumes/catalog-frontend/env.js:/app/src/assets/env.js
     networks:
       - inpe_cdsr
-    ports:
-      - 5001:8000
+    depends_on:
+      - inpe_cdsr_catalog_backend
+    # ports:
+    #   - 5001:8000
+    # Access this link: http://localhost:8089/catalogo
 
   inpe_cdsr_catalog_backend:
     container_name: inpe_cdsr_catalog_backend
@@ -52,6 +55,8 @@ services:
       - ./env_files/backend.env
     networks:
       - inpe_cdsr
+    depends_on:
+      - inpe_cdsr_db
     ports:
       - 5002:5001
 
@@ -81,6 +86,8 @@ services:
       - ./env_files/inpe_stac.env
     networks:
       - inpe_cdsr
+    depends_on:
+      - inpe_cdsr_db
     ports:
       - 5004:5000
 
@@ -96,6 +103,8 @@ services:
       - ./env_files/stac_compose.env
     networks:
       - inpe_cdsr
+    depends_on:
+      - inpe_cdsr_inpe_stac
     ports:
       - 5005:5002
 
@@ -128,7 +137,7 @@ services:
 
   inpe_cdsr_db:
     container_name: inpe_cdsr_db
-    image: mariadb:10.4.11
+    image: mariadb:10.5.3
     # restart: always
     volumes:
       - ../data/mysqldata:/var/lib/mysql
@@ -149,6 +158,8 @@ services:
       - ./volumes/phpmyadmin/php.ini:/usr/local/etc/php/php.ini
     networks:
       - inpe_cdsr
+    depends_on:
+      - inpe_cdsr_db
     ports:
       - 8099:80
 
