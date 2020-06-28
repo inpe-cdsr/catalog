@@ -49,6 +49,7 @@ server {
 
     location /datastore {
         try_files $uri $uri/ .png .xml .tif .json .txt;
+        add_header Content-disposition "attachment";
     }
 
     location /geoserver {
