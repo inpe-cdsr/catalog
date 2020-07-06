@@ -10,7 +10,7 @@ services:
     restart: always
     volumes:
       - ./volumes/nginx/nginx.template:/etc/nginx/conf.d/mysite.template
-      - /dados2/TIFF:/var/www/html/datastore/TIFF
+      - ${DATA_TIFF}:/var/www/html/datastore/TIFF
     env_file:
       - ./env_files/nginx.env
     command: /bin/bash -c "envsubst '$$NGINX_HOST $$NGINX_PORT' < /etc/nginx/conf.d/mysite.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
@@ -43,7 +43,7 @@ services:
     image: registry.dpi.inpe.br/inpe-cdsr/catalog-backend:0.0.7
     restart: always
     volumes:
-      - /dados2/TIFF:/TIFF
+      - ${DATA_TIFF}:/TIFF
     env_file:
       - ./env_files/backend.env
     networks:

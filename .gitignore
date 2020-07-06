@@ -2,6 +2,9 @@
 env_files/*
 !env_files/*.EXAMPLE
 
+.env
+!env.EXAMPLE
+
 # exclude all files and just include the '.EXAMPLE' files
 volumes/catalog-frontend/*
 !volumes/catalog-frontend/*.EXAMPLE
