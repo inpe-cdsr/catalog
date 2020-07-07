@@ -132,7 +132,7 @@ services:
 
   inpe_cdsr_phpmyadmin:
     container_name: inpe_cdsr_phpmyadmin
-    image: phpmyadmin/phpmyadmin:4.9
+    image: phpmyadmin/phpmyadmin:5.0.1
     restart: always
     env_file:
       - ./env_files/phpmyadmin.env
