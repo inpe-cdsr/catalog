@@ -10,6 +10,7 @@ services:
     restart: always
     volumes:
       - ./volumes/nginx/nginx.template:/etc/nginx/conf.d/mysite.template
+      - ./volumes/nginx/.htpasswd:/etc/nginx/.htpasswd
       - ${DATA_TIFF}:/var/www/html/datastore/TIFF
     env_file:
       - ./env_files/nginx.env
