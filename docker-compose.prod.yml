@@ -11,6 +11,7 @@ services:
     volumes:
       - ./volumes/nginx/nginx.template:/etc/nginx/conf.d/mysite.template
       - ./volumes/nginx/.htpasswd:/etc/nginx/.htpasswd
+      - ./volumes/nginx/include:/etc/nginx/conf.d/include
       - ${DATA_TIFF}:/var/www/html/datastore/TIFF
     env_file:
       - ./env_files/nginx.env
