@@ -125,6 +125,7 @@ services:
     restart: always
     volumes:
       - ../data/mysqldata:/var/lib/mysql
+      - ./volumes/mysql/config-file.cnf:/etc/mysql/conf.d/config-file.cnf
     env_file:
       - ./env_files/db.env
     networks:
