@@ -16,8 +16,8 @@ server {
     server_name _;
     charset  utf-8;
 
-    fastcgi_read_timeout 180;
-    proxy_read_timeout 180;
+    fastcgi_read_timeout 600;
+    proxy_read_timeout 600;
 
     access_log /var/log/nginx/access.log combined if=$loggable;
 
