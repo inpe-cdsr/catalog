@@ -3,6 +3,13 @@
 This is a quick start file related to CDSR project. This file explains how to install the project and do the basic settings.
 
 
+## Requirements
+
+Install the following requirements before installing the application.
+
+- [Docker](https://docs.docker.com/engine/install/ubuntu)
+
+
 ## Install
 
 Create a new folder called `inpe-cdsr`, where you are going to put [catalog](https://github.com/inpe-cdsr/catalog) repository:
