@@ -252,7 +252,7 @@ Namespace URI: <your host>/vector_data
 
 Follow the steps below to add your Shapefile files to your [GeoServer](http://geoserver.org/):
 
-For the steps below, consider each `<data source name>` one element inside the following list: ["`grid_cbers4_mux`", "`grid_ibge_states`", "`grid_landsat_tm_amsul`", "`grid_sentinel_mgrs`"].
+For the steps below, consider each `<data source name>` one folder name inside the [volumes/geoserver/grids](./volumes/geoserver/grids) folder.
 
 - Click on `Stores` option on left side menu and click on `Add new store`.
 
