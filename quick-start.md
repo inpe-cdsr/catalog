@@ -5,9 +5,11 @@ This is a quick start file related to CDSR project. This file explains how to in
 
 ## Requirements
 
-Install the following requirements before installing the application.
+Install the following requirements before continuing this documentation.
 
 - [Docker](https://docs.docker.com/engine/install/ubuntu)
+- [Manage Docker as a non-root user](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user)
+- [Docker Compose](https://docs.docker.com/compose/install)
 
 
 ## Install
@@ -115,6 +117,12 @@ Restart Docker with the following command and try to log in the above registry a
 $ sudo service docker restart
 ```
 
+Use the following commands to run in production mode:
+
+```
+$ docker-compose -f docker-compose.prod.yml up -d
+```
+
 When you run in production mode for the first time, all Docker images will be downloaded **automatically**. If they are not downloaded, for some reason, you can pull all Docker images using the following command:
 
 ```
@@ -122,12 +130,6 @@ $ docker pull <Docker image>
 ```
 
 Where `<Docker image>` is the image inside each service in the [docker-compose.prod.yml](./docker-compose.prod.yml) file.
-
-Use the following commands to run in production mode:
-
-```
-$ docker-compose -f docker-compose.prod.yml up -d
-```
 
 
 ### Endpoints
