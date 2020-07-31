@@ -57,16 +57,16 @@ This section describes how to run the `docker-compose.[dev|prod].yml` files, in 
 
 ### Development mode
 
-`docker-compose.dev.yml` file uses volumes that point to the source code of some services, hence you need download the other repositories first, in order to execute this file.
+`docker-compose.dev.yml` file uses volumes that point to the source code of some services, hence you need to download the other repositories first, in order to execute this file.
 
-Assuming that you are inside `catalog` folder, go back one folder and clone the other repositories:
+Assuming that you are inside `catalog` folder, then go back one folder and clone the other repositories:
 
 ```
 $ cd .. && \
-git clone https://github.com/inpe-cdsr/catalog-frontend.git && \
-git clone https://github.com/inpe-cdsr/catalog-backend.git && \
-git clone https://github.com/inpe-cdsr/inpe-stac.git && \
-git clone https://github.com/inpe-cdsr/stac-compose.git
+  git clone https://github.com/inpe-cdsr/catalog-frontend.git && \
+  git clone https://github.com/inpe-cdsr/catalog-backend.git && \
+  git clone https://github.com/inpe-cdsr/inpe-stac.git && \
+  git clone https://github.com/inpe-cdsr/stac-compose.git
 ```
 
 For each repository you cloned before, you need to build its development Docker image by following the instructions inside each repository: [catalog-frontend](https://github.com/inpe-cdsr/catalog-frontend), [catalog-backend](https://github.com/inpe-cdsr/catalog-backend), [inpe-stac](https://github.com/inpe-cdsr/inpe-stac) and [stac-compose](https://github.com/inpe-cdsr/stac-compose).
@@ -78,18 +78,10 @@ $ cd catalog/volumes/catalog-frontend/ && \
   cp env.js.EXAMPLE env.js
 ```
 
-Use the following commands to run in development mode:
-
-- Run containers in the foreground:
+Use the following command to run the docker compose file in development mode:
 
 ```
 $ docker-compose -f docker-compose.dev.yml up
-```
-
-- Run containers in the background:
-
-```
-$ docker-compose -f docker-compose.dev.yml up -d
 ```
 
 
@@ -113,26 +105,18 @@ If you get any error related to invalid certificate, you must insert `registry.d
 Restart Docker with the following command and try to log in the above registry again.
 
 ```
-sudo service docker restart
+$ sudo service docker restart
 ```
 
-When you run in production mode for the first time, all Docker images will be downloaded. If they are not downloaded, for some reason, you can pull all Docker images using the following command:
+When you run in production mode for the first time, all Docker images will be downloaded **automatically**. If they are not downloaded, for some reason, you can pull all Docker images using the following command:
 
 ```
 $ docker pull <Docker image>
 ```
 
-Where `<Docker image>` is the image used inside each service on the `docker-compose.prod.yml` file.
+Where `<Docker image>` is the image inside each service in the [docker-compose.prod.yml](./docker-compose.prod.yml) file.
 
 Use the following commands to run in production mode:
-
-- Run containers in the foreground:
-
-```
-$ docker-compose -f docker-compose.prod.yml up
-```
-
-- Run containers in the background:
 
 ```
 $ docker-compose -f docker-compose.prod.yml up -d
@@ -165,7 +149,7 @@ This section assumes you have run a `docker-compose.[dev|prod].yml` file before 
 On another console, clone the [database](https://github.com/inpe-cdsr/database) repository inside `inpe-cdsr` folder and get in it:
 
 ```
-$ cd ../ && \
+$ cd inpe-cdsr/ && \
   git clone https://github.com/inpe-cdsr/database.git && \
   cd database/
 ```
