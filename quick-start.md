@@ -29,23 +29,30 @@ $ cd env_files/ && \
   for file in *.env.EXAMPLE; do cp "$file" "${file/.EXAMPLE}"; done
 ```
 
-Update the files above with proper settings. The files are environment variables files that contain settings related to the services inside `docker-compose.*.yml` files.
+Update the files above with proper settings. The files are environment variables files that contain settings related to the services inside `docker-compose.[dev|prod].yml` files.
 
 
 #### Environment variables basic settings
 
-Open `nginx.env` file and set a host name that Nginx will use to serve all the applications publicly. Port you should leave the default value, but if you would like to change it, you must change the binding port on `inpe_cdsr_nginx` service inside `docker-compose.*.yml` files.
+Open `nginx.env` file and set a host name that Nginx will use to serve all the applications publicly. Port you should leave the default value, but if you would like to change it, you must change the binding port on `inpe_cdsr_nginx` service inside `docker-compose.[dev|prod].yml` files.
 
 The settings you chose to `nginx.env` file, you must add them to `frontend.env` and `inpe_stac.env` files as well, by updating the URLs according to domain and port you chose previously, in other words, you must replace `localhost:8089` by the settings inside `nginx.env` file. You can leave the default values to the `nginx.env`, `frontend.env` and `inpe_stac.env` files if you are running locally.
 
-`docker-compose.*.yml` files expect your TIFF files are mounted in `/data/TIFF` folder, ergo you must mount them in this folder. Satellites folders are expected to be inside that folder. For example: you have TIFF files related to CBERS-4 and Landsat 5 satellites, then their folders must be mounted in `/data/TIFF/CBERS4` and `/data/TIFF/LANDSAT5` folders respectively. All subfolders inside `/data/TIFF` folder are considered satellites folders.
+If you are inside [env_files](./env_files) folder, then go to the root folder and create the `.env` file:
+
+```
+$ cd .. && \
+  cp .env.EXAMPLE .env
+```
+
+`docker-compose.[dev|prod].yml` files expect that your TIFF files are mounted in a folder that is defined by `DATA_TIFF` environment variable. This environment variable is inside the `.env` file. Change the `.env` file with the path to your TIFF files. For example: you have TIFF files related to CBERS-4 and Landsat 5 satellites, then their folders must be mounted in `/data/TIFF/CBERS4` and `/data/TIFF/LANDSAT5` folders respectively. All subfolders inside `/data/TIFF` folder are considered satellites folders.
 
 Environment variables advanced settings can be found in [this section](./README.md#docker-compose-services).
 
 
 ## Run the docker compose files
 
-This section describes how to run the `docker-compose.*.yml` files, in development and production mode, and show the available endpoints.
+This section describes how to run the `docker-compose.[dev|prod].yml` files, in development and production mode, and show the available endpoints.
 
 
 ### Development mode
@@ -153,7 +160,7 @@ The following endpoints are now available:
 
 ## Database settings
 
-This section assumes you have run a `docker-compose.*.yml` file before continuing.
+This section assumes you have run a `docker-compose.[dev|prod].yml` file before continuing.
 
 On another console, clone the [database](https://github.com/inpe-cdsr/database) repository inside `inpe-cdsr` folder and get in it:
 

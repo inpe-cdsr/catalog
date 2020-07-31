@@ -13,12 +13,12 @@ Start reading the [quick start](./quick-start.md) file and follow its instructio
 
 ## Docker compose services
 
-This section describes the services inside `docker-compose.*.yml` files.
+This section describes the services inside `docker-compose.[dev|prod].yml` files.
 
 
 ### inpe_cdsr_nginx
 
-`inpe_cdsr_nginx` is a service that runs a [Nginx](https://hub.docker.com/_/nginx) Docker image, that is a reverse proxy server. This service serves all other applications inside `docker-compose.*.yml` files.
+`inpe_cdsr_nginx` is a service that runs a [Nginx](https://hub.docker.com/_/nginx) Docker image, that is a reverse proxy server. This service serves all other applications inside `docker-compose.[dev|prod].yml` files.
 
 Existing volumes:
 
@@ -169,7 +169,7 @@ Existing volumes:
 
         - 0: if the service is allowed to validate the provider before using it.
 
-An example file can be found in [`./volumes/stac-compose/providers/providers.json`](./volumes/stac-compose/providers/providers.json). This file will be used by [stac-compose](https://github.com/inpe-cdsr/stac-compose) that runs inside `docker-compose.*.yml` files. In order to add a new provider, just insert a new key inside the JSON object in the file and fill it with the correct settings.
+An example file can be found in [`./volumes/stac-compose/providers/providers.json`](./volumes/stac-compose/providers/providers.json). This file will be used by [stac-compose](https://github.com/inpe-cdsr/stac-compose) that runs inside `docker-compose.[dev|prod].yml` files. In order to add a new provider, just insert a new key inside the JSON object in the file and fill it with the correct settings.
 
 Existing volumes in development mode:
 
@@ -235,7 +235,7 @@ Environment variables file is named as `./env_files/phpmyadmin.env` and its vari
 
 On this section you will import your Shapefile files inside [GeoServer](http://geoserver.org/).
 
-First, run `docker-compose.*.yml` file and open the [GeoServer](http://geoserver.org/) on `http://<your host>:8089/geoserver`.
+First, run `docker-compose.[dev|prod].yml` file and open the [GeoServer](http://geoserver.org/) on `http://<your host>:8089/geoserver`.
 
 Make sure you have all grids saved on Shapefile files. Put all these files inside `volumes/geoserver/grids` folder separate by subfolders, for example: the folder "`grid_cbers4_mux`" will have all files from CBERS4 grid Shapefile. There are default Shapefile files inside `volumes/geoserver/grids` folder.
 

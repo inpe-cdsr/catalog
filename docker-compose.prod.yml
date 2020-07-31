@@ -20,12 +20,11 @@ services:
       - inpe_cdsr
     depends_on:
       - inpe_cdsr_catalog_frontend
-      - inpe_cdsr_catalog_backend
       - inpe_cdsr_catalog_dash
-      - inpe_cdsr_inpe_stac
       - inpe_cdsr_stac_compose
       - inpe_cdsr_portainer
       - inpe_cdsr_geoserver
+      - inpe_cdsr_phpmyadmin
     ports:
       - 8089:8089
 
