@@ -43,20 +43,30 @@ Update the files above with proper settings. The files are environment variables
 
 #### Environment variables basic settings
 
-Open `nginx.env` file and set a host name that Nginx will use to serve all the applications publicly. Port you should leave the default value, but if you would like to change it, you must change the binding port on `inpe_cdsr_nginx` service inside `docker-compose.[dev|prod].yml` files.
+There are some environment variables files that you can change their basic settings, such as:
 
-The settings you chose to `nginx.env` file, you must add them to `frontend.env` and `inpe_stac.env` files as well, by updating the URLs according to domain and port you chose previously, in other words, you must replace `localhost:8089` by the settings inside `nginx.env` file. You can leave the default values to the `nginx.env`, `frontend.env` and `inpe_stac.env` files if you are running locally.
+- `db.env`: open it and define a new password to root user by changing the `MYSQL_ROOT_PASSWORD` environment variable.
 
-If you are inside [env_files](./env_files) folder, then go to the root folder and create the `.env` file:
+  If you define a new password to root user, you must also change it in other files: `backend.env`, `catalog_dash.env` and `inpe_stac.env`.
 
-```
-$ cd .. && \
-  cp .env.EXAMPLE .env
-```
+- `.env`: if you are inside [env_files](./env_files) folder, then go to the root folder and create the `.env` file:
 
-`docker-compose.[dev|prod].yml` files expect that your TIFF files are mounted in a folder that is defined by `DATA_TIFF` environment variable. This environment variable is inside the `.env` file. Change the `.env` file with the path to your TIFF files. For example: you have TIFF files related to CBERS-4 and Landsat 5 satellites, then their folders must be mounted in `/data/TIFF/CBERS4` and `/data/TIFF/LANDSAT5` folders respectively. All subfolders inside `/data/TIFF` folder are considered satellites folders.
+  ```
+  $ cd .. && \
+    cp .env.EXAMPLE .env
+  ```
 
-Environment variables advanced settings can be found in [this section](./README.md#docker-compose-services).
+  `docker-compose.[dev|prod].yml` files expect that your TIFF files are mounted in a folder that is defined by `DATA_TIFF` environment variable. This environment variable is inside the `.env` file. Change the `.env` file with the path to your TIFF files.
+
+  For example: you have TIFF files related to CBERS-4 and Landsat 5 satellites and their folders are mounted in `/data/TIFF/CBERS4` and `/data/TIFF/LANDSAT5` folders respectively. Hence, the path that you should set is `/data/TIFF`. All subfolders inside `/data/TIFF` folder are considered satellites folders.
+
+- `geoserver.env`: open it and define a new password to admin user by changing the `GEOSERVER_ADMIN_PASSWORD` environment variable.
+
+- `nginx.env`: open it and set a host name that Nginx will use to serve all the applications publicly. Port you should leave the default value, but if you would like to change it, you must change the binding port on `inpe_cdsr_nginx` service inside `docker-compose.[dev|prod].yml` files.
+
+  The settings you chose to `nginx.env` file, you must add them to `frontend.env`, `backend.env`, `inpe_stac.env` and `phpmyadmin.env` files as well, by updating the URLs according to domain and port you chose previously, in other words, you must replace `localhost:8089` by the settings inside `nginx.env` file. You can leave the default values to the `nginx.env`, `frontend.env` and `inpe_stac.env` files if you are running locally.
+
+Advanced settings to the environment variables can be found on [this section](./README.md#docker-compose-services).
 
 
 ## Run the docker compose files
