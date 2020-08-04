@@ -16,6 +16,4 @@ volumes/nginx/nginx.*.test
 volumes/nginx/log
 volumes/nginx/.htpasswd
 
-volumes/stac-compose/providers/providers*.json
-
 .vscode/*
