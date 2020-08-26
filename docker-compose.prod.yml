@@ -55,7 +55,7 @@ services:
 
   inpe_cdsr_catalog_dash:
     container_name: inpe_cdsr_catalog_dash
-    image: registry.dpi.inpe.br/inpe-cdsr/catalog-dash:0.0.7
+    image: registry.dpi.inpe.br/inpe-cdsr/catalog-dash:0.0.8
     restart: always
     env_file:
       - ./env_files/catalog_dash.env
