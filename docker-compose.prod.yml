@@ -79,7 +79,7 @@ services:
 
   inpe_cdsr_stac_compose:
     container_name: inpe_cdsr_stac_compose
-    image: registry.dpi.inpe.br/inpe-cdsr/stac-compose:0.0.5
+    image: registry.dpi.inpe.br/inpe-cdsr/stac-compose:0.0.6
     restart: always
     env_file:
       - ./env_files/stac_compose.env
