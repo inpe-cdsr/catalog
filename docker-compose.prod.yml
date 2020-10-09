@@ -31,7 +31,7 @@ services:
 
   inpe_cdsr_catalog_frontend:
     container_name: inpe_cdsr_catalog_frontend
-    image: registry.dpi.inpe.br/inpe-cdsr/catalog-frontend:0.0.19
+    image: registry.dpi.inpe.br/inpe-cdsr/catalog-frontend:1.0.0
     restart: always
     env_file:
       - ./env_files/frontend.env
@@ -42,7 +42,7 @@ services:
 
   inpe_cdsr_catalog_backend:
     container_name: inpe_cdsr_catalog_backend
-    image: registry.dpi.inpe.br/inpe-cdsr/catalog-backend:0.0.10
+    image: registry.dpi.inpe.br/inpe-cdsr/catalog-backend:1.0.0
     restart: always
     volumes:
       - ${DATA_TIFF}:/TIFF
@@ -55,7 +55,7 @@ services:
 
   inpe_cdsr_catalog_dash:
     container_name: inpe_cdsr_catalog_dash
-    image: registry.dpi.inpe.br/inpe-cdsr/catalog-dash:0.0.12
+    image: registry.dpi.inpe.br/inpe-cdsr/catalog-dash:1.0.0
     restart: always
     env_file:
       - ./env_files/catalog_dash.env
@@ -68,7 +68,7 @@ services:
 
   inpe_cdsr_inpe_stac:
     container_name: inpe_cdsr_inpe_stac
-    image: registry.dpi.inpe.br/inpe-cdsr/inpe-stac:0.0.13
+    image: registry.dpi.inpe.br/inpe-cdsr/inpe-stac:1.0.0
     restart: always
     env_file:
       - ./env_files/inpe_stac.env
@@ -79,7 +79,7 @@ services:
 
   inpe_cdsr_stac_compose:
     container_name: inpe_cdsr_stac_compose
-    image: registry.dpi.inpe.br/inpe-cdsr/stac-compose:0.0.6
+    image: registry.dpi.inpe.br/inpe-cdsr/stac-compose:1.0.0
     restart: always
     env_file:
       - ./env_files/stac_compose.env
