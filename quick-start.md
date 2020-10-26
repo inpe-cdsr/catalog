@@ -40,6 +40,13 @@ $ cd env_files/ && \
 
 Update the files above with proper settings. The files are environment variables files that contain settings related to the services inside `docker-compose.[dev|prod].yml` files.
 
+Get in [location](./volumes/nginx/include/dynamic/location) folder and create a `catalog.conf` file. This file can be used afterwards.
+
+```
+$ cd volumes/nginx/include/dynamic/location && \
+  touch catalog.conf
+```
+
 
 ### Environment variables basic settings
 
@@ -73,13 +80,25 @@ Advanced settings to the environment variables can be found on [this section](./
 
 Install [apache2-utils](https://www.digitalocean.com/community/tutorials/how-to-set-up-password-authentication-with-nginx-on-ubuntu-14-04) package in order to use `htpasswd` utility.
 
-Create the `cdsr_operator` user (or other name) and choose a password:
+Create the `cdsr_operator` user (or other one) and choose a password:
 
 ```
 $ sudo htpasswd -c inpe-cdsr/catalog/volumes/nginx/.htpasswd cdsr_operator
 ```
 
 This user will be used to access all [locations](./volumes/nginx/include/location.conf) that need authentication (i.e. locations that use [auth_basic.conf](./volumes/nginx/include/auth_basic.conf) file).
+
+[/catalogo/]() endpoint uses `catalog.conf` file as a dynamic file. If you desire that this endpoint needs a password authentication, then open the `catalog.conf` file [...]
+
+```
+$ nano volumes/nginx/include/dynamic/location/catalog.conf
+```
+
+[...] and include the following line:
+
+```
+include /etc/nginx/conf.d/include/auth_basic.conf;
+```
 
 
 ## Run the docker compose files
