@@ -85,10 +85,11 @@ $ cd .. && \
   git clone https://github.com/inpe-cdsr/catalog-frontend.git && \
   git clone https://github.com/inpe-cdsr/catalog-backend.git && \
   git clone https://github.com/inpe-cdsr/inpe-stac.git && \
-  git clone https://github.com/inpe-cdsr/stac-compose.git
+  git clone https://github.com/inpe-cdsr/stac-compose.git && \
+  git clone https://github.com/inpe-cdsr/catalog-dash.git
 ```
 
-For each repository you cloned before, you need to build its development Docker image by following the instructions inside each repository: [catalog-frontend](https://github.com/inpe-cdsr/catalog-frontend), [catalog-backend](https://github.com/inpe-cdsr/catalog-backend), [inpe-stac](https://github.com/inpe-cdsr/inpe-stac) and [stac-compose](https://github.com/inpe-cdsr/stac-compose).
+For each repository you cloned before, you need to build its development Docker image by following the instructions inside each repository: [catalog-frontend](https://github.com/inpe-cdsr/catalog-frontend), [catalog-backend](https://github.com/inpe-cdsr/catalog-backend), [inpe-stac](https://github.com/inpe-cdsr/inpe-stac), [stac-compose](https://github.com/inpe-cdsr/stac-compose) and [catalog-dash](https://github.com/inpe-cdsr/catalog-dash).
 
 Angular does not read environment variables because it is executed in the browser, then you need to create a JavaScript file with the necessary variables in development mode. In order to do that, get in the `catalog-frontend` volume folder, copy the environment file and edit it if necessary:
 
@@ -155,6 +156,8 @@ The following endpoints are now available:
 - [/inpe-stac](http://localhost:8089/inpe-stac): [inpe-stac](https://github.com/inpe-cdsr/inpe-stac) application;
 
 - [/stac-compose](http://localhost:8089/stac-compose): [stac-compose](https://github.com/inpe-cdsr/stac-compose) application;
+
+- [/catalog-dash](http://localhost:8089/catalog-dash): [catalog-dash](https://github.com/inpe-cdsr/catalog-dash) application;
 
 - [/geoserver](http://localhost:8089/geoserver): [GeoServer](https://hub.docker.com/r/kartoza/geoserver/) application;
 
