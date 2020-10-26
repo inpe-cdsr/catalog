@@ -40,7 +40,7 @@ $ cd env_files/ && \
 
 Update the files above with proper settings. The files are environment variables files that contain settings related to the services inside `docker-compose.[dev|prod].yml` files.
 
-Get in [location](./volumes/nginx/include/dynamic/location) folder and create a `catalog.conf` file. This file can be used afterwards.
+Get in [location](./volumes/nginx/include/dynamic/location) folder and create the `catalog.conf` file. This file can be used afterwards.
 
 ```
 $ cd volumes/nginx/include/dynamic/location && \
@@ -88,7 +88,7 @@ $ sudo htpasswd -c inpe-cdsr/catalog/volumes/nginx/.htpasswd cdsr_operator
 
 This user will be used to access all [locations](./volumes/nginx/include/location.conf) that need authentication (i.e. locations that use [auth_basic.conf](./volumes/nginx/include/auth_basic.conf) file).
 
-[/catalogo/]() endpoint uses `catalog.conf` file as a dynamic file. If you desire that this endpoint needs a password authentication, then open the `catalog.conf` file [...]
+[/catalogo](./volumes/nginx/include/location.conf#L48) endpoint uses `catalog.conf` file as a dynamic file. If you desire that this endpoint needs a password authentication, then open the `catalog.conf` file [...]
 
 ```
 $ nano volumes/nginx/include/dynamic/location/catalog.conf
