@@ -29,7 +29,7 @@ $ cd inpe-cdsr/ && \
 ```
 
 
-### Settings
+## Settings
 
 Get in [env_files](./env_files) folder and create the environment files related to each application based on the example ones inside it:
 
@@ -41,7 +41,7 @@ $ cd env_files/ && \
 Update the files above with proper settings. The files are environment variables files that contain settings related to the services inside `docker-compose.[dev|prod].yml` files.
 
 
-#### Environment variables basic settings
+### Environment variables basic settings
 
 There are some environment variables files that you can change their basic settings, such as:
 
@@ -67,6 +67,19 @@ There are some environment variables files that you can change their basic setti
   The settings you chose to `nginx.env` file, you must add them to `frontend.env`, `backend.env`, `inpe_stac.env` and `phpmyadmin.env` files as well, by updating the URLs according to domain and port you chose previously, in other words, you must replace `localhost:8089` by the settings inside `nginx.env` file. You can leave the default values to the `nginx.env`, `frontend.env` and `inpe_stac.env` files if you are running locally.
 
 Advanced settings to the environment variables can be found on [this section](./README.md#docker-compose-services).
+
+
+### Set up password authentication to Nginx service
+
+Install [apache2-utils](https://www.digitalocean.com/community/tutorials/how-to-set-up-password-authentication-with-nginx-on-ubuntu-14-04) package in order to use `htpasswd` utility.
+
+Create the `cdsr_operator` user (or other name) and choose a password:
+
+```
+$ sudo htpasswd -c inpe-cdsr/catalog/volumes/nginx/.htpasswd cdsr_operator
+```
+
+This user will be used to access all [locations](./volumes/nginx/include/location.conf) that need authentication (i.e. locations that use [auth_basic.conf](./volumes/nginx/include/auth_basic.conf) file).
 
 
 ## Run the docker compose files
