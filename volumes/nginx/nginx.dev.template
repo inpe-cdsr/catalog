@@ -40,7 +40,7 @@ server {
     listen         $NGINX_PORT default_server;
     listen         [::]:$NGINX_PORT default_server;
 
-    client_max_body_size 50M;
+    client_max_body_size 256M;
     root /var/www/html;
     index index.php index.html index.htm;
     server_name _;
