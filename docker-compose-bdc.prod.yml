@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  inpe_cdsr_postgis:
+    container_name: inpe_cdsr_postgis
+    image: kartoza/postgis:11.0-2.5
+    restart: restart
+    env_file:
+      - ./env_files/postgis.env
+    volumes:
+      - ./volumes/postgresql:/var/lib/postgresql
+    networks:
+      - inpe_cdsr
+    ports:
+      - 6000:5432
+
+  inpe_cdsr_pgadmin4:
+    container_name: inpe_cdsr_pgadmin4
+    image: dpage/pgadmin4:4.15
+    restart: restart
+    env_file:
+      - ./env_files/pgadmin4.env
+    volumes:
+      - ./volumes/pgadmin4:/var/lib/pgadmin
+    networks:
+      - inpe_cdsr
+    depends_on:
+      - inpe_cdsr_postgis
+    ports:
+      - 6001:80
+
+  inpe_cdsr_bdc_stac:
+    container_name: inpe_cdsr_bdc_stac
+    image: bdc-stac:0.9.0-0
+    restart: restart
+    env_file:
+      - ./env_files/bdc_stac.env
+    networks:
+      - inpe_cdsr
+    depends_on:
+      - inpe_cdsr_pgadmin4
+    ports:
+      - 6002:5000
