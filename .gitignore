@@ -22,3 +22,5 @@ volumes/postgresql
 volumes/pgadmin4
 
 .vscode/*
+
+.backup
