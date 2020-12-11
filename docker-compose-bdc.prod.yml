@@ -31,7 +31,7 @@ services:
 
   inpe_cdsr_bdc_stac:
     container_name: inpe_cdsr_bdc_stac
-    image: bdc-stac:0.9.0-0
+    image: registry.dpi.inpe.br/brazildatacube/stac:0.9.0-10
     restart: always
     env_file:
       - ./env_files/bdc_stac.env
