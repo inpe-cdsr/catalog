@@ -139,7 +139,8 @@ services:
     image: mariadb:10.5.3
     # restart: always
     volumes:
-      - ../data/mysqldata:/var/lib/mysql
+      - ./volumes/mysql/data:/var/lib/mysql
+      - ./volumes/mysql/config-file.cnf:/etc/mysql/conf.d/config-file.cnf
     env_file:
       - ./env_files/db.env
     networks:

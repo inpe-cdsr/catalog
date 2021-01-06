@@ -5,11 +5,15 @@ env_files/*
 .env
 !env.EXAMPLE
 
-# exclude all files and just include the '.EXAMPLE' files
+
+# volumes
+
 volumes/catalog-frontend/*
 !volumes/catalog-frontend/*.EXAMPLE
 
 volumes/geoserver/geoserverdata
+
+volumes/mysql/data
 
 volumes/nginx/nginx.*.backup.*
 volumes/nginx/nginx.*.test
@@ -18,8 +22,11 @@ volumes/nginx/.htpasswd
 volumes/nginx/include/dynamic/location/*
 !volumes/nginx/include/dynamic/location/*.EXAMPLE
 
-volumes/postgresql
 volumes/pgadmin4
+volumes/postgresql
+
+
+# other folders and files
 
 .vscode/*
 
