@@ -31,7 +31,7 @@ services:
 
   inpe_cdsr_catalog_frontend:
     container_name: inpe_cdsr_catalog_frontend
-    image: registry.dpi.inpe.br/inpe-cdsr/catalog-frontend:1.0.3
+    image: registry.dpi.inpe.br/inpe-cdsr/catalog-frontend:1.0.4
     restart: always
     env_file:
       - ./env_files/frontend.env
@@ -122,8 +122,7 @@ services:
     image: mariadb:10.5.3
     restart: always
     volumes:
-      - ../data/mysqldata:/var/lib/mysql
-      # - ./volumes/mysql/data:/var/lib/mysql
+      - ./volumes/mysql/data:/var/lib/mysql
       - ./volumes/mysql/config-file.cnf:/etc/mysql/conf.d/config-file.cnf
     env_file:
       - ./env_files/db.env
