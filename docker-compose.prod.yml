@@ -26,6 +26,7 @@ services:
       - inpe_cdsr_portainer
       - inpe_cdsr_geoserver
       - inpe_cdsr_phpmyadmin
+      - inpe_cdsr_bdc_stac
     ports:
       - 8089:8089
 
