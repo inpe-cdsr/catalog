@@ -29,6 +29,8 @@ services:
     ports:
       - 8089:8089
 
+  # CDSR services
+
   inpe_cdsr_catalog_frontend:
     container_name: inpe_cdsr_catalog_frontend
     image: registry.dpi.inpe.br/inpe-cdsr/catalog-frontend:1.0.3
@@ -38,7 +40,7 @@ services:
     networks:
       - inpe_cdsr
     # ports:
-    #   - 8002:8000
+    #   - 5001:8000
 
   inpe_cdsr_catalog_backend:
     container_name: inpe_cdsr_catalog_backend
@@ -51,7 +53,7 @@ services:
     networks:
       - inpe_cdsr
     # ports:
-    #   - 5022:5000
+    #   - 5002:5001
 
   inpe_cdsr_catalog_dash:
     container_name: inpe_cdsr_catalog_dash
@@ -75,7 +77,7 @@ services:
     networks:
       - inpe_cdsr
     # ports:
-    #  - 5002:5000
+    #  - 5004:5000
 
   inpe_cdsr_stac_compose:
     container_name: inpe_cdsr_stac_compose
@@ -88,7 +90,7 @@ services:
     networks:
       - inpe_cdsr
     # ports:
-    #   - 5001:8002
+    #   - 5005:5002
 
   inpe_cdsr_portainer:
     container_name: inpe_cdsr_portainer
@@ -115,7 +117,7 @@ services:
     networks:
       - inpe_cdsr
     # ports:
-    #   - 9003:8080
+    #   - 9001:8080
 
   inpe_cdsr_db:
     container_name: inpe_cdsr_db
@@ -144,6 +146,49 @@ services:
       - inpe_cdsr
     ports:
       - 8099:80
+
+  # BDC services
+
+  inpe_cdsr_postgis:
+    container_name: inpe_cdsr_postgis
+    image: kartoza/postgis:11.0-2.5
+    restart: always
+    env_file:
+      - ./env_files/postgis.env
+    volumes:
+      - ./volumes/postgresql:/var/lib/postgresql
+    networks:
+      - inpe_cdsr
+    ports:
+      - 6000:5432
+
+  inpe_cdsr_pgadmin4:
+    container_name: inpe_cdsr_pgadmin4
+    image: dpage/pgadmin4:4.15
+    restart: always
+    env_file:
+      - ./env_files/pgadmin4.env
+    volumes:
+      - ./volumes/pgadmin4:/var/lib/pgadmin
+    networks:
+      - inpe_cdsr
+    depends_on:
+      - inpe_cdsr_postgis
+    ports:
+      - 6001:80
+
+  inpe_cdsr_bdc_stac:
+    container_name: inpe_cdsr_bdc_stac
+    image: registry.dpi.inpe.br/brazildatacube/stac:0.9.0-10
+    restart: always
+    env_file:
+      - ./env_files/bdc_stac.env
+    networks:
+      - inpe_cdsr
+    depends_on:
+      - inpe_cdsr_pgadmin4
+    ports:
+      - 6002:5000
 
 networks:
   inpe_cdsr:
