@@ -5,14 +5,10 @@ env_files/*
 .env
 !env.EXAMPLE
 
-
 # volumes
-
 volumes/catalog-frontend/*
 !volumes/catalog-frontend/*.EXAMPLE
-
 volumes/geoserver/geoserverdata
-
 volumes/mysql/data
 
 volumes/nginx/nginx.*.backup.*
@@ -24,10 +20,8 @@ volumes/nginx/include/dynamic/location/*
 
 volumes/pgadmin4
 volumes/postgresql
-
+volumes/rabbitmq
 
 # other folders and files
-
 .vscode/*
-
 .backup
