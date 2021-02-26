@@ -4,6 +4,10 @@ volumes:
   portainer_data:
 
 services:
+  ##################################################
+  # reverse proxy
+  ##################################################
+
   inpe_cdsr_nginx:
     container_name: inpe_cdsr_nginx
     image: nginx:1.17.6
@@ -26,6 +30,10 @@ services:
       - inpe_cdsr_bdc_stac
     ports:
       - 8089:8089
+
+  ##################################################
+  # INPE CDSR services
+  ##################################################
 
   inpe_cdsr_catalog_frontend:
     container_name: inpe_cdsr_catalog_frontend
@@ -164,7 +172,9 @@ services:
     ports:
       - 8099:80
 
+  ##################################################
   # BDC services
+  ##################################################
 
   inpe_cdsr_postgis:
     container_name: inpe_cdsr_postgis
@@ -206,6 +216,61 @@ services:
       - inpe_cdsr_pgadmin4
     ports:
       - 6002:5000
+
+  ##################################################
+  # Publisher services
+  ##################################################
+
+  inpe_cdsr_rabbitmq:
+    container_name: inpe_cdsr_rabbitmq
+    hostname: inpe_cdsr_rabbitmq
+    image: rabbitmq:3.8.11-management
+    # restart: always
+    volumes:
+     - ./volumes/rabbitmq:/var/lib/rabbitmq
+    env_file:
+      - ./env_files/rabbitmq.env
+    networks:
+      - inpe_cdsr
+    ports:
+      # - 5672:5672
+      - 7000:15672
+
+  inpe_cdsr_publisher_processing:
+    container_name: inpe_cdsr_publisher_processing
+    hostname: inpe_cdsr_publisher_processing
+    image: inpe-cdsr-publisher2
+    # restart: always
+    command: celery -A publisher.workers.processing worker -l INFO -Q processing
+    volumes:
+      - ../publisher2:/app
+      - ${DATA_TIFF}:/TIFF
+    env_file:
+      - ./env_files/publisher.env
+    links:
+      - inpe_cdsr_rabbitmq
+    depends_on:
+      - inpe_cdsr_rabbitmq
+    networks:
+      - inpe_cdsr
+
+  inpe_cdsr_publisher:
+    container_name: inpe_cdsr_publisher
+    image: inpe-cdsr-publisher2
+    # restart: always
+    volumes:
+      - ../publisher2:/app
+      - ${DATA_TIFF}:/TIFF
+    env_file:
+      - ./env_files/publisher.env
+    networks:
+      - inpe_cdsr
+    depends_on:
+      - inpe_cdsr_pgadmin4
+      - inpe_cdsr_rabbitmq
+      - inpe_cdsr_publisher_processing
+    ports:
+      - 7001:5000
 
 networks:
   inpe_cdsr:
