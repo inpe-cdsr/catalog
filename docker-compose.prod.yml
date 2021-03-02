@@ -222,8 +222,9 @@ services:
     hostname: inpe_cdsr_publisher_processing
     image: registry.dpi.inpe.br/cdsr/publisher:0.0.1
     # restart: always
-    command: celery -A publisher.workers.processing worker -l INFO -Q processing
+    command: celery -A publisher.workers.processing worker -l INFO -Q master,processing
     volumes:
+      - ../publisher2:/app
       - ${DATA_TIFF}:/TIFF
     env_file:
       - ./env_files/publisher.env
