@@ -233,15 +233,15 @@ services:
     networks:
       - inpe_cdsr
     ports:
-      # - 5672:5672
+      - 5672:5672
       - 7000:15672
 
-  inpe_cdsr_publisher_processing:
-    container_name: inpe_cdsr_publisher_processing
-    hostname: inpe_cdsr_publisher_processing
+  inpe_cdsr_publisher_master:
+    container_name: inpe_cdsr_publisher_master
+    hostname: inpe_cdsr_publisher_master
     image: inpe-cdsr-publisher2
     # restart: always
-    command: celery -A publisher.workers.processing worker -l INFO -Q processing
+    command: celery -A publisher.workers.master_worker worker -l INFO -Q master
     volumes:
       - ../publisher2:/app
       - ${DATA_TIFF}:/TIFF
@@ -251,6 +251,24 @@ services:
       - inpe_cdsr_rabbitmq
     depends_on:
       - inpe_cdsr_rabbitmq
+    networks:
+      - inpe_cdsr
+
+  inpe_cdsr_publisher_processing:
+    container_name: inpe_cdsr_publisher_processing
+    hostname: inpe_cdsr_publisher_processing
+    image: inpe-cdsr-publisher2
+    # restart: always
+    command: celery -A publisher.workers.processing_worker worker -l INFO -Q processing
+    volumes:
+      - ../publisher2:/app
+      - ${DATA_TIFF}:/TIFF
+    env_file:
+      - ./env_files/publisher.env
+    links:
+      - inpe_cdsr_rabbitmq
+    depends_on:
+      - inpe_cdsr_publisher_master
     networks:
       - inpe_cdsr
 
@@ -268,6 +286,7 @@ services:
     depends_on:
       - inpe_cdsr_pgadmin4
       - inpe_cdsr_rabbitmq
+      - inpe_cdsr_publisher_master
       - inpe_cdsr_publisher_processing
     ports:
       - 7001:5000
