@@ -4,6 +4,11 @@ map $request_uri $loggable {
     default 1;
 }
 
+
+##################################################
+# INPE CDSR services
+##################################################
+
 upstream frontend {
     server inpe_cdsr_catalog_frontend:8000;
 }
@@ -18,10 +23,6 @@ upstream catalog_dash {
 
 upstream inpestac {
     server inpe_cdsr_inpe_stac:5000;
-}
-
-upstream bdc_stac {
-    server inpe_cdsr_bdc_stac:5000;
 }
 
 upstream staccompose {
@@ -39,6 +40,23 @@ upstream geoserver {
 upstream phpmyadmin {
     server inpe_cdsr_phpmyadmin:80;
 }
+
+##################################################
+# BDC services
+##################################################
+
+upstream bdc_stac {
+    server inpe_cdsr_bdc_stac:5000;
+}
+
+##################################################
+# Publisher services
+##################################################
+
+upstream publisher_dash {
+    server inpe_cdsr_publisher_dash:8050;
+}
+
 
 server {
     listen         $NGINX_PORT default_server;
@@ -59,6 +77,34 @@ server {
         try_files $uri $uri/ .png .xml .tif .json .txt;
         add_header Content-disposition "attachment";
     }
+
+    ##################################################
+    # Publisher services
+    ##################################################
+
+    location /publisher-dash {
+        proxy_pass http://publisher_dash;
+        proxy_redirect off;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    ##################################################
+    # BDC services
+    ##################################################
+
+    location /bdc-stac {
+        rewrite /bdc-stac/(.*) /$1  break;
+        proxy_pass http://bdc_stac;
+        proxy_redirect off;
+        proxy_set_header Host $http_host;
+    }
+
+    ##################################################
+    # INPE CDSR services
+    ##################################################
 
     location /geoserver {
         proxy_pass http://geoserver;
@@ -96,13 +142,6 @@ server {
         proxy_set_header Host $http_host;
     }
 
-    location /bdc-stac {
-        rewrite /bdc-stac/(.*) /$1  break;
-        proxy_pass http://bdc_stac;
-        proxy_redirect off;
-        proxy_set_header Host $http_host;
-    }
-
     location /catalog-dash {
         proxy_pass http://catalog_dash;
         proxy_redirect off;
@@ -128,6 +167,10 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
     }
+
+    ##################################################
+    # database
+    ##################################################
 
     location / {
         client_max_body_size 0;
