@@ -18,6 +18,9 @@ volumes/nginx/.htpasswd
 volumes/nginx/include/dynamic/location/*
 !volumes/nginx/include/dynamic/location/*.EXAMPLE
 
+volumes/stac-compose/providers/providers.json*
+!volumes/stac-compose/providers/*.EXAMPLE
+
 volumes/pgadmin4
 volumes/postgresql
 volumes/rabbitmq
