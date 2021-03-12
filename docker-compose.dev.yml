@@ -28,6 +28,7 @@ services:
       - inpe_cdsr_geoserver
       - inpe_cdsr_phpmyadmin
       - inpe_cdsr_bdc_stac
+      - inpe_cdsr_publisher_dash
     ports:
       - 8089:8089
 
@@ -250,6 +251,7 @@ services:
     links:
       - inpe_cdsr_rabbitmq
     depends_on:
+      - inpe_cdsr_pgadmin4
       - inpe_cdsr_rabbitmq
     networks:
       - inpe_cdsr
@@ -284,12 +286,25 @@ services:
     networks:
       - inpe_cdsr
     depends_on:
-      - inpe_cdsr_pgadmin4
-      - inpe_cdsr_rabbitmq
       - inpe_cdsr_publisher_master
       - inpe_cdsr_publisher_processing
     ports:
       - 7001:5000
+
+  inpe_cdsr_publisher_dash:
+    container_name: inpe_cdsr_publisher_dash
+    image: inpe-cdsr-publish-dash
+    restart: always
+    volumes:
+      - ../publisher-dash:/app
+    env_file:
+      - ./env_files/publisher-dash.env
+    networks:
+      - inpe_cdsr
+    depends_on:
+      - inpe_cdsr_publisher
+    ports:
+      - 7002:8050
 
 networks:
   inpe_cdsr:
