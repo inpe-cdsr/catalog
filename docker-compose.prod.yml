@@ -231,6 +231,7 @@ services:
     links:
       - inpe_cdsr_rabbitmq
     depends_on:
+      - inpe_cdsr_pgadmin4
       - inpe_cdsr_rabbitmq
     networks:
       - inpe_cdsr
@@ -265,12 +266,25 @@ services:
     networks:
       - inpe_cdsr
     depends_on:
-      - inpe_cdsr_pgadmin4
-      - inpe_cdsr_rabbitmq
       - inpe_cdsr_publisher_master
       - inpe_cdsr_publisher_processing
     ports:
       - 7001:5000
+
+  inpe_cdsr_publisher_dash:
+    container_name: inpe_cdsr_publisher_dash
+    image: registry.dpi.inpe.br/cdsr/publish-dash:0.0.1
+    restart: always
+    volumes:
+      - ../publisher-dash:/app
+    env_file:
+      - ./env_files/publisher-dash.env
+    networks:
+      - inpe_cdsr
+    depends_on:
+      - inpe_cdsr_publisher
+    # ports:
+    #   - 7002:8050
 
 networks:
   inpe_cdsr:
